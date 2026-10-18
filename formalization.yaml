@@ -189,15 +189,16 @@ automation:
       prompting_notes: >-
         The runs, on 2026-10-16 and 2026-10-17, asked for a full solution of
         Erdős Problem 173, with GPT-6 Astra and Claude Opus 5.5 working in
-        alternating steps over two rounds. The campaign's brief for the
-        problem set the starting route: adapt OpenAI's transfer from
-        arbitrary to measurable colorings to the equilateral triangles of
-        sides 1 and x. GPT-6 Astra prepared each round, attacked the open
-        steps and recorded the results. Among them, it proved the
-        unit-template theorem for the algebraic closure of ℚ(x) and the
-        extension of the rigidity theorem for wild character laws to that
-        field. Fresh GPT-6 Astra contexts then reviewed the argument and
-        graded the review (see review).
+        alternating steps over two rounds. The starting route came from an
+        earlier planning step, in which a Claude Opus 5.5 agent read OpenAI's
+        paper and proposed adapting its transfer from arbitrary to measurable
+        colorings to the equilateral triangles of sides 1 and x; the
+        campaign's brief for the problem carried it forward. GPT-6 Astra
+        prepared each round, attacked the open steps and recorded the results.
+        Among them, it proved the unit-template theorem for the algebraic
+        closure of ℚ(x) and the extension of the rigidity theorem for wild
+        character laws to that field. Fresh GPT-6 Astra contexts then reviewed
+        the argument and graded the review (see review).
     - method: "agent"
       models: ["claude-opus-5-5"]
       framework: "Claude Code"
