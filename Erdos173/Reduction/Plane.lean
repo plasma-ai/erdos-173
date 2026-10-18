@@ -48,6 +48,7 @@ def pMotion (k t : ℂ) : ℝ² →ᵃ[ℝ] ℝ² :=
   toC.symm.toLinearEquiv.toLinearMap.toAffineMap.comp
     ((cMotion k t).comp toC.toLinearEquiv.toLinearMap.toAffineMap)
 
+/-- `pMotion k t` acts as `w ↦ k w + t` in the coordinate `toC`. -/
 lemma pMotion_apply (k t : ℂ) (x : ℝ²) : pMotion k t x = toC.symm (k * toC x + t) :=
   rfl
 

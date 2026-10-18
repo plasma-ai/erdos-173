@@ -121,6 +121,7 @@ theorem templateProperty_algebraic : TemplateProperty (algebraicClosure ℚ ℂ 
   algClosed := mem_algebraicClosure_of_root
   template := templateProperty_algebraic
 
+/-- A real algebraic number lies in the algebraic carrier. -/
 theorem ofReal_mem_algebraicCarrier {x : ℝ} (hx : IsAlgebraic ℚ x) :
     (x : ℂ) ∈ algebraicCarrier.E :=
   mem_algebraicClosure_iff.mpr hx.algebraMap
@@ -144,17 +145,20 @@ def adjoinEquiv :
   (IntermediateField.equivMap _ (Complex.ofRealAm.restrictScalars ℚ)).trans
     (IntermediateField.equivOfEq (adjoin_map_ofReal x))
 
+/-- A real number lies in `fieldOf x` exactly when it lies in `realFieldOf x`. -/
 theorem ofReal_mem_fieldOf_iff (t : ℝ) : (t : ℂ) ∈ fieldOf x ↔ t ∈ realFieldOf x := by
   simp only [fieldOf, realFieldOf, IntermediateField.mem_restrictScalars,
     mem_algebraicClosure_iff]
   exact isAlgebraic_ringHom_iff_of_comp_eq (adjoinEquiv x) Complex.ofRealHom
     Complex.ofReal_injective (RingHom.ext fun _ => rfl)
 
+/-- `i` lies in `fieldOf x`. -/
 theorem I_mem_fieldOf : Complex.I ∈ fieldOf x := by
   simp only [fieldOf, IntermediateField.mem_restrictScalars, mem_algebraicClosure_iff]
   exact (isAlgebraic_iff_isIntegral.mpr (Complex.isIntegral_I ℚ)).extendScalars
     (algebraMap ℚ (IntermediateField.adjoin ℚ {(x : ℂ)})).injective
 
+/-- `fieldOf x` is closed under conjugation, which fixes `ℚ(x)`. -/
 theorem conj_mem_fieldOf {z : ℂ} (hz : z ∈ fieldOf x) : conj z ∈ fieldOf x := by
   let k := IntermediateField.adjoin ℚ {(x : ℂ)}
   let c : ℂ →ₐ[k] ℂ :=
@@ -201,6 +205,7 @@ theorem conj_mem_fieldOf {z : ℂ} (hz : z ∈ fieldOf x) : conj z ∈ fieldOf x
     exact mem_algebraicClosure_of_root p hp hc z hz
   template := h
 
+/-- `x` lies in its carrier. -/
 theorem ofReal_mem_carrierOf (h : TemplateProperty (fieldOf x : Set ℂ)) :
     (x : ℂ) ∈ (carrierOf x h).E := by
   change (x : ℂ) ∈ fieldOf x

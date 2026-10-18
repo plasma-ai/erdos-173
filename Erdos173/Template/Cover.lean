@@ -468,8 +468,8 @@ lemma quotReal_span (ℓ' : quotA N ℓ →ₗ[𝔸] 𝔸)
 
 variable {N ℓ}
 
--- instance synthesis on the quotient algebra `A / I` needs more than the default budget
 set_option synthInstance.maxHeartbeats 200000 in
+-- instance synthesis on the quotient algebra `A / I` needs more than the default budget
 /-- In the finite-dimensional quotient some Cayley transform escapes every
 functional `x ↦ ℓ(q x)`. -/
 lemma escape_of_finiteDimensional [FiniteDimensional 𝔸 (quotA N ℓ)] (hℓ : ℓ 1 = 1)

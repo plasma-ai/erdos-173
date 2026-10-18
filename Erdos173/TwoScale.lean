@@ -56,7 +56,7 @@ theorem not_avoidsEq_one_and {x : ℝ} (hx : 0 < x) (hx₁ : x ≠ 1) (c : ℂ �
   by_cases ha : IsAlgebraic ℚ x
   · let := algebraicCarrier
     exact not_avoidsEq_of_mem hx hx₁ (ofReal_mem_algebraicCarrier ha) c h₁ h₂
-  · let h := templateProperty_fieldOf (x := x) ha
+  · have h := templateProperty_fieldOf (x := x) ha
     let := carrierOf x h
     exact not_avoidsEq_of_mem hx hx₁ (ofReal_mem_carrierOf x h) c h₁ h₂
 

@@ -34,6 +34,7 @@ variable (𝔣 : CauchyFrame) (ℓ : ℂ →ₗ[𝔸] 𝔸)
 /-- The twisted functional `z ↦ ℓ(v z)`. -/
 def twist (v : ℂ) : ℂ →ₗ[𝔸] 𝔸 := ℓ.comp (LinearMap.mulLeft 𝔸 v)
 
+/-- `twist ℓ v` is `z ↦ ℓ(v z)`. -/
 @[simp] lemma twist_apply (v z : ℂ) : twist ℓ v z = ℓ (v * z) := rfl
 
 /-- Twisting by a member of `U` keeps a functional covered. -/
@@ -131,7 +132,7 @@ def Φ : 𝔣.A →ₗ[𝔸] (Fin 𝔣.d → Fin (𝔣.degBound + 1) → 𝔸) w
     rw [one_smul, one_smul] at hl
     have h' := tameVec_eq hmul hcov (v := v + w) hl
     funext l m
-    show (tameVec hmul hcov (v + w) l).coeff m =
+    change (tameVec hmul hcov (v + w) l).coeff m =
       (tameVec hmul hcov v l).coeff m + (tameVec hmul hcov w l).coeff m
     rw [h', Pi.add_apply, coeff_add]
   map_smul' c v := by
@@ -139,9 +140,10 @@ def Φ : 𝔣.A →ₗ[𝔸] (Fin 𝔣.d → Fin (𝔣.degBound + 1) → 𝔸) w
     rw [add_zero, add_zero] at hl
     have h' := tameVec_eq hmul hcov (v := c • v) hl
     funext l m
-    show (tameVec hmul hcov (c • v) l).coeff m = c • (tameVec hmul hcov v l).coeff m
+    change (tameVec hmul hcov (c • v) l).coeff m = c • (tameVec hmul hcov v l).coeff m
     rw [h', Pi.smul_apply, coeff_smul]
 
+/-- `Φ v` lists the coefficients of the numerator vector of `v`. -/
 lemma Φ_apply (v : 𝔣.A) (l : Fin 𝔣.d) (m : Fin (𝔣.degBound + 1)) :
     Φ hmul hcov v l m = (tameVec hmul hcov v l).coeff m := rfl
 
@@ -174,6 +176,7 @@ lemma T_mul_mem (hmul : ∀ u ∈ 𝔣.U, ∀ v ∈ 𝔣.U, u * v ∈ 𝔣.U) (h
 def τ : 𝔣.A →ₗ[𝔸] 𝔣.A := (LinearMap.mulLeft 𝔸 𝔣.T).restrict fun _ hv => T_mul_mem hmul hTU hv
 
 omit hcov in
+/-- `τ` is multiplication by `T`. -/
 @[simp] lemma coe_τ (v : 𝔣.A) : ((τ hmul hTU v : 𝔣.A) : ℂ) = 𝔣.T * v := rfl
 
 /-- The numerator vector of `T v` is `X P_v + Δ (ℓ(v b_l))_l`. -/

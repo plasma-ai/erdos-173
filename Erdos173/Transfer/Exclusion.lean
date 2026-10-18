@@ -42,6 +42,7 @@ namespace Transfer
 /-- A real side `r` in the carrier, as an element of `E`. -/
 def sideE (r : ℝ) (h : (r : ℂ) ∈ E) : E := ⟨r, h⟩
 
+/-- `sideE r h` is `r`. -/
 @[simp] lemma coe_sideE (r : ℝ) (h : (r : ℂ) ∈ E) : (sideE r h : ℂ) = r := rfl
 
 /-- `1` lies in the carrier. -/

@@ -117,7 +117,7 @@ lemma eval_coord_mem_polyFuns (p : K[X]) (i : ι) : (fun z : ι → K => p.eval 
 
 /-- Proves membership in `polyFuns` of expressions built from coordinates, constants,
 sums, differences, products and univariate polynomials of coordinates. -/
-macro "polyfun" : tactic => `(tactic| repeat' (first
+scoped macro "polyfun" : tactic => `(tactic| repeat' (first
   | exact coord_mem_polyFuns _ | exact const_mem_polyFuns _ | exact eval_coord_mem_polyFuns _ _
   | apply add_mem_polyFuns | apply sub_mem_polyFuns | apply mul_mem_polyFuns))
 

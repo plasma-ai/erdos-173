@@ -55,6 +55,7 @@ lemma qform_nonneg {a b c : ℝ} (ha : -1 ≤ a ∧ a ≤ 1) (hb : -1 ≤ b ∧ 
 def threshold (t : ℝ) : Fin 2 := if 0 ≤ t then 0 else 1
 
 omit [Carrier] in
+/-- Thresholding is measurable. -/
 lemma measurable_threshold : Measurable threshold :=
   Measurable.ite measurableSet_Ici measurable_const measurable_const
 
@@ -109,6 +110,7 @@ lemma integral_qform {X : Type*} [MeasurableSpace X] (μ : Measure X) [IsProbabi
 def clampSign (z : ℂ) : ℂ := (max (-1) (min 1 z.re) : ℝ)
 
 omit [Carrier] in
+/-- The clamp is `1`-Lipschitz. -/
 lemma lipschitzWith_clampSign : LipschitzWith 1 clampSign := by
   have hr : LipschitzWith 1 (fun z : ℂ => z.re) := by
     apply LipschitzWith.of_dist_le_mul
@@ -120,6 +122,7 @@ lemma lipschitzWith_clampSign : LipschitzWith 1 clampSign := by
     Complex.isometry_ofReal.lipschitzWith.comp ((hr.const_min 1).const_max (-1))
 
 omit [Carrier] in
+/-- The clamp fixes `0`. -/
 @[simp] lemma clampSign_zero : clampSign 0 = 0 := by simp [clampSign]
 
 omit [Carrier] in
@@ -139,6 +142,7 @@ lemma clampSign_eq {z : ℂ} (hz : z.im = 0 ∧ -1 ≤ z.re ∧ z.re ≤ 1) : cl
 
 variable (R : Set E) (ω₀ : Space R)
 
+/-- The continuous vectors form a complete subspace. -/
 instance continuous_complete : CompleteSpace (space (A := E) (representation R ω₀)) :=
   (isClosed_space (A := E) (representation R ω₀)).completeSpace_coe
 
