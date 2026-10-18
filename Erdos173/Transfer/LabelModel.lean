@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import Erdos173.Basic
 public import OAI.Analysis.PlaneSpectrum.Representations
 

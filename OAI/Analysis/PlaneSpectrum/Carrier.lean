@@ -10,6 +10,8 @@ public import Mathlib.Analysis.Real.Sqrt
 /-!
 # Plane carriers
 
+New in this repository; not part of openai/math.
+
 The source fixes its carrier, the field of algebraic numbers. This module states the
 properties of a carrier field `E ⊆ ℂ` that its spectral rigidity theorem uses, so that
 the theorem applies to the algebraic closure of `ℚ(x)` for every real `x`.

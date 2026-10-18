@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import Mathlib.Algebra.Ring.GeomSum
 public import Mathlib.FieldTheory.Minpoly.Field
 public import Mathlib.LinearAlgebra.Dual.Lemmas

@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import OAI.MeasureTheory.CompactFactors.Factors
 public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
 

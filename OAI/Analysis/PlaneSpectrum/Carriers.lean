@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import OAI.Analysis.PlaneSpectrum.Selections
 public import Mathlib.Algebra.AlgebraicCard
 public import Mathlib.Algebra.Polynomial.Lifts
@@ -7,6 +9,11 @@ public import Mathlib.Analysis.Complex.IsIntegral
 
 /-!
 # The carriers
+
+New in this repository. `algebraic_complex_iff_coordinates` and the countability proof of
+`algebraicCarrier` are moved here from `OAI/Analysis/PlaneSpectrum/Basic.lean` of
+openai/math, and `templateProperty_algebraic` adapts the proof of `uniform_selection` in
+its `OAI/Analysis/PlaneSpectrum/Selections.lean`.
 
 Two carriers for the spectral rigidity theorem: the source's own, the field of algebraic
 numbers, whose template property is the number-field general-position selection of the
@@ -40,8 +47,8 @@ theorem mem_algebraicClosure_of_root {k : Type*} [Field k] [Algebra k ℂ] (p : 
 
 /-! ### The algebraic numbers -/
 
-/-- The complex algebraic closure used above is precisely F(i) from the source,
-not a different countable plane. -/
+/-- The complex algebraic numbers are precisely F(i) from the source, `F` the real
+algebraic numbers, not a different countable plane. -/
 theorem algebraic_complex_iff_coordinates (z : ℂ) :
     IsAlgebraic ℚ z ↔ IsAlgebraic ℚ z.re ∧ IsAlgebraic ℚ z.im := by
   have hi : IsAlgebraic ℚ Complex.I := isAlgebraic_iff_isIntegral.mpr (Complex.isIntegral_I ℚ)

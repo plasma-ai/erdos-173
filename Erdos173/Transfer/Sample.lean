@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import Erdos173.Transfer.LabelModel
 public import OAI.Analysis.PlaneSpectrum.Ergodicity
 public import OAI.Geometry.PlaneColoring.BorelTransfer
