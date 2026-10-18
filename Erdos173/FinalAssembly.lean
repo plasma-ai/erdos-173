@@ -15,9 +15,9 @@ oriented as it is, so by part (i) of the eight-point configuration the coloring
 avoids the equilateral triangles of each of its side lengths that differs from
 another. By `two_scale` that is impossible for two different sides, so the
 triangle is equilateral, of the unique avoided side. Two such triangles are
-equilateral of the same side, hence congruent. A right triangle is not
-equilateral. Alternating half-open strips of width `√3/2` contain no
-monochromatic equilateral triangle of side one.
+equilateral of the same side, hence congruent, and a non-equilateral triangle,
+such as a right triangle, has a monochromatic copy. Alternating half-open strips
+of width `√3/2` contain no monochromatic equilateral triangle of side one.
 -/
 
 @[expose] public section
@@ -98,5 +98,16 @@ theorem equilateral_exception_proved : ∃ (c : ℝ² → Fin 2) (T : Triangle �
   ⟨stripColor, unitTriangle, by rw [dist_unitTriangle (by decide), dist_unitTriangle (by decide)],
     by rw [dist_unitTriangle (by decide), dist_unitTriangle (by decide)],
     not_hasMonochromaticCopy_strip⟩
+
+/-- A triangle without a monochromatic copy is equilateral, so a non-equilateral triangle
+has one. -/
+theorem non_equilateral_proved (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
+    (hT : ¬ (dist (T.points 0) (T.points 1) = dist (T.points 1) (T.points 2) ∧
+      dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0))) :
+    HasMonochromaticCopy c T := by
+  by_contra h
+  obtain ⟨-, e⟩ := equilateral_of_not_hasMonochromaticCopy c T h
+  exact hT ⟨(e 0 1 (by decide)).trans (e 1 2 (by decide)).symm,
+    (e 1 2 (by decide)).trans (e 2 0 (by decide)).symm⟩
 
 end Erdos173

@@ -5,7 +5,7 @@ public import Erdos173.FinalAssembly
 /-!
 # Proof of Erdős Problem 173
 
-Comparator checks the three theorems in this module against the Mathlib-only
+Comparator checks the four theorems in this module against the Mathlib-only
 statements in `Challenge.lean`.
 -/
 
@@ -46,5 +46,15 @@ theorem erdos_173.variants.equilateral_exception : ∃ (c : ℝ² → Fin 2) (T 
     dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0) ∧
     ¬ HasMonochromaticCopy c T :=
   equilateral_exception_proved
+
+/--
+Every non-equilateral triangle has a monochromatic congruent copy in every $2$-colouring of
+$\mathbb{R}^2$.
+-/
+theorem erdos_173.variants.non_equilateral (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
+    (hT : ¬ (dist (T.points 0) (T.points 1) = dist (T.points 1) (T.points 2) ∧
+      dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0))) :
+    HasMonochromaticCopy c T :=
+  non_equilateral_proved c T hT
 
 end Erdos173

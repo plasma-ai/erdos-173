@@ -8,8 +8,10 @@ public import Mathlib.Topology.MetricSpace.Congruence
 /-!
 # Erdős Problem 173: monochromatic triangles in two-colorings of the plane
 
-Erdős asked whether, in every two-coloring of the plane, every triangle with at
-most one exception has a monochromatic congruent copy.
+Erdős, Graham, Montgomery, Rothschild, Spencer and Straus conjectured that, in
+every two-coloring of the plane, every triangle except possibly one equilateral
+triangle has a monochromatic congruent copy. Thomas F. Bloom catalogs the
+question as [Erdős Problem 173](https://www.erdosproblems.com/173).
 
 **Claim.** In every two-coloring of the plane, any two triangles without a
 monochromatic congruent copy are congruent. Every non-equilateral triangle has a
@@ -18,15 +20,21 @@ is equilateral. Some coloring has such an exception: alternating half-open strip
 of suitable width contain no monochromatic copy of some equilateral triangle.
 
 `HasMonochromaticCopy`, `erdos_173`, `erdos_173.variants.right_triangle` and
-`erdos_173.variants.equilateral_exception` are copied verbatim from
-`formal-conjectures` (`FormalConjectures/ErdosProblems/173.lean`, commit
-`7db2ea3b91`), with its `ℝ²` notation for `EuclideanSpace ℝ (Fin 2)` declared
-locally. A triangle there is Mathlib's `Affine.Triangle`, whose vertices are
-affinely independent, and a copy may be reflected and relabelled. Thomas F.
-Bloom catalogs the question as
-[Erdős Problem 173](https://www.erdosproblems.com/173).
+`erdos_173.variants.equilateral_exception` are copied verbatim, apart from their
+category attributes, from `formal-conjectures`
+(`FormalConjectures/ErdosProblems/173.lean`, commit `7db2ea3b91`, Copyright 2026
+The Formal Conjectures Authors, under the Apache License 2.0), with its `ℝ²`
+notation for `EuclideanSpace ℝ (Fin 2)` declared locally.
+`erdos_173.variants.non_equilateral` is not from `formal-conjectures`: it states
+the claim that every non-equilateral triangle has a monochromatic copy,
+Conjecture 3 of *Euclidean Ramsey theorems, III*. A triangle here is Mathlib's
+`Affine.Triangle`, whose vertices are affinely independent, so collinear triples
+are not covered, and a copy may be reflected and relabelled.
 
-The three theorems below have deliberate proof holes. `Solution.lean` supplies
+[Sh76] L. E. Shader, *All right triangles are Ramsey in $E^2$!*, J. Combin.
+Theory Ser. A 20 (1976), 385–389.
+
+The four theorems below have deliberate proof holes. `Solution.lean` supplies
 their proofs, and Comparator checks them against these statements.
 -/
 
@@ -77,6 +85,17 @@ theorem erdos_173.variants.equilateral_exception : ∃ (c : ℝ² → Fin 2) (T 
     dist (T.points 0) (T.points 1) = dist (T.points 1) (T.points 2) ∧
     dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0) ∧
     ¬ HasMonochromaticCopy c T := by
+  sorry
+
+/--
+Every non-equilateral triangle has a monochromatic congruent copy in every $2$-colouring of
+$\mathbb{R}^2$. This is Conjecture 3 of Erdős, Graham, Montgomery, Rothschild, Spencer and
+Straus, for nondegenerate triangles.
+-/
+theorem erdos_173.variants.non_equilateral (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
+    (hT : ¬ (dist (T.points 0) (T.points 1) = dist (T.points 1) (T.points 2) ∧
+      dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0))) :
+    HasMonochromaticCopy c T := by
   sorry
 
 end Erdos173
