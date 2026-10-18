@@ -15,10 +15,10 @@ New in this repository. `algebraic_complex_iff_coordinates` and the countability
 openai/math, and `templateProperty_algebraic` adapts the proof of `uniform_selection` in
 its `OAI/Analysis/PlaneSpectrum/Selections.lean`.
 
-Two carriers for the spectral rigidity theorem: the source's own, the field of algebraic
-numbers, whose template property is the number-field general-position selection of the
-source's Lemma 3.4; and, for every real `x` given the template property, the algebraic
-closure of `ℚ(x)` in `ℂ`.
+Two carriers for the rigidity theorem for wild character laws: the source's own, the
+field of algebraic numbers, whose template property is the number-field general-position
+selection of the source's Lemma 3.4; and, for every real `x` given the template property,
+the algebraic closure of `ℚ(x)` in `ℂ`.
 -/
 
 @[expose] public section

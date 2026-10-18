@@ -13,8 +13,8 @@ public import Mathlib.Analysis.Real.Sqrt
 New in this repository; not part of openai/math.
 
 The source fixes its carrier, the field of algebraic numbers. This module states the
-properties of a carrier field `E ⊆ ℂ` that its spectral rigidity theorem uses, so that
-the theorem applies to the algebraic closure of `ℚ(x)` for every real `x`.
+properties of a carrier field `E ⊆ ℂ` that its rigidity theorem for wild character laws
+uses, so that the theorem applies to the algebraic closure of `ℚ(x)` for every real `x`.
 
 A carrier is a countable subfield `E` of `ℂ` that is relatively algebraically closed and
 is the complexification of its real slice `F`. Its unit circle has the *template
@@ -40,7 +40,7 @@ def TemplateProperty (E : Set ℂ) : Prop :=
         (1 : ℂ) ∈ Submodule.span ℚ ((fun s => j s * s) '' (S : Set ℂ)) ∧
         Complex.I ∈ Submodule.span ℚ ((fun s => j s * s) '' (S : Set ℂ))
 
-/-- A carrier for the spectral rigidity theorem. -/
+/-- A carrier for the rigidity theorem for wild character laws. -/
 class Carrier where
   /-- The complex carrier field. -/
   E : IntermediateField ℚ ℂ

@@ -12,9 +12,9 @@ public import OAI.Geometry.PlaneColoring.BorelTransfer
 Let `P` be the orthogonal projection onto the vectors continuous under translation, and
 `g = P s` the projected sign. The projection commutes with the contraction
 `z ↦ max (-1) (min 1 (Re z))`, so `g` is real with values in `[-1, 1]`. OpenAI's
-spectral rigidity theorem (`residual_fourier`) gives `⟪g, T_z g⟫ = ⟪s, T_z s⟫ = ρ(z)` for
-`z ≠ 0`. The orbit of `g` extends to a continuous field `G(y)` on `ℂ` with the same
-bounds.
+rigidity theorem for wild character laws (`residual_fourier`) gives
+`⟪g, T_z g⟫ = ⟪s, T_z s⟫ = ρ(z)` for `z ≠ 0`. The orbit of `g` extends to a
+continuous field `G(y)` on `ℂ` with the same bounds.
 
 For two colors on a triangle the monochromatic indicator is quadratic:
 `Q(a, b, c) = 1 + ab + ac + bc` is `4` on equal signs and `0` otherwise, and
@@ -195,7 +195,7 @@ lemma projected_rotation_fixed (b : K) :
     (Homeomorph.mulLeft₀ (kCoeff b) (kCoeff_ne_zero b)) (mul_zero _)
     (rotation_covariance R ω₀ b) _ (rotation_signVector R ω₀ b)
 
-/-- Spectral rigidity: away from zero, the projected sign has the sign's correlations. -/
+/-- Rigidity: away from zero, the projected sign has the sign's correlations. -/
 lemma projected_corr (z : E) (hz : z ≠ 0) :
     ⟪projected R ω₀, op (representation R ω₀) z (projected R ω₀)⟫_ℂ = (corr R ω₀ z : ℂ) := by
   have hb := residual_fourier (representation R ω₀) (rotation R ω₀) (rotation_covariance R ω₀)

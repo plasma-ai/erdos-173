@@ -13,17 +13,17 @@ Let `c` avoid the equilateral triangles of sides `1` and `x`, with `x` in the
 carrier `E`. Its restriction to `E` lies in the compact space of labelings of `E`
 with no monochromatic equilateral triangle of side `1` or `x`, which carries a
 probability measure invariant under translations by `E` and rotations by `K`.
-For the origin's sign `f`, OpenAI's spectral rigidity theorem gives
+For the origin's sign `f`, OpenAI's rigidity theorem for wild character laws gives
 `⟪f, T_z f⟫ = ⟪P f, T_z P f⟫` for `z ≠ 0`, where `P` projects onto the vectors
 continuous under translation.
 
 Avoidance makes the three pair correlations of every equilateral triangle of side
-`1` or `x` sum to `-1`, so the radial spectral measure of `P f` has
-`∫ J₀(t) dν = ∫ J₀(x t) dν = -1/3` with mass at most one, which the Bessel bound
-excludes when `x ≥ 3/2` or `x ≤ 2/3`. For two colors on a triangle the
-monochromatic indicator `(1 + ab + ac + bc)/4` is quadratic, so the projected
-field, sampled and thresholded, is a measurable coloring that weakly avoids both
-sides.
+`1` or `x` sum to `-1`. The spectral measure of `f` on the ordinary characters
+gives a radial measure `ν` of mass at most one with
+`∫ J₀(t) dν = ∫ J₀(x t) dν = -1/3`, which the Bessel bound excludes when
+`x ≥ 3/2` or `x ≤ 2/3`. For two colors on a triangle the monochromatic indicator
+`(1 + ab + ac + bc)/4` is quadratic, so the projected field, sampled and
+thresholded, is a measurable coloring that weakly avoids both sides.
 -/
 
 @[expose] public section

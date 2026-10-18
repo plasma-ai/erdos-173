@@ -11,10 +11,10 @@ public import OAI.Geometry.PlaneColoring.BorelTransfer
 
 The spectral measure of the sign vector lives on the dual `D` of the discrete carrier and
 is invariant under the rotations `K`. Its restriction off the ordinary characters `C` is
-wild, so by OpenAI's spectral rigidity theorem its Fourier coefficients vanish away from
-zero. Its restriction to `C` pulls back along the character map `j` to a finite measure
-`ν` on `ℂ` of mass at most `‖s‖² = 1`. Averaging over the circle, which `K` fills
-densely, turns its Fourier transform into `J₀`:
+wild, so by OpenAI's rigidity theorem for wild character laws its Fourier coefficients
+vanish away from zero. Its restriction to `C` pulls back along the character map `j` to
+a finite measure `ν` on `ℂ` of mass at most `‖s‖² = 1`. Averaging over the circle,
+which `K` fills densely, turns its Fourier transform into `J₀`:
 
 `ρ(z) = ∫ J₀(|z| |ξ|) dν(ξ)` for `z ≠ 0`.
 -/

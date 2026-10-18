@@ -17,9 +17,9 @@ forces the Cauchy transforms `a ↦ ℓ(b / (T - a))` to be rational, factors `�
 the finite-dimensional algebra `A / p(T) A`, and there contradicts the cover with
 Cayley transforms.
 
-By compactness of the space of choices (König's lemma) a failure of the template
-property with algebraic coefficients gives such a cover, and number-field general
-position turns algebraic coefficients into rational ones.
+By compactness of the space of choices, a failure of the template property with
+algebraic coefficients gives such a cover, and number-field general position turns
+algebraic coefficients into rational ones.
 -/
 
 @[expose] public section
