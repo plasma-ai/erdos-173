@@ -219,8 +219,8 @@ automation:
         divided into components developed by parallel agents against fixed
         intermediate statements, then merged and reviewed for consistency.
         Claude Code wrote Erdos173/, the two new carrier modules under OAI/,
-        and the port and generalization of the vendored modules. The
-        blueprint, blueprint/proof.md, was written with Claude Code from
+        and the port and generalization of the vendored modules. Claude Opus
+        5.5 in Claude Code wrote the blueprint, blueprint/proof.md, from
         Plasma AI's unpublished write-up of the proof.
     - method: "agent"
       prompting_notes: >-
