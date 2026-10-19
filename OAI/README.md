@@ -54,13 +54,18 @@ comment saying so:
 ## Changes
 
 Upstream pins Lean `v4.34.1` and Mathlib commit `d13f23b`. This project pins
-Lean and Mathlib `v4.35.0`. The 34 modules were changed in two ways.
+Lean and Mathlib `v4.35.0-rc3`. The 34 modules were changed in two ways.
 
 *Porting.* All 34 use the module system: each begins with `module`, imports
 with `public import`, and exposes its definitions with
 `@[expose] public section`. The nine that imported all of Mathlib import the
 Mathlib modules they use instead, and 14 others import Mathlib modules they use
-but no longer see, because a module sees only what its imports export. The
+but no longer see, because a module sees only what its imports export.
+`Analysis/PlaneSpectrum/ConditionalSpectrum.lean` and
+`Analysis/PlaneSpectrum/NumberFields.lean` import the star orders on `ℤ` and
+`ℚ` from `Mathlib.Data.Int.Star` and `Mathlib.Data.Rat.Star`, their modules in
+Mathlib `v4.35.0-rc3`; Mathlib `v4.35.0` moves them to
+`Mathlib.Algebra.Order.Star.Int` and `Mathlib.Algebra.Order.Star.Rat`. The
 port changed these proofs and statements:
 
 - Two `measurable_const.piecewise` steps became `Measurable.ite`, in

@@ -6,7 +6,7 @@ public import Mathlib.Algebra.CharP.IntermediateField
 public import Mathlib.Algebra.Order.Ring.Star
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.InnerProductSpace.Basic
-public import Mathlib.Algebra.Order.Star.Rat
+public import Mathlib.Data.Rat.Star
 public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 public import Mathlib.FieldTheory.Perfect
 public import Mathlib.RingTheory.Flat.TorsionFree
