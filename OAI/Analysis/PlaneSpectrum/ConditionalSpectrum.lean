@@ -6,7 +6,7 @@ public import OAI.Analysis.PlaneSpectrum.FourierTests
 public import OAI.Analysis.PlaneSpectrum.SmallArcs
 public import OAI.MeasureTheory.CompactFactors.ConditionalSelection
 public import Mathlib.Analysis.Complex.IsIntegral
-public import Mathlib.Algebra.Order.Star.Int
+public import Mathlib.Data.Int.Star
 
 @[expose] public section
 

@@ -159,9 +159,9 @@ related_formalizations:
     relationship: "adapts"
     note: >-
       Produced by an internal OpenAI model, as recorded upstream. 34 modules
-      are vendored under OAI/, ported to Lean v4.35.0 and the module system,
-      and generalized from the algebraic numbers to any carrier field with
-      the template property; OAI/README.md records the changes.
+      are vendored under OAI/, ported to Lean v4.35.0-rc3 and the module
+      system, and generalized from the algebraic numbers to any carrier field
+      with the template property; OAI/README.md records the changes.
       Erdos173/Template/CayleyEscape.lean, Erdos173/Transfer/LabelModel.lean
       and Erdos173/Transfer/Sample.lean adapt further upstream code.
 
@@ -265,7 +265,7 @@ review:
     that come from formal-conjectures against the problem and confirmed that
     they formalize it; the other two, non_equilateral and
     three_distinct_points, have not had that check. The full development
-    builds on Lean v4.35.0, and the five compared theorems depend only on
+    builds on Lean v4.35.0-rc3, and the five compared theorems depend only on
     propext, Classical.choice, and Quot.sound. Comparator, from the
     toolchain's lake comparator, accepts them against Challenge.lean with
     the Lean, NanoDa and con-ron kernels, and in its paranoid mode also with
