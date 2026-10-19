@@ -6,8 +6,7 @@ later sections follow the Lean development. Each section names the module and
 the Lean declarations it describes. The argument is Plasma AI's, apart from
 the inputs credited below. GPT-6 Astra in Codex and Claude Opus 5.5 in Claude
 Code found it. This document, written by Claude Opus 5.5 in Claude Code from
-Plasma AI's unpublished write-up of the proof, is its first public
-presentation.
+Plasma AI's write-up of the proof, is its first public presentation.
 
 **Conventions.** The plane is `ℂ`. A coloring is `c : ℂ → Fin 2`, with no
 regularity unless measurability is stated. A *template* `(0, a, b)` has the
@@ -598,11 +597,11 @@ maps `ℓ : ℂ → 𝔸`.
 
 ## 9. Relation to the original argument
 
-The original argument is Plasma AI's unpublished write-up; this blueprint is
-the first public presentation of the proof. The original proves the same
-conclusion by the same route: finite forcing, the carrier, the unit template,
-Haar rigidity, binary transfer, measurable exclusion and assembly. The Lean
-route makes these changes:
+The original argument is Plasma AI's write-up; this blueprint is the first
+public presentation of the proof. The original proves the same conclusion by
+the same route: finite forcing, the carrier, the unit template, Haar rigidity,
+binary transfer, measurable exclusion and assembly. The Lean route makes these
+changes:
 
 - **Scope.** The original argument treats triangles and collinear triples
   of distinct points alike. The `formal-conjectures` statements and

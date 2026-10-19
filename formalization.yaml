@@ -37,10 +37,9 @@ sources:
     note: >-
       The prose proof accompanying this repository, in blueprint/; not
       refereed. It is the first public presentation of the proof, which
-      Plasma AI's agent research process found (see automation); Plasma AI's
-      original write-up is unpublished. It follows the Lean development
-      module by module and records where the Lean route departs from the
-      original.
+      Plasma AI's agent research process found (see automation). It follows
+      the Lean development module by module and records where the Lean route
+      departs from Plasma AI's original write-up.
   - title: "Erdős Problem #173"
     authors: ["Thomas F. Bloom"]
     id: "https://www.erdosproblems.com/173"
@@ -228,7 +227,7 @@ automation:
         Claude Code wrote Erdos173/, the two new carrier modules under OAI/,
         and the port and generalization of the vendored modules. Claude Opus
         5.5 in Claude Code wrote the blueprint, blueprint/proof.md, from
-        Plasma AI's unpublished write-up of the proof.
+        Plasma AI's write-up of the proof.
     - method: "agent"
       prompting_notes: >-
         The 34 vendored modules under OAI/, about two-thirds of the Lean, and
