@@ -11,7 +11,8 @@ project:
     congruence, degenerate or not, has no monochromatic copy. Alternating
     strips show that one equilateral triangle can be missed. This answers
     Erdős Problem 173 as Bloom states it and settles the conjecture of Erdős,
-    Graham, Montgomery, Rothschild, Spencer and Straus, collinear triples
+    Graham, Montgomery, Rothschild, Spencer and Straus that every
+    non-equilateral triangle has a monochromatic copy, collinear triples
     included; it is new to our knowledge. The step from arbitrary to
     measurable colorings adapts OpenAI's rigidity theorem for wild character
     laws, extended here from the algebraic numbers to the algebraic closure of
@@ -124,7 +125,7 @@ sources:
   - title: "Euclidean Ramsey theory"
     authors: ["R. L. Graham"]
     id: "Handbook of Discrete and Computational Geometry, 3rd edition, Chapter 11, CRC Press (2017)"
-    type: "book chapter"
+    type: "book"
     location: "Conjectures 11.1.1 and 11.1.2"
     relationship: "background"
     note: >-
@@ -282,8 +283,11 @@ alignment:
       module: "Solution"
       status: "proved"
       note: >-
-        In every two-coloring of the plane, any two triangles without a
-        monochromatic congruent copy are congruent up to relabelling.
+        In every two-coloring of the plane, any two nondegenerate triangles
+        without a monochromatic congruent copy are congruent up to
+        relabelling. Degenerate (collinear) triples are covered by
+        erdos_173.variants.three_distinct_points, so together the two answer
+        the problem with degenerate triangles counted.
     - source: "Euclidean Ramsey theorems, III, Conjecture 2"
       lean: "Erdos173.erdos_173"
       module: "Solution"
