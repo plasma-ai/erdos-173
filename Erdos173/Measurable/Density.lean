@@ -135,7 +135,9 @@ theorem ae_densityZero {K : Set ℂ} (hK : MeasurableSet K) :
     congr 1
     rw [← ENNReal.ofReal_coe_nnreal, NNReal.coe_real_pi]
   have h1 := hP ⟨hρ, hρδ⟩
-  rw [ENNReal.div_le_iff (by rw [hball]; simp; positivity) (by rw [hball]; simp)] at h1
+  rw [ENNReal.div_le_iff
+    (by rw [hball]; simp only [ne_eq, ENNReal.ofReal_eq_zero, not_le]; positivity)
+    (by rw [hball]; simp)] at h1
   refine h1.trans ?_
   rw [hball, ← ENNReal.ofReal_mul (by positivity)]
   apply ENNReal.ofReal_le_ofReal

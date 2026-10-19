@@ -10,9 +10,11 @@ public import Mathlib.Analysis.Real.Sqrt
 /-!
 # Plane carriers
 
+New in this repository; not part of openai/math.
+
 The source fixes its carrier, the field of algebraic numbers. This module states the
-properties of a carrier field `E ⊆ ℂ` that its spectral rigidity theorem uses, so that
-the theorem applies to the algebraic closure of `ℚ(x)` for every real `x`.
+properties of a carrier field `E ⊆ ℂ` that its rigidity theorem for wild character laws
+uses, so that the theorem applies to the algebraic closure of `ℚ(x)` for every real `x`.
 
 A carrier is a countable subfield `E` of `ℂ` that is relatively algebraically closed and
 is the complexification of its real slice `F`. Its unit circle has the *template
@@ -38,22 +40,23 @@ def TemplateProperty (E : Set ℂ) : Prop :=
         (1 : ℂ) ∈ Submodule.span ℚ ((fun s => j s * s) '' (S : Set ℂ)) ∧
         Complex.I ∈ Submodule.span ℚ ((fun s => j s * s) '' (S : Set ℂ))
 
-/-- A carrier for the spectral rigidity theorem. -/
+/-- A carrier for the rigidity theorem for wild character laws. -/
 class Carrier where
   /-- The complex carrier field. -/
   E : IntermediateField ℚ ℂ
   /-- Its real slice. -/
   F : IntermediateField ℚ ℝ
+  /-- `E` is countable. -/
   countable : Countable E
+  /-- A complex number lies in `E` exactly when its real and imaginary parts lie in `F`. -/
   mem_iff : ∀ z : ℂ, z ∈ E ↔ z.re ∈ F ∧ z.im ∈ F
   /-- Every root in `ℂ` of a nonzero polynomial with coefficients in `E` lies in `E`. -/
   algClosed : ∀ p : Polynomial ℂ, p ≠ 0 → (∀ n, p.coeff n ∈ E) →
     ∀ z : ℂ, p.eval z = 0 → z ∈ E
+  /-- The unit circle of `E` has the template property. -/
   template : TemplateProperty (E : Set ℂ)
 
 namespace Carrier
-
-open scoped ComplexConjugate
 
 variable [Carrier]
 
@@ -62,19 +65,21 @@ variable [Carrier]
 The source's uses of algebraicity over `ℚ` are replaced by the following consequences
 of the carrier fields. -/
 
+/-- The real part of an element of `E` lies in `F`. -/
 theorem re_mem {z : ℂ} (hz : z ∈ E) : z.re ∈ F := ((mem_iff z).mp hz).1
 
+/-- The imaginary part of an element of `E` lies in `F`. -/
 theorem im_mem {z : ℂ} (hz : z ∈ E) : z.im ∈ F := ((mem_iff z).mp hz).2
 
+/-- An element of `F` lies in `E`. -/
 theorem ofReal_mem {t : ℝ} (ht : t ∈ F) : (t : ℂ) ∈ E :=
   (mem_iff _).mpr ⟨by simpa using ht, by simp⟩
 
+/-- `i` lies in `E`. -/
 theorem I_mem : Complex.I ∈ E :=
   (mem_iff _).mpr ⟨by simp, by simp⟩
 
-theorem conj_mem {z : ℂ} (hz : z ∈ E) : conj z ∈ E :=
-  (mem_iff _).mpr ⟨by simpa using re_mem hz, by simpa using F.neg_mem (im_mem hz)⟩
-
+/-- Rationals lie in `F`. -/
 theorem ratCast_mem (q : ℚ) : (q : ℝ) ∈ F := SubfieldClass.ratCast_mem F q
 
 /-- A root of an element of the carrier lies in the carrier. -/
@@ -95,6 +100,7 @@ theorem mem_of_pow_mem {w : ℂ} {n : ℕ} (hn : n ≠ 0) (hw : w ^ n ∈ E) : w
     · simp
   · simp
 
+/-- `F` is closed under square roots, with `√t = 0` for `t < 0`. -/
 theorem sqrt_mem {t : ℝ} (ht : t ∈ F) : Real.sqrt t ∈ F := by
   by_cases h : 0 ≤ t
   · have hc : ((Real.sqrt t : ℝ) : ℂ) ∈ E := by
@@ -105,6 +111,7 @@ theorem sqrt_mem {t : ℝ} (ht : t ∈ F) : Real.sqrt t ∈ F := by
   · rw [Real.sqrt_eq_zero_of_nonpos (le_of_not_ge h)]
     exact F.zero_mem
 
+/-- The modulus of an element of `E` lies in `F`. -/
 theorem norm_mem {z : ℂ} (hz : z ∈ E) : ‖z‖ ∈ F := by
   have h : ‖z‖ = Real.sqrt (z.re * z.re + z.im * z.im) := by
     rw [← Complex.normSq_apply, Complex.normSq_eq_norm_sq, Real.sqrt_sq (norm_nonneg z)]
@@ -112,6 +119,7 @@ theorem norm_mem {z : ℂ} (hz : z ∈ E) : ‖z‖ ∈ F := by
   exact sqrt_mem (F.add_mem (F.mul_mem (re_mem hz) (re_mem hz))
     (F.mul_mem (im_mem hz) (im_mem hz)))
 
+/-- The real slice is countable. -/
 theorem countable_F : Countable F := by
   have := countable
   let f : F → E := fun t => ⟨((t : ℝ) : ℂ), ofReal_mem t.property⟩

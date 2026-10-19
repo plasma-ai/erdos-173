@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import Mathlib.MeasureTheory.Function.LpSpace.InfiniteSum
 public import OAI.Analysis.PlaneSpectrum.Ergodicity
 public import OAI.Geometry.PlaneColoring.Coloring

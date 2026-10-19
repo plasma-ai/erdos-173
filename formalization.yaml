@@ -4,14 +4,20 @@ version: "v0.4"
 project:
   name: "Erdős Problem 173: monochromatic triangles in two-colorings of the plane"
   description: >-
-    A Lean proof that in every two-coloring of the plane every non-equilateral
-    triangle has a monochromatic congruent copy and at most one equilateral
-    side length is missed, so at most one triangle up to congruence has no
-    monochromatic copy. This answers Erdős Problem 173 and is new to our
-    knowledge. The step from
-    arbitrary to measurable colorings uses OpenAI's spectral rigidity
-    theorem, extended here from the algebraic numbers to the algebraic
-    closure of ℚ(x) for every real x.
+    A Lean proof that in every two-coloring of the plane any three distinct
+    points that are not the vertices of an equilateral triangle, collinear
+    points included, have a monochromatic congruent copy and at most one
+    equilateral side length is missed, so at most one triangle up to
+    congruence, degenerate or not, has no monochromatic copy. Alternating
+    strips show that one equilateral triangle can be missed. This answers
+    Erdős Problem 173 as Bloom states it and settles the conjecture of Erdős,
+    Graham, Montgomery, Rothschild, Spencer and Straus that every
+    non-equilateral triangle has a monochromatic copy, collinear triples
+    included; it is new to our knowledge. The step from arbitrary to
+    measurable colorings adapts OpenAI's rigidity theorem for wild character
+    laws, extended here from the algebraic numbers to the algebraic closure of
+    ℚ(x) in ℂ for every real x, and its transfer from proper to weak
+    measurable colorings.
   authors:
     - "Jacob Parish"
   license: "Apache-2.0"
@@ -20,58 +26,95 @@ project:
 
 classification:
   arxiv: ["math.CO", "math.MG"]
-  msc2020: ["05D10", "52C10"]
+  msc2020: ["05D10", "52C10", "43A35", "37A15", "33C10", "28A75"]
 
 sources:
-  - title: "Euclidean Ramsey theorems, III"
-    authors: ["P. Erdős", "R. L. Graham", "P. Montgomery", "B. L. Rothschild", "J. Spencer", "E. G. Straus"]
-    id: "Infinite and Finite Sets (Keszthely 1973), Colloq. Math. Soc. János Bolyai 10 (1975), 559–583"
-    type: "paper"
-    relationship: "formalizes"
-    note: >-
-      Source of the conjecture that every non-equilateral triangle has a
-      monochromatic copy in every two-coloring of the plane, and of the
-      eight-point configuration reducing it to equilateral triangles. To our
-      knowledge the conjecture is proved here for the first time, by a
-      targeted search on 2026-10-17 recorded in the README.
-  - title: "Monochromatic triangles in two-colorings of the plane (blueprint)"
+  - title: "Every two-coloring of the plane misses at most one triangle, which is equilateral"
     authors: ["Plasma AI"]
     id: "https://github.com/plasma-ai/erdos-173/blob/main/blueprint/proof.md"
     type: "original-proof"
-    relationship: "formalizes"
+    relationship: "other"
     note: >-
       The prose proof accompanying this repository, in blueprint/; not
-      refereed. It follows the Lean development module by module.
+      refereed. It is the first public presentation of the proof, which
+      Plasma AI's agent research process found (see automation); Plasma AI's
+      original write-up is unpublished. It follows the Lean development
+      module by module and records where the Lean route departs from the
+      original.
   - title: "Erdős Problem #173"
     authors: ["Thomas F. Bloom"]
     id: "https://www.erdosproblems.com/173"
     relationship: "background"
     note: >-
-      Bloom's catalog entry supplies the problem number and statement.
+      Accessed 2026-10-17, when the problem was listed as open. Bloom's
+      catalog entry supplies the problem number and statement.
+  - title: "Old and new problems and results in combinatorial number theory: van der Waerden's theorem and related topics"
+    authors: ["P. Erdős", "R. L. Graham"]
+    id: "L'Enseignement Mathématique (2) 25 (1979), 325–344"
+    type: "paper"
+    location: "p. 330"
+    relationship: "background"
+    note: >-
+      The source of the problem that Bloom cites. It asks for more: that a
+      single class of every two-coloring of the plane contain copies of all
+      three-point sets with the possible exception of one equilateral
+      triangle. That stronger form is not addressed here.
+  - title: "Euclidean Ramsey theorems. I"
+    authors: ["P. Erdős", "R. L. Graham", "P. Montgomery", "B. L. Rothschild", "J. Spencer", "E. G. Straus"]
+    id: "https://doi.org/10.1016/0097-3165(73)90011-3"
+    type: "paper"
+    location: "pp. 342, 347"
+    relationship: "other"
+    note: >-
+      First states the conjecture (p. 347), in two clauses: every
+      non-equilateral triangle has a monochromatic copy in every
+      two-coloring of the plane, and a coloring missing the equilateral
+      triangle of one side has those of every other side. Its strip coloring
+      (p. 342) is the coloring that the proof of equilateral_exception uses.
+  - title: "Euclidean Ramsey theorems, III"
+    authors: ["P. Erdős", "R. L. Graham", "P. Montgomery", "B. L. Rothschild", "J. Spencer", "E. G. Straus"]
+    id: "Infinite and Finite Sets (Keszthely 1973), Colloq. Math. Soc. János Bolyai 10 (1975), 559–583"
+    type: "paper"
+    location: "pp. 560, 563–564"
+    relationship: "other"
+    note: >-
+      Restates the conjecture as Conjectures 2 and 3 (p. 560), in a form that
+      includes collinear triples. Its Theorem 1, through the eight-point
+      configuration, reduces the conjecture to equilateral triangles; that
+      configuration is an ingredient, formalized here in the form of Jelínek
+      et al. below. The recorded result proves Conjecture 2, and Conjecture 3
+      with collinear triples included; this source does not prove them.
   - title: "Formal Conjectures: ErdosProblems/173.lean"
     authors: ["The Formal Conjectures Authors"]
     id: "https://github.com/google-deepmind/formal-conjectures/blob/7db2ea3b91bfbd0ab620215163e6c488bbb916d5/FormalConjectures/ErdosProblems/173.lean"
     relationship: "background"
     note: >-
-      HasMonochromaticCopy and the three compared statements in
+      HasMonochromaticCopy and three of the five compared statements in
       Challenge.lean are copied verbatim from this file at the stated commit,
-      with its ℝ² notation declared locally.
+      apart from their category attributes, with its ℝ² notation declared
+      locally. The other two, non_equilateral and three_distinct_points, are
+      not from this file.
   - title: "All right triangles are Ramsey in E²!"
     authors: ["Leslie E. Shader"]
     id: "https://doi.org/10.1016/0097-3165(76)90036-4"
     type: "paper"
-    relationship: "background"
+    relationship: "other"
     note: >-
       Proves the right-triangle case, which the variant right_triangle
-      states; it is derived here from the main result.
+      states; it is derived here from the main result, not from this proof.
   - title: "Monochromatic triangles in two-colored plane"
     authors: ["Vít Jelínek", "Jan Kynčl", "Rudolf Stolař", "Tomáš Valla"]
     id: "https://doi.org/10.1007/s00493-009-2291-y"
     type: "paper"
-    relationship: "adapts"
+    relationship: "other"
     note: >-
-      Lemma 1.3, the eight-point configuration taken from Erdős et al., is
-      formalized in coordinates, in pointwise and positive-measure forms.
+      An ingredient. Lemma 1.3, the eight-point configuration taken from
+      Erdős et al., is formalized in coordinates: part (i) pointwise and
+      part (ii) in a positive-measure form. What is derived from it is the
+      contrapositive of part (i), the direction the proof uses: every side of
+      three distinct points without a monochromatic copy, collinear or not,
+      is the side of an equilateral triangle without one. The paper proves
+      the conjecture only for special classes of colorings.
   - title: "Any two-coloring of the plane contains monochromatic 3-term arithmetic progressions"
     authors: ["Gabriel Currier", "Kenneth Moore", "Chi Hoi Yip"]
     id: "https://doi.org/10.1007/s00493-024-00122-2"
@@ -79,27 +122,64 @@ sources:
     relationship: "background"
     note: >-
       Previous partial results on the problem.
+  - title: "Euclidean Ramsey theory"
+    authors: ["R. L. Graham"]
+    id: "Handbook of Discrete and Computational Geometry, 3rd edition, Chapter 11, CRC Press (2017)"
+    type: "book"
+    location: "Conjectures 11.1.1 and 11.1.2"
+    relationship: "background"
+    note: >-
+      States the conjecture as Conjecture 11.1.1, proved here. The stronger
+      Conjecture 11.1.2, that a single class of every two-coloring contains
+      every triangle with the possible exception of one equilateral triangle,
+      is not addressed.
   - title: "The Euclidean plane is not five-colorable"
     authors: ["OpenAI"]
-    id: "https://github.com/openai/math"
+    id: "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf"
     type: "paper"
+    relationship: "other"
+    note: >-
+      An unrefereed preprint produced by an OpenAI model. Its rigidity theorem
+      for wild character laws (Theorem 2.3) and its transfer from proper to
+      weak measurable colorings (Lemma 4.1 and Proposition 4.2) are
+      ingredients, used through their Lean formalization (see
+      related_formalizations); Theorem 2.3 is extended here from the
+      algebraic numbers to any carrier field with the template property. Its
+      number-field general position (Lemma 3.4) and algebraic Cayley lemmas
+      are also used. The recorded result is Erdős Problem 173, which this
+      source does not address.
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/7db2ea3b91bfbd0ab620215163e6c488bbb916d5/FormalConjectures/ErdosProblems/173.lean"
+    relationship: "builds-on"
+    note: >-
+      Statement only. HasMonochromaticCopy and three of the five compared
+      statements are copied verbatim, without the category attributes.
+  - id: "https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean"
     relationship: "adapts"
     note: >-
-      Supplies the spectral rigidity theorem and the invariant-mean and
-      continuous-factor inputs of the step from arbitrary to measurable
-      colorings. The 34 vendored modules under OAI/ are ported from the lean/
-      directory at commit adc7f1241b42e322a6451854ab7e4b4c146bf78a and
-      generalized from the algebraic numbers to any carrier field with the
-      template property.
+      Produced by an internal OpenAI model, as recorded upstream. 34 modules
+      are vendored under OAI/, ported to Lean v4.35.0 and the module system,
+      and generalized from the algebraic numbers to any carrier field with
+      the template property; OAI/README.md records the changes.
+      Erdos173/Template/CayleyEscape.lean, Erdos173/Transfer/LabelModel.lean
+      and Erdos173/Transfer/Sample.lean adapt further upstream code.
 
 status:
   scope: >-
-    Comparator checks the three formal-conjectures theorems for Erdős Problem
-    173: any two triangles without a monochromatic congruent copy in a
-    two-coloring of the plane are congruent; every right triangle has a
-    monochromatic copy; and some two-coloring misses an equilateral triangle.
-    The development also proves that every non-equilateral triangle has a
-    monochromatic copy. Triangles in the formal statement are nondegenerate.
+    Comparator checks five theorems, with no hypotheses beyond their
+    statements: any two triangles without a monochromatic congruent copy in a
+    two-coloring of the plane are congruent (erdos_173); every right triangle
+    has a monochromatic copy (erdos_173.variants.right_triangle); some
+    two-coloring misses an equilateral triangle
+    (erdos_173.variants.equilateral_exception); every non-equilateral
+    triangle has a monochromatic copy (erdos_173.variants.non_equilateral);
+    and any three distinct points that are not the vertices of an
+    equilateral triangle, collinear points included, have a monochromatic
+    copy (erdos_173.variants.three_distinct_points). The first three are the
+    formal-conjectures statements; the last two are not. Triangles in the
+    first four are nondegenerate; three_distinct_points is stated for any
+    three distinct points, so it covers degenerate (collinear) triangles too.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Quot.sound", "Classical.choice"]
@@ -107,34 +187,93 @@ status:
 automation:
   methods:
     - method: "agent"
+      models: ["gpt-6-astra"]
+      framework: "Codex"
+      tool_setup: >-
+        Unattended research runs over the problem's sources and Plasma AI's
+        research notes, without Lean.
+      prompting_notes: >-
+        The runs, on 2026-10-16 and 2026-10-17, asked for a full solution of
+        Erdős Problem 173, with GPT-6 Astra and Claude Opus 5.5 working in
+        alternating steps over two rounds. The starting route came from an
+        earlier planning step, in which a Claude Opus 5.5 agent read OpenAI's
+        paper and proposed adapting its transfer from arbitrary to measurable
+        colorings to the equilateral triangles of sides 1 and x; Plasma AI's
+        research brief for the problem carried it forward. GPT-6 Astra
+        prepared each round, attacked the open steps and recorded the results.
+        Among them, it proved the unit-template theorem for the algebraic
+        closure of ℚ(x) and the extension of the rigidity theorem for wild
+        character laws to that field. Fresh GPT-6 Astra contexts then reviewed
+        the argument and graded the review (see review).
+    - method: "agent"
       models: ["claude-opus-5-5"]
       framework: "Claude Code"
-      tool_setup: "Lean 4.35.0, Mathlib, Lake, and the lean-lsp MCP server."
+      tool_setup: >-
+        The same research runs, in the steps that propose and develop
+        constructions, without Lean.
       prompting_notes: >-
-        Human direction covered the target statement, the use of the
-        formal-conjectures statement and the vendored openai/math
+        Among its results, Claude Opus 5.5 proved the circle exclusion: no
+        measurable coloring weakly avoids the equilateral triangles of sides
+        1 and x for any x ≠ 1.
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "Lean 4.35.0, Mathlib, Lake, Comparator, and the lean-lsp MCP server."
+      prompting_notes: >-
+        Formalization. Human direction covered the target statement, the use
+        of the formal-conjectures statement and the vendored openai/math
         formalization, and the publication layout. The formalization was
         divided into components developed by parallel agents against fixed
         intermediate statements, then merged and reviewed for consistency.
+        Claude Code wrote Erdos173/, the two new carrier modules under OAI/,
+        and the port and generalization of the vendored modules. Claude Opus
+        5.5 in Claude Code wrote the blueprint, blueprint/proof.md, from
+        Plasma AI's unpublished write-up of the proof.
+    - method: "agent"
+      prompting_notes: >-
+        The 34 vendored modules under OAI/, about two-thirds of the Lean, and
+        the upstream code adapted in Erdos173/Template/CayleyEscape.lean,
+        Erdos173/Transfer/LabelModel.lean and Erdos173/Transfer/Sample.lean
+        were produced by an internal OpenAI model for openai/math, as
+        recorded upstream, where their review status is unchecked.
   notes: >-
+    GPT-6 Astra in Codex and Claude Opus 5.5 in Claude Code found the proof.
     Claude Opus 5.5 produced the Lean formalization in Claude Code under
-    human direction, following a proof written up by Plasma AI.
+    human direction. The vendored OAI library, about two-thirds of the
+    Lean, was produced by an internal OpenAI model, as recorded upstream.
 
 fidelity:
   divergences: >-
-    No known divergence from the formal-conjectures statement, which is
-    copied verbatim. That statement uses Mathlib's Affine.Triangle, whose
-    vertices are affinely independent, so degenerate triples are not part of
-    the compared statements. Copies may be reflected and relabelled.
+    The compared statements are formal-conjectures' Erdős Problem 173, copied
+    verbatim apart from the category attributes, together with non_equilateral
+    and three_distinct_points, which state Conjecture 3 of Euclidean Ramsey
+    theorems, III. The formal-conjectures statements and non_equilateral use
+    Mathlib's Affine.Triangle, whose vertices are affinely independent;
+    three_distinct_points is stated for any three distinct points, so the
+    collinear triples that the conjecture of Erdős, Graham, Montgomery,
+    Rothschild, Spencer and Straus counts as triangles are compared too.
+    Copies may be reflected and relabelled, as in that conjecture. The
+    single-class form of Erdős and Graham (1979) is not addressed. The Lean
+    proof follows the route of the blueprint, which records where it departs
+    from the original argument.
 
 review:
-  status: ""
+  status: "self-assessed"
   reviewers: []
   notes: >-
-    The full development builds on Lean v4.35.0, and the three compared
-    theorems depend only on propext, Classical.choice, and Quot.sound.
-    Comparator has not yet been run.
-    No independent review of the formalization has been recorded.
+    The human project lead checked the three statements in Challenge.lean
+    that come from formal-conjectures against the problem and confirmed that
+    they formalize it; the other two, non_equilateral and
+    three_distinct_points, have not had that check. The full development
+    builds on Lean v4.35.0, and the five compared theorems depend only on
+    propext, Classical.choice, and Quot.sound. Comparator, from the
+    toolchain's lake comparator, accepts them against Challenge.lean with
+    the Lean, NanoDa and con-ron kernels, and in its paranoid mode also with
+    lean4lean and con-leche. It ran on macOS without its bwrap sandbox. An
+    internal independent review and a separate grade, each by GPT-6 Astra in
+    Codex, passed the informal argument, collinear triples included; they
+    did not cover the blueprint or the Lean. No independent review of the
+    formalization has been recorded.
 
 alignment:
   namespace: "Erdos173"
@@ -144,8 +283,19 @@ alignment:
       module: "Solution"
       status: "proved"
       note: >-
-        In every two-coloring of the plane, any two triangles without a
-        monochromatic congruent copy are congruent up to relabelling.
+        In every two-coloring of the plane, any two nondegenerate triangles
+        without a monochromatic congruent copy are congruent up to
+        relabelling. Degenerate (collinear) triples are covered by
+        erdos_173.variants.three_distinct_points, so together the two answer
+        the problem with degenerate triangles counted.
+    - source: "Euclidean Ramsey theorems, III, Conjecture 2"
+      lean: "Erdos173.erdos_173"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        A two-coloring of the plane that misses the monochromatic equilateral
+        triangles of one side has those of every other side, since
+        equilateral triangles of different sides are not congruent.
     - source: "Shader's theorem on right triangles"
       lean: "Erdos173.erdos_173.variants.right_triangle"
       module: "Solution"
@@ -158,7 +308,26 @@ alignment:
       module: "Solution"
       status: "proved"
       note: >-
-        Alternating half-open strips of width √3/2 contain no monochromatic
-        equilateral triangle of side one.
+        Some two-coloring of the plane has no monochromatic congruent copy of
+        some equilateral triangle; the proof uses alternating half-open
+        strips of width √3/2 and side one (Euclidean Ramsey theorems, I,
+        p. 342).
+    - source: "Euclidean Ramsey theorems, III, Conjecture 3, nondegenerate triangles"
+      lean: "Erdos173.erdos_173.variants.non_equilateral"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Every nondegenerate non-equilateral triangle has a monochromatic
+        congruent copy in every two-coloring of the plane.
+    - source: "Euclidean Ramsey theorems, III, Conjecture 3"
+      lean: "Erdos173.erdos_173.variants.three_distinct_points"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Any three distinct points of the plane that are not the vertices of
+        an equilateral triangle, collinear points included, have a
+        monochromatic congruent copy in every two-coloring of the plane.
+        Three distinct collinear points never have equal pairwise distances,
+        so every degenerate triangle is covered.
 
 acknowledgements: "Mathlib, formal-conjectures, OpenAI's openai/math formalization, and the authors of the cited mathematical sources."

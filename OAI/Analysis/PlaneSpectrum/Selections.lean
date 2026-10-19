@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import OAI.Analysis.PlaneSpectrum.Carrier
 public import OAI.Analysis.PlaneSpectrum.NumberFields
 public import Mathlib.Combinatorics.Pigeonhole
@@ -180,7 +182,8 @@ lemma uniform_selection (Q : Finset ℂ)
     exact (hab i).2.2
 
 /-- Uniform integral spanning selections extracted from a syndetic cover of a set of units
-with the template property, in place of the number-field selection of `uniform_selection`. -/
+with the template property, in place of the number-field selection of `uniform_selection`.
+New in this repository. -/
 lemma uniform_selection_of_template (E : Set ℂ) (hE : PlaneFiveColor.Spectral.TemplateProperty E)
     (hEmul : ∀ a ∈ E, ∀ b ∈ E, a*b ∈ E) (Q : Finset ℂ)
     (hQn : ∀ q ∈ Q, ‖q‖ = 1) (hQa : ∀ q ∈ Q, q ∈ E)

@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import Erdos173.Transfer.LabelModel
 public import OAI.Analysis.PlaneSpectrum.Ergodicity
 public import OAI.Geometry.PlaneColoring.BorelTransfer
@@ -10,9 +12,9 @@ public import OAI.Geometry.PlaneColoring.BorelTransfer
 Let `P` be the orthogonal projection onto the vectors continuous under translation, and
 `g = P s` the projected sign. The projection commutes with the contraction
 `z ↦ max (-1) (min 1 (Re z))`, so `g` is real with values in `[-1, 1]`. OpenAI's
-spectral rigidity theorem (`residual_fourier`) gives `⟪g, T_z g⟫ = ⟪s, T_z s⟫ = ρ(z)` for
-`z ≠ 0`. The orbit of `g` extends to a continuous field `G(y)` on `ℂ` with the same
-bounds.
+rigidity theorem for wild character laws (`residual_fourier`) gives
+`⟪g, T_z g⟫ = ⟪s, T_z s⟫ = ρ(z)` for `z ≠ 0`. The orbit of `g` extends to a
+continuous field `G(y)` on `ℂ` with the same bounds.
 
 For two colors on a triangle the monochromatic indicator is quadratic:
 `Q(a, b, c) = 1 + ab + ac + bc` is `4` on equal signs and `0` otherwise, and
@@ -55,6 +57,7 @@ lemma qform_nonneg {a b c : ℝ} (ha : -1 ≤ a ∧ a ≤ 1) (hb : -1 ≤ b ∧ 
 def threshold (t : ℝ) : Fin 2 := if 0 ≤ t then 0 else 1
 
 omit [Carrier] in
+/-- Thresholding is measurable. -/
 lemma measurable_threshold : Measurable threshold :=
   Measurable.ite measurableSet_Ici measurable_const measurable_const
 
@@ -109,6 +112,7 @@ lemma integral_qform {X : Type*} [MeasurableSpace X] (μ : Measure X) [IsProbabi
 def clampSign (z : ℂ) : ℂ := (max (-1) (min 1 z.re) : ℝ)
 
 omit [Carrier] in
+/-- The clamp is `1`-Lipschitz. -/
 lemma lipschitzWith_clampSign : LipschitzWith 1 clampSign := by
   have hr : LipschitzWith 1 (fun z : ℂ => z.re) := by
     apply LipschitzWith.of_dist_le_mul
@@ -120,6 +124,7 @@ lemma lipschitzWith_clampSign : LipschitzWith 1 clampSign := by
     Complex.isometry_ofReal.lipschitzWith.comp ((hr.const_min 1).const_max (-1))
 
 omit [Carrier] in
+/-- The clamp fixes `0`. -/
 @[simp] lemma clampSign_zero : clampSign 0 = 0 := by simp [clampSign]
 
 omit [Carrier] in
@@ -139,6 +144,7 @@ lemma clampSign_eq {z : ℂ} (hz : z.im = 0 ∧ -1 ≤ z.re ∧ z.re ≤ 1) : cl
 
 variable (R : Set E) (ω₀ : Space R)
 
+/-- The continuous vectors form a complete subspace. -/
 instance continuous_complete : CompleteSpace (space (A := E) (representation R ω₀)) :=
   (isClosed_space (A := E) (representation R ω₀)).completeSpace_coe
 
@@ -189,7 +195,7 @@ lemma projected_rotation_fixed (b : K) :
     (Homeomorph.mulLeft₀ (kCoeff b) (kCoeff_ne_zero b)) (mul_zero _)
     (rotation_covariance R ω₀ b) _ (rotation_signVector R ω₀ b)
 
-/-- Spectral rigidity: away from zero, the projected sign has the sign's correlations. -/
+/-- Rigidity: away from zero, the projected sign has the sign's correlations. -/
 lemma projected_corr (z : E) (hz : z ≠ 0) :
     ⟪projected R ω₀, op (representation R ω₀) z (projected R ω₀)⟫_ℂ = (corr R ω₀ z : ℂ) := by
   have hb := residual_fourier (representation R ω₀) (rotation R ω₀) (rotation_covariance R ω₀)

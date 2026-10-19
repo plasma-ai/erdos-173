@@ -88,12 +88,19 @@ structure CauchyFrame where
   p : Q → Fin n → Fin d → 𝔸[X]
   /-- The units on which the cover acts. -/
   U : Set ℂ
+  /-- `T` has modulus one. -/
   norm_T : ‖T‖ = 1
+  /-- The common denominator is nonzero. -/
   κ_ne : κ ≠ 0
+  /-- The coordinates: `κ(T) q s_k = ∑_l p_{qkl}(T) b_l`. -/
   coord : ∀ (j : Q) k, aeval T κ * ((j : ℂ) * s k) = ∑ l, aeval T (p j k l) * b l
+  /-- For each `q`, any `d` coordinate rows `p_{qk}` form a matrix of nonzero determinant. -/
   det_ne : ∀ (j : Q) (e : Fin d ↪ Fin n), (Matrix.of fun i l => p j (e i) l).det ≠ 0
+  /-- There are more than `|Q|(d - 1)` units `s_k`. -/
   card_lt : Fintype.card Q * (d - 1) < n
+  /-- The units `s_k` lie in `U`. -/
   s_mem : ∀ k, s k ∈ U
+  /-- `U` is stable under the multipliers `a (1 + h/(T - a))` with `(a, h) ∈ Ω`. -/
   mul_mem : ∀ z ∈ Ω, ∀ u ∈ U, u * ((z 0 : ℂ) * (1 + (z 1 : ℂ) / (T - z 0))) ∈ U
 
 namespace CauchyFrame
@@ -436,7 +443,7 @@ lemma double_branch {μ : ℂ →ₗ[𝔸] 𝔸} (hcov : 𝔣.Covered μ) {β γ
     rw [he] at hμ
     simp only [map_add, map_sub, map_smul, smul_eq_mul] at hμ
     have h0 : w (.inl 0) * w (.inr 0) ≠ 0 := mul_ne_zero hw1.1.1 hw2.1.1
-    show Ex ⟨q, hq⟩ w = 0
+    change Ex ⟨q, hq⟩ w = 0
     apply (mul_eq_zero.mp _).resolve_left h0
     rw [← hμ]
     simp only [Ex, L, H]

@@ -10,14 +10,16 @@ public import Mathlib.Geometry.Euclidean.Angle.Unoriented.RightAngle
 /-!
 # Assembly of Erdős Problem 173
 
-Identify `ℝ²` with `ℂ`. A triangle without a monochromatic copy has none
-oriented as it is, so by part (i) of the eight-point configuration the coloring
-avoids the equilateral triangles of each of its side lengths that differs from
-another. By `two_scale` that is impossible for two different sides, so the
-triangle is equilateral, of the unique avoided side. Two such triangles are
-equilateral of the same side, hence congruent. A right triangle is not
-equilateral. Alternating half-open strips of width `√3/2` contain no
-monochromatic equilateral triangle of side one.
+Identify `ℝ²` with `ℂ`. Three distinct points, collinear or not, without a
+monochromatic copy have none oriented as they are, so by part (i) of the
+eight-point configuration the coloring avoids the equilateral triangles of each
+of their side lengths. By `two_scale` that is impossible for two different
+sides, so the points are equilateral, of the unique avoided side. Two triangles
+without a monochromatic copy are therefore equilateral of the same side, hence
+congruent, and three distinct points that are not equilateral, such as the
+vertices of a right triangle or any three collinear points, have a monochromatic
+copy. Alternating half-open strips of width `√3/2` contain no monochromatic
+equilateral triangle of side one.
 -/
 
 @[expose] public section
@@ -32,36 +34,50 @@ open Plane Strips
 /-- The Euclidean plane, as in `formal-conjectures`. -/
 local notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-/-- A triangle without a monochromatic copy has every side avoided, as an
-equilateral side of the transported coloring. -/
-lemma avoidsEq_side (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²) (h : ¬ HasMonochromaticCopy c T)
-    (σ : Equiv.Perm (Fin 3)) : AvoidsEq (c ∘ toC.symm) (side T σ) := by
+/-- Three distinct points with no monochromatic image under a motion have every side
+avoided, as an equilateral side of the transported coloring. -/
+lemma avoidsEq_side (c : ℝ² → Fin 2) {v : Fin 3 → ℝ²} (hv : Function.Injective v)
+    (h : ¬ ∃ k t : ℂ, ‖k‖ = 1 ∧ ∃ i, ∀ j, c (pMotion k t (v j)) = i)
+    (σ : Equiv.Perm (Fin 3)) : AvoidsEq (c ∘ toC.symm) (side v σ) := by
   by_contra hne
-  have := not_avoids_of_not_avoidsEq (z := apex T σ) _ hne
+  have := not_avoids_of_not_avoidsEq (z := apex v σ) _ hne
   simp only [Avoids, not_forall, not_not] at this
   obtain ⟨p, u, hu, hm⟩ := this
-  exact h (hasMonochromaticCopy_of_monoCopy c T σ hu hm)
+  exact h (exists_motion_of_monoCopy c hv σ hu hm)
 
-/-- A triangle without a monochromatic copy is equilateral, and its side is avoided. -/
-theorem equilateral_of_not_hasMonochromaticCopy (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
-    (h : ¬ HasMonochromaticCopy c T) :
-    AvoidsEq (c ∘ toC.symm) (dist (T.points 0) (T.points 1)) ∧
-      ∀ i j, i ≠ j → dist (T.points i) (T.points j) = dist (T.points 0) (T.points 1) := by
-  have h₀ := avoidsEq_side c T h 1
-  have h₁ := avoidsEq_side c T h (finRotate 3)
-  have h₂ := avoidsEq_side c T h (finRotate 3).symm
-  have e₁ := two_scale _ (side_pos T 1) (side_pos T _) h₀ h₁
-  have e₂ := two_scale _ (side_pos T 1) (side_pos T _) h₀ h₂
-  have s₀ : side T 1 = dist (T.points 0) (T.points 1) := rfl
-  have s₁ : side T (finRotate 3) = dist (T.points 1) (T.points 2) := rfl
-  have s₂ : side T (finRotate 3).symm = dist (T.points 2) (T.points 0) := rfl
+/-- Three distinct points with no monochromatic image under a motion are equilateral, and
+their side is avoided. -/
+theorem equilateral_of_not_exists_motion (c : ℝ² → Fin 2) {v : Fin 3 → ℝ²}
+    (hv : Function.Injective v)
+    (h : ¬ ∃ k t : ℂ, ‖k‖ = 1 ∧ ∃ i, ∀ j, c (pMotion k t (v j)) = i) :
+    AvoidsEq (c ∘ toC.symm) (dist (v 0) (v 1)) ∧
+      ∀ i j, i ≠ j → dist (v i) (v j) = dist (v 0) (v 1) := by
+  have h₀ := avoidsEq_side c hv h 1
+  have h₁ := avoidsEq_side c hv h (finRotate 3)
+  have h₂ := avoidsEq_side c hv h (finRotate 3).symm
+  have e₁ := two_scale _ (side_pos hv 1) (side_pos hv _) h₀ h₁
+  have e₂ := two_scale _ (side_pos hv 1) (side_pos hv _) h₀ h₂
+  have s₀ : side v 1 = dist (v 0) (v 1) := rfl
+  have s₁ : side v (finRotate 3) = dist (v 1) (v 2) := rfl
+  have s₂ : side v (finRotate 3).symm = dist (v 2) (v 0) := rfl
   rw [s₀, s₁] at e₁
   rw [s₀, s₂] at e₂
   refine ⟨s₀ ▸ h₀, fun i j hij => ?_⟩
-  have c₀ := dist_comm (T.points 0) (T.points 1)
-  have c₁ := dist_comm (T.points 1) (T.points 2)
-  have c₂ := dist_comm (T.points 2) (T.points 0)
+  have c₀ := dist_comm (v 0) (v 1)
+  have c₁ := dist_comm (v 1) (v 2)
+  have c₂ := dist_comm (v 2) (v 0)
   fin_cases i <;> fin_cases j <;> simp at hij ⊢ <;> linarith
+
+/-- A triangle without a monochromatic copy has no monochromatic image under a motion, so
+it is equilateral, and its side is avoided. -/
+theorem equilateral_of_not_hasMonochromaticCopy (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
+    (h : ¬ HasMonochromaticCopy c T) :
+    AvoidsEq (c ∘ toC.symm) (dist (T.points 0) (T.points 1)) ∧
+      ∀ i j, i ≠ j → dist (T.points i) (T.points j) = dist (T.points 0) (T.points 1) :=
+  equilateral_of_not_exists_motion c T.independent.injective fun ⟨k, t, hk, hm⟩ =>
+    h ⟨T.map (pMotion k t) (isometry_pMotion hk t).injective,
+      show Congruent (pMotion k t ∘ T.points) T.points from
+        (Congruent.refl _).comp_left (isometry_pMotion hk t), hm⟩
 
 /-- Two triangles without a monochromatic copy are equilateral of the one avoided
 side, hence congruent. -/
@@ -98,5 +114,29 @@ theorem equilateral_exception_proved : ∃ (c : ℝ² → Fin 2) (T : Triangle �
   ⟨stripColor, unitTriangle, by rw [dist_unitTriangle (by decide), dist_unitTriangle (by decide)],
     by rw [dist_unitTriangle (by decide), dist_unitTriangle (by decide)],
     not_hasMonochromaticCopy_strip⟩
+
+/-- A triangle without a monochromatic copy is equilateral, so a non-equilateral triangle
+has one. -/
+theorem non_equilateral_proved (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
+    (hT : ¬ (dist (T.points 0) (T.points 1) = dist (T.points 1) (T.points 2) ∧
+      dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0))) :
+    HasMonochromaticCopy c T := by
+  by_contra h
+  obtain ⟨-, e⟩ := equilateral_of_not_hasMonochromaticCopy c T h
+  exact hT ⟨(e 0 1 (by decide)).trans (e 1 2 (by decide)).symm,
+    (e 1 2 (by decide)).trans (e 2 0 (by decide)).symm⟩
+
+/-- Three distinct points without a monochromatic congruent copy have no monochromatic
+image under a motion, so they are equilateral. Non-equilateral points, collinear ones
+included, therefore have one. -/
+theorem three_distinct_points_proved (c : ℝ² → Fin 2) (p : Fin 3 → ℝ²)
+    (hp : Function.Injective p)
+    (he : ¬ (dist (p 0) (p 1) = dist (p 1) (p 2) ∧ dist (p 1) (p 2) = dist (p 2) (p 0))) :
+    ∃ q : Fin 3 → ℝ², (q ≅ p) ∧ ∃ i, ∀ j, c (q j) = i := by
+  by_contra h
+  obtain ⟨-, e⟩ := equilateral_of_not_exists_motion c hp fun ⟨k, t, hk, hm⟩ =>
+    h ⟨pMotion k t ∘ p, (Congruent.refl _).comp_left (isometry_pMotion hk t), hm⟩
+  exact he ⟨(e 0 1 (by decide)).trans (e 1 2 (by decide)).symm,
+    (e 1 2 (by decide)).trans (e 2 0 (by decide)).symm⟩
 
 end Erdos173

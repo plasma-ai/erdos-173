@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.Complex.Circle
 public import Mathlib.Probability.Kernel.MeasurableIntegral

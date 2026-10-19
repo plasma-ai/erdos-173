@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import Mathlib.Algebra.CharP.IntermediateField
 public import Mathlib.Algebra.Order.Ring.Star
 public import Mathlib.Analysis.CStarAlgebra.Classes

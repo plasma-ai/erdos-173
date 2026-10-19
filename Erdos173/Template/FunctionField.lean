@@ -34,9 +34,10 @@ lemma aeval_ne_zero (hT : Transcendental 𝔸 T) {p : 𝔸[X]} (hp : p ≠ 0) : 
   fun h => hp (transcendental_iff.mp hT p h)
 
 /-- Elements of `𝔸(T)` have a common polynomial denominator. -/
-lemma exists_common_denom (hT : Transcendental 𝔸 T) {ι : Type*} [Fintype ι] (g : ι → 𝔸⟮T⟯) :
+lemma exists_common_denom (hT : Transcendental 𝔸 T) {ι : Type*} [Finite ι] (g : ι → 𝔸⟮T⟯) :
     ∃ κ : 𝔸[X], κ ≠ 0 ∧ ∃ P : ι → 𝔸[X], ∀ i, aeval T κ * (g i : ℂ) = aeval T (P i) := by
   classical
+  have := Fintype.ofFinite ι
   have hrep (i : ι) : ∃ r s : 𝔸[X], s ≠ 0 ∧ (g i : ℂ) = aeval T r / aeval T s := by
     obtain ⟨r, s, h⟩ := (mem_adjoin_simple_iff 𝔸 (g i : ℂ)).mp (g i).property
     by_cases hs : s = 0

@@ -1,8 +1,13 @@
 # Blueprint: monochromatic triangles in two-colorings of the plane
 
-This document proves, in prose, the three theorems that Comparator checks, in
-the order the Lean development proves them. Each section names the module and
-the Lean declarations it describes. The argument is Plasma AI's.
+This document proves, in prose, the five theorems that Comparator checks.
+Section 1 states them and derives them from the reduction and from §2; the
+later sections follow the Lean development. Each section names the module and
+the Lean declarations it describes. The argument is Plasma AI's, apart from
+the inputs credited below. GPT-6 Astra in Codex and Claude Opus 5.5 in Claude
+Code found it. This document, written by Claude Opus 5.5 in Claude Code from
+Plasma AI's unpublished write-up of the proof, is its first public
+presentation.
 
 **Conventions.** The plane is `ℂ`. A coloring is `c : ℂ → Fin 2`, with no
 regularity unless measurability is stated. A *template* `(0, a, b)` has the
@@ -15,8 +20,8 @@ copies `(p, t)` are null for area times `angularMeasure`. With
 `ζ = e^{iπ/3}`, `AvoidsEq c r` and `WeaklyAvoidsEq c r` refer to the
 equilateral template `(0, r, r ζ)`. `𝔸` is the field of complex algebraic
 numbers. For a carrier `E` (§3), `F` is its real slice, `K` its unit circle,
-`D` the dual of `E` with the discrete topology, and `C ⊆ D` the ordinary
-characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
+`D` the compact dual group of `E`, with `E` taken discrete, and `C ⊆ D` the
+ordinary characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
 
 ---
 
@@ -29,20 +34,28 @@ characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
   congruent to `T` has one color; triangles are Mathlib's `Affine.Triangle`,
   with affinely independent vertices. `erdos_173`,
   `erdos_173.variants.right_triangle` and
-  `erdos_173.variants.equilateral_exception` are copied verbatim from
-  `formal-conjectures`. `Solution.lean` proves them by `erdos_173_proved`,
-  `right_triangle_proved` and `equilateral_exception_proved`.
+  `erdos_173.variants.equilateral_exception` are copied verbatim, apart
+  from their category attributes, from `formal-conjectures`;
+  `erdos_173.variants.non_equilateral` is not from `formal-conjectures` and
+  states that every non-equilateral triangle has a monochromatic copy.
+  `erdos_173.variants.three_distinct_points`, also not from
+  `formal-conjectures`, states the same for any three distinct points `p`,
+  collinear ones included: some `q` with `q ≅ p` has one color.
+  `Solution.lean` proves them by `erdos_173_proved`,
+  `right_triangle_proved`, `equilateral_exception_proved`,
+  `non_equilateral_proved` and `three_distinct_points_proved`.
   `Basic.lean` defines the templates of the conventions.
 
 `Erdos173/Reduction/Plane.lean`.
 
-- **Triangles as templates** (`toC`, `side`, `frame`, `apex`,
-  `hasMonochromaticCopy_of_monoCopy`). Identify `ℝ²` with `ℂ`. For a
-  triangle `T` relabelled by `σ`, with vertices `w_j`, put
-  `a = |w₁ - w₀|`, `u₀ = (w₁ - w₀)/a` and `z = (w₂ - w₀)/u₀`. Placing
-  `(0, a, z)` by `(p, u)` is the image of `T` under the isometry
-  `w ↦ (u/u₀)(w - w₀) + p` (`isometry_pMotion`), so a monochromatic copy of
-  the template is a monochromatic congruent copy of `T`.
+- **Three points as templates** (`toC`, `side`, `frame`, `apex`,
+  `exists_motion_of_monoCopy`). Identify `ℝ²` with `ℂ`. For three distinct
+  points `v`, collinear or not, relabelled by `σ`, with images `w_j`, put
+  `a = |w₁ - w₀|`, `u₀ = (w₁ - w₀)/a` and `z = (w₂ - w₀)/u₀`; `z` is real
+  when the points are collinear. Placing `(0, a, z)` by `(p, u)` is the
+  image of `v` under the isometry `w ↦ (u/u₀)(w - w₀) + p`
+  (`isometry_pMotion`), so a monochromatic copy of the template is a
+  monochromatic image of `v` under a motion, which is congruent to `v`.
 
 `Erdos173/Reduction/EightPoint.lean`.
 
@@ -70,20 +83,29 @@ characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
 `Erdos173/FinalAssembly.lean`.
 
 - **Avoided triangles are equilateral** (`avoidsEq_side`,
-  `equilateral_of_not_hasMonochromaticCopy`). If `T` has no monochromatic
-  copy, part (i) with `z = apex T σ` shows that the side `side T σ` is
-  avoided as an equilateral side. Relabelling cyclically, all three sides
-  are avoided, and they are equal by `two_scale` (§2).
-- **The theorems** (`erdos_173_proved`, `right_triangle_proved`). Two
-  triangles without a monochromatic copy are equilateral with avoided
-  sides, equal by `two_scale`, so congruent. A right triangle is not
-  equilateral, since `a² = 2a²` is impossible.
+  `equilateral_of_not_exists_motion`,
+  `equilateral_of_not_hasMonochromaticCopy`). If three distinct points `v`,
+  collinear or not, have no monochromatic image under a motion, part (i)
+  with `z = apex v σ` shows that the side `side v σ` is avoided as an
+  equilateral side. Relabelling cyclically, all three sides are avoided, and
+  they are equal by `two_scale` (§2). Such an image is a congruent copy,
+  so a triangle without a monochromatic copy, or three distinct points
+  without one, has no monochromatic image under a motion.
+- **The theorems** (`erdos_173_proved`, `right_triangle_proved`,
+  `non_equilateral_proved`, `three_distinct_points_proved`). Two triangles
+  without a monochromatic copy are equilateral with avoided sides, equal by
+  `two_scale`, so congruent. A triangle that is not equilateral therefore
+  has a monochromatic copy, and so do three distinct points that are not
+  equilateral; a right triangle is not equilateral, since `a² = 2a²` is
+  impossible, and neither are three distinct collinear points, whose
+  longest distance is the sum of the other two.
 
 `Erdos173/Reduction/Strips.lean`.
 
 - **The exception** (`stripColor`, `vertical_identity`, `strip_pair`,
   `strip_parity`, `not_hasMonochromaticCopy_strip`). Color by the parity of
-  `⌊y/h⌋`, `h = √3/2`. A unit equilateral triangle with consecutive vertical
+  `⌊y/h⌋`, `h = √3/2`. This is the strip coloring of *Euclidean Ramsey
+  theorems, I* (p. 342). A unit equilateral triangle with consecutive vertical
   gaps `t₁`, `t₂` has `t₁² + t₂² + t₁ t₂ = h²`. Two heights of equal parity
   lie in one strip, closer than `h`, or in strips at least two apart,
   farther than `h`, and both alternatives for three vertices contradict the
@@ -121,19 +143,27 @@ characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
   property* (`template`): for every finite set `Q` of units of `E` there is
   a finite set `S` of units such that, for every choice of `q_s ∈ Q` at each
   `s ∈ S`, both `1` and `i` lie in the `ℚ`-span of the products `q_s s`.
-- **Closure properties** (`Carrier.I_mem`, `conj_mem`, `re_mem`,
-  `mem_of_pow_mem`, `sqrt_mem`, `norm_mem`, `countable_F`,
-  `K_pow_surjective`, `dense_E`). `i ∈ E`; `E` is closed under conjugation
-  and roots, `F` under square roots of nonnegative elements; `|z| ∈ F` for
-  `z ∈ E`; `K` is divisible; and `E ⊇ ℚ(i)` is dense. These replace the
-  source's uses of algebraicity over `ℚ`.
+- **Closure properties** (`Carrier.I_mem`, `re_mem`, `im_mem`,
+  `ofReal_mem`, `mem_of_pow_mem`, `sqrt_mem`, `norm_mem`, `countable_F`).
+  `i ∈ E`; `E` is closed under roots, `F` under square roots of nonnegative
+  elements; `|z| ∈ F` for `z ∈ E`; and `F` is countable. With
+  `K_pow_surjective` in `OAI/Analysis/PlaneSpectrum/Basic.lean` (`K` is
+  divisible) and `dense_E` in `OAI/Geometry/PlaneColoring/BorelTransfer.lean`
+  (`E ⊇ ℚ(i)` is dense), these replace the source's uses of algebraicity
+  over `ℚ`.
+- **The fields of `ℚ(x)`** (`fieldOf`, `realFieldOf`). The algebraic
+  closures of `ℚ(x)` in `ℂ` and `ℝ`.
 
 `OAI/Analysis/PlaneSpectrum/Ergodicity.lean`.
 
-**The rigidity theorem.** The input from OpenAI's *The Euclidean plane is
-not five-colorable* (23 September 2026) is its spectral rigidity theorem, in
-the Lean form below. A finite measure `ν` on `D` is *wild* (`IsWild`) when
-it is invariant under the rotations `d ↦ d(u ·)`, `u ∈ K`, and `ν(C) = 0`.
+**The rigidity theorem.** The main input from OpenAI's *The Euclidean plane
+is not five-colorable* (23 September 2026) is its rigidity theorem for wild
+character laws (Theorem 2.3), in the Lean form below. §4 and §6 also adapt
+its transfer from proper to weak measurable colorings (Lemma 4.1 and
+Proposition 4.2) to triangle avoidance; §3 and §8 use its number-field
+general position (Lemma 3.4), and §8 adapts its algebraic Cayley lemmas. A
+finite measure `ν` on `D` is *wild* (`IsWild`) when it is invariant under the
+rotations `d ↦ d(u ·)`, `u ∈ K`, and `ν(C) = 0`.
 
 - **Wild laws are Haar** (`finite_wild_fourier`). A finite wild measure `ν`
   has `∫ d(z) dν(d) = 0` for every nonzero `z ∈ E`.
@@ -165,18 +195,20 @@ becomes a closure property above, except one.
 `OAI/Analysis/PlaneSpectrum/Carriers.lean`.
 
 - **The algebraic carrier** (`algebraicCarrier`,
-  `templateProperty_algebraic`). Its template property is the source's
-  Lemma 3.4. In the number field `N` generated by `Q`, `i` and their real
+  `templateProperty_algebraic`). Its template property follows from the
+  source's Lemma 3.4 and the pigeonhole selection in its proof of
+  Theorem 2.3. In the number field `N` generated by `Q`, `i` and their real
   and imaginary parts, take `S` in rational general position with
   `|S| > |Q|([N : ℚ] - 1)` (`numberField_general_position`). For a choice,
   pigeonhole gives one `q` chosen on a rational basis `T ⊆ S` of `N`
   (`spanning_selection`), and the rational span of the `q t` is `q N`, which
   contains `1` and `i` (`span_mult_rep`).
-- **The carrier of `ℚ(x)`** (`fieldOf`, `realFieldOf`, `carrierOf`). `E` and
-  `F` are the algebraic closures of `ℚ(x)` in `ℂ` and `ℝ`. `E` is countable,
-  closed under conjugation, which fixes `ℚ(x)` (`conj_mem_fieldOf`), and
-  contains `i`, which gives `mem_iff`; roots stay in it
-  (`mem_algebraicClosure_of_root`). The template property is a hypothesis.
+- **The carrier of `ℚ(x)`** (`carrierOf`). `E = fieldOf x` and
+  `F = realFieldOf x` are the algebraic closures of `ℚ(x)` in `ℂ` and `ℝ`.
+  `E` is countable, closed under conjugation, which fixes `ℚ(x)`
+  (`conj_mem_fieldOf`), and contains `i`, which gives `mem_iff`; roots stay
+  in it (`mem_algebraicClosure_of_root`). The template property is a
+  hypothesis.
 
 ---
 
@@ -303,10 +335,11 @@ becomes a closure property above, except one.
   `1`-Lipschitz, fixes `s`, and preserves continuous vectors
   (`clampSign_mem`, from OpenAI's `nonlinear_mem`). A `1`-Lipschitz map
   preserving a closed subspace and fixing `s` fixes its projection
-  (`projection_fixed_of_contraction`), so `g` is real with values in
-  `[-1, 1]`. Likewise rotations fix `g` (`projection_covariance_fixed`).
+  (OpenAI's `projection_fixed_of_contraction`), so `g` is real with values
+  in `[-1, 1]`. Likewise rotations fix `g` (OpenAI's
+  `projection_covariance_fixed`).
 - **Rigidity** (`projected_corr`). `s - g` is rotation fixed and orthogonal
-  to the continuous vectors, so `residual_fourier` and
+  to the continuous vectors, so `residual_fourier` and OpenAI's
   `projection_coefficient` give `⟨g, T_z g⟩ = ρ(z)` for nonzero `z ∈ E`.
 - **The field** (`field`, `field_inner`, `field_range`). The orbit of `g`
   extends to a continuous field `G(y)`, `y ∈ ℂ` (OpenAI's
@@ -337,8 +370,8 @@ becomes a closure property above, except one.
 `Erdos173/Measurable/Density.lean`.
 
 - **Density points** (`DensityZero`, `boundary`, `measurableSet_boundary`,
-  `volume_boundary`). `K` has density zero at `p` when
-  `|K ∩ B(p, ρ)| = o(ρ²)`. The *boundary* of `c` is where neither class has
+  `volume_boundary`). A set `X` has density zero at `p` when
+  `|X ∩ B(p, ρ)| = o(ρ²)`. The *boundary* of `c` is where neither class has
   density zero. Testing along the radii `1/(k + 1)` makes it measurable, and
   Lebesgue's density theorem (`ae_densityZero`) makes it null.
 - **Both classes have area** (`volume_ne_zero_of_weaklyAvoids`). If one
@@ -348,10 +381,10 @@ becomes a closure property above, except one.
 `Erdos173/Measurable/Apex.lean`.
 
 - **The apex lemma** (`apex_density`). Let `c` weakly avoid `(0, a, b)` and
-  let the class `i` have positive upper density `ε` at `p`. Then for no
-  direction `u₀` are `p + u₀ a` and `p + u₀ b` both density points of the
-  class `i`. Otherwise take `h` with `|K ∩ B(p, h)| > ε h²` and the arc `T`
-  of directions within `h/L` of `u₀`, `L = |a| + |b| + 1`. For `q ∈ B(p, h)`
+  let the class `X` of `i` have positive upper density `ε` at `p`. Then for
+  no direction `u₀` are `p + u₀ a` and `p + u₀ b` both density points of
+  `X`. Otherwise take `h` with `|X ∩ B(p, h)| > ε h²` and the arc `T` of
+  directions within `h/L` of `u₀`, `L = |a| + |b| + 1`. For `q ∈ B(p, h)`
   and `u ∈ T`, `q + u a` lies in `B(p + u₀ a, 2h)`, where the other class
   has measure `o(h²)`, and likewise at `b`. So the copies with `q` in the
   class and `u ∈ T` that leave it have measure `o(h²) |T|`, out of at least
@@ -377,7 +410,7 @@ becomes a closure property above, except one.
   sets back to null sets (`angularMeasure_prod_add_mem`): after the shear
   `u ↦ t + u` it is `e^{it}(1 + e^{iu})`; by polar coordinates almost every
   circle about `0` meets a null set in null angle
-  (`ae_angularMeasure_mul_mem`); and `|1 + e^{iu}| = 2 cos(u/2)` lies in a
+  (`ae_angularMeasure_mul_mem`); and `|1 + e^{iu}| = 2|cos(u/2)|` lies in a
   null set of radii only for null `u`, as `arccos` is differentiable on
   `(-1, 1)` (`angularMeasure_norm_one_add_mem`).
 
@@ -549,11 +582,10 @@ maps `ℓ : ℂ → 𝔸`.
   there is a finite set `P` of units of `L` such that every choice
   `p ↦ q_p ∈ Q` has `1` in the `𝔸`-span of the `q_p p`. Otherwise the
   choices `K_L → Q` whose span on a finite `P` misses `1` form nonempty
-  closed sets, directed in `P`, in a compact space (Tychonoff; König's
-  lemma, `K_L` being countable). A choice in all of them has span missing
-  `1`, and a dual functional vanishing on that span with `g(1) ≠ 0`
-  (`Submodule.exists_dual_map_eq_bot_of_notMem`), normalized, is covered by
-  `Q`, contrary to `cover_impossible_fieldOf`.
+  closed sets, directed in `P`, in a compact space (Tychonoff). A choice in
+  all of them has span missing `1`, and a dual functional vanishing on that
+  span with `g(1) ≠ 0` (`Submodule.exists_dual_map_eq_bot_of_notMem`),
+  normalized, is covered by `Q`, contrary to `cover_impossible_fieldOf`.
 - **Rational coefficients** (`templateProperty_fieldOf`). Let `N` be the
   number field of all these coefficients, with `i` and real and imaginary
   parts, and `S` in rational general position with
@@ -566,36 +598,43 @@ maps `ℓ : ℂ → 𝔸`.
 
 ## 9. Relation to the original argument
 
-The original argument proves the same conclusion by the same route: finite
-forcing, the carrier, the unit template, Haar rigidity, binary transfer,
-measurable exclusion and assembly. The Lean route makes these changes:
+The original argument is Plasma AI's unpublished write-up; this blueprint is
+the first public presentation of the proof. The original proves the same
+conclusion by the same route: finite forcing, the carrier, the unit template,
+Haar rigidity, binary transfer, measurable exclusion and assembly. The Lean
+route makes these changes:
 
-- **Scope.** The formal statement is that of `formal-conjectures`, whose
-  triangles are nondegenerate `Affine.Triangle`s. The original argument
-  also treats collinear triples of distinct points.
+- **Scope.** The original argument treats triangles and collinear triples
+  of distinct points alike. The `formal-conjectures` statements and
+  `non_equilateral` use nondegenerate `Affine.Triangle`s;
+  `three_distinct_points` states the result for any three distinct points,
+  collinear ones included. Both come from the same lemmas about three
+  distinct points (§1), since part (i) of the configuration holds for any
+  apex `z`.
 - **Rigidity.** The original argument adapts OpenAI's prose proof lemma by
   lemma to `F_x(i)`, `F_x` the real closure of `ℚ(x)`, the same field as
   `fieldOf x`. The Lean route generalizes OpenAI's Lean proof over the class
   `Carrier`, whose axioms supply every field operation used, and isolates
   the one number-field step as the template property; the source's
-  Lemma 3.4 becomes the template property of `algebraicCarrier`.
+  Lemma 3.4 and its pigeonhole selection become the template property of
+  `algebraicCarrier`.
 - **Far ratios.** The original argument applies the Bessel bound to the
   measurable coloring from the transfer, through Plancherel on disks and a
   weak-star limit. The Lean route applies it to the label model, whose
   radial measure comes from the spectral measure of the sign and
   `finite_wild_fourier` rather than Bochner's theorem.
 - **The Bessel bound.** The original argument locates the zeros of `J₁` by
-  their spacing (Sturm comparison and Wirtinger's inequality) and encloses
-  values by the alternating series. The Lean route uses Taylor enclosures
-  through the angular integral, the sign of `J₁` on `[0, π]`, Lipschitz
-  bounds on `J₁` and `J₀` with values at more points, and the energy
-  `J₀² + J₁²`.
-- **Binary transfer.** The original argument bounds `P s` by identifying
-  the continuous vectors with `L²` of a σ-algebra, making `P` a conditional
-  expectation. The Lean route uses only that `P` commutes with a
-  `1`-Lipschitz map preserving the subspace. It works with `±1` signs and
-  the clamp to `[-1, 1]`, where OpenAI's transfer uses color indicators and
-  the clamp to `[0, 1]`, and one Tonelli step serves both sides.
+  their spacing (Wirtinger's inequality) and encloses values by the
+  alternating series. The Lean route uses Taylor enclosures through the
+  angular integral, the sign of `J₁` on `[0, π]`, Lipschitz bounds on `J₁`
+  and `J₀` with values at more points, and the energy `J₀² + J₁²`.
+- **Binary transfer.** The original argument bounds `P s` by identifying the
+  continuous vectors with `L²` of a σ-algebra, making `P` a conditional
+  expectation. The Lean route, like OpenAI's Lean, uses only that `P`
+  commutes with a `1`-Lipschitz map preserving the subspace. It works with
+  `±1` signs and the clamp to `[-1, 1]`, where OpenAI's transfer uses color
+  indicators and the clamp to `[0, 1]`, and one Tonelli step serves both
+  sides.
 - **Alternation on a circle.** The original argument shows invariance under
   the closed subgroup generated by `2π/3` and `γ - π/3`. The Lean route
   uses ergodicity of the irrational rotation by `γ - π/3`.

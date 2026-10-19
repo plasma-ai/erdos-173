@@ -1,5 +1,7 @@
 module
 
+-- Adapts code from openai/math at adc7f124; see OAI/README.md.
+
 public import Mathlib.Algebra.Ring.GeomSum
 public import Mathlib.FieldTheory.Minpoly.Field
 public import Mathlib.LinearAlgebra.Dual.Lemmas
@@ -121,6 +123,7 @@ lemma reciprocal_denominator (b : R) (hb : IsIntegral K b) :
 def polyLinear (ℓ : R →ₗ[K] K) (p : R[X]) : K[X] :=
   Polynomial.ofFinsupp (AddMonoidAlgebra.ofCoeff (p.toFinsupp.coeff.mapRange ℓ (map_zero ℓ)))
 
+/-- `polyLinear ℓ` applies `ℓ` to each coefficient. -/
 @[simp] lemma coeff_polyLinear (ℓ : R →ₗ[K] K) (p : R[X]) (n : ℕ) :
     (polyLinear ℓ p).coeff n = ℓ (p.coeff n) := rfl
 
@@ -321,10 +324,15 @@ structure RealStructure (K R : Type*) [Field K] [CommRing R] [Algebra K R] where
   ι : R
   /-- The real elements. -/
   Re : Set R
+  /-- `ι` has square `-1`. -/
   ι_sq : ι * ι = -1
+  /-- `1` is real. -/
   one_mem : (1 : R) ∈ Re
+  /-- The real elements are closed under sums. -/
   add_mem : ∀ r ∈ Re, ∀ s ∈ Re, r + s ∈ Re
+  /-- The real elements are closed under rational multiples. -/
   smul_mem : ∀ t : ℚ, ∀ r ∈ Re, algebraMap K R t * r ∈ Re
+  /-- The Cayley denominator `1 - ι r` of a real element is a unit. -/
   isUnit : ∀ r ∈ Re, IsUnit (1 - ι * r)
 
 namespace RealStructure

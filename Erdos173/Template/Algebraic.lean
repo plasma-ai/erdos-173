@@ -26,8 +26,10 @@ open Polynomial ComplexConjugate
 /-- The complex algebraic numbers. -/
 abbrev 𝔸 : IntermediateField ℚ ℂ := algebraicClosure ℚ ℂ
 
+/-- The algebraic numbers are algebraically closed. -/
 instance : IsAlgClosed 𝔸 := IsAlgClosure.isAlgClosed ℚ
 
+/-- The algebraic numbers are infinite. -/
 instance : Infinite 𝔸 := Infinite.of_injective (algebraMap ℚ 𝔸) (algebraMap ℚ 𝔸).injective
 
 /-- `i` is algebraic. -/
@@ -43,11 +45,13 @@ lemma conj_mem_𝔸 {z : ℂ} (hz : z ∈ 𝔸) : conj z ∈ 𝔸 :=
 /-- The imaginary unit as an algebraic number. -/
 def iA : 𝔸 := ⟨Complex.I, I_mem_𝔸⟩
 
+/-- `iA` is `i`. -/
 @[simp] lemma coe_iA : ((iA : 𝔸) : ℂ) = Complex.I := rfl
 
 /-- Complex conjugation on the algebraic numbers. -/
 def conjA (a : 𝔸) : 𝔸 := ⟨conj (a : ℂ), conj_mem_𝔸 a.property⟩
 
+/-- `conjA` is complex conjugation. -/
 @[simp] lemma coe_conjA (a : 𝔸) : ((conjA a : 𝔸) : ℂ) = conj (a : ℂ) := rfl
 
 /-- The action of `𝔸` on `ℂ` is multiplication. -/
@@ -104,6 +108,7 @@ lemma Ω_unit {z : Fin 2 → 𝔸} (hz : z ∈ Ω) {T : ℂ} (hT : ‖T‖ = 1) 
 /-- The Cayley parametrization of the rational points of the unit circle. -/
 def cayA (s : ℚ) : 𝔸 := (1 + (s : 𝔸) * iA) / (1 - (s : 𝔸) * iA)
 
+/-- `cayA s` is the Cayley transform `(1 + s i)/(1 - s i)`. -/
 lemma coe_cayA (s : ℚ) : ((cayA s : 𝔸) : ℂ) = (1 + s * Complex.I) / (1 - s * Complex.I) := by
   simp [cayA]
 

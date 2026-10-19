@@ -1,6 +1,6 @@
 {
   "challenge_module": "Challenge",
   "solution_module": "Solution",
-  "theorem_names": ["Erdos173.erdos_173", "Erdos173.erdos_173.variants.right_triangle", "Erdos173.erdos_173.variants.equilateral_exception"],
+  "theorem_names": ["Erdos173.erdos_173", "Erdos173.erdos_173.variants.right_triangle", "Erdos173.erdos_173.variants.equilateral_exception", "Erdos173.erdos_173.variants.non_equilateral", "Erdos173.erdos_173.variants.three_distinct_points"],
   "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
 }

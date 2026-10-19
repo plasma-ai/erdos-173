@@ -1,5 +1,7 @@
 module
 
+-- Copied from openai/math at adc7f124 (same path under lean/) and modified; see OAI/README.md.
+
 public import OAI.Analysis.PlaneSpectrum.PhaseCollision
 public import Mathlib.Combinatorics.Pigeonhole
 public import Mathlib.Probability.Kernel.CondDistrib
