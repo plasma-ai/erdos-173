@@ -5,7 +5,7 @@ public import Erdos173.FinalAssembly
 /-!
 # Proof of Erdős Problem 173
 
-Comparator checks the four theorems in this module against the Mathlib-only
+Comparator checks the five theorems in this module against the Mathlib-only
 statements in `Challenge.lean`.
 -/
 
@@ -56,5 +56,16 @@ theorem erdos_173.variants.non_equilateral (c : ℝ² → Fin 2) (T : Triangle �
       dist (T.points 1) (T.points 2) = dist (T.points 2) (T.points 0))) :
     HasMonochromaticCopy c T :=
   non_equilateral_proved c T hT
+
+/--
+Any three distinct points of $\mathbb{R}^2$ that are not the vertices of an equilateral triangle,
+collinear points included, have a monochromatic congruent copy in every $2$-colouring of
+$\mathbb{R}^2$.
+-/
+theorem erdos_173.variants.three_distinct_points (c : ℝ² → Fin 2) (p : Fin 3 → ℝ²)
+    (hp : Function.Injective p)
+    (he : ¬ (dist (p 0) (p 1) = dist (p 1) (p 2) ∧ dist (p 1) (p 2) = dist (p 2) (p 0))) :
+    ∃ q : Fin 3 → ℝ², (q ≅ p) ∧ ∃ i, ∀ j, c (q j) = i :=
+  three_distinct_points_proved c p hp he
 
 end Erdos173

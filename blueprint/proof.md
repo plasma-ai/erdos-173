@@ -1,6 +1,6 @@
 # Blueprint: monochromatic triangles in two-colorings of the plane
 
-This document proves, in prose, the four theorems that Comparator checks.
+This document proves, in prose, the five theorems that Comparator checks.
 Section 1 states them and derives them from the reduction and from §2; the
 later sections follow the Lean development. Each section names the module and
 the Lean declarations it describes. The argument is Plasma AI's, apart from
@@ -38,19 +38,24 @@ ordinary characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
   from their category attributes, from `formal-conjectures`;
   `erdos_173.variants.non_equilateral` is not from `formal-conjectures` and
   states that every non-equilateral triangle has a monochromatic copy.
-  `Solution.lean` proves them by `erdos_173_proved`, `right_triangle_proved`,
-  `equilateral_exception_proved` and `non_equilateral_proved`.
+  `erdos_173.variants.three_distinct_points`, also not from
+  `formal-conjectures`, states the same for any three distinct points `p`,
+  collinear ones included: some `q` with `q ≅ p` has one color.
+  `Solution.lean` proves them by `erdos_173_proved`,
+  `right_triangle_proved`, `equilateral_exception_proved`,
+  `non_equilateral_proved` and `three_distinct_points_proved`.
   `Basic.lean` defines the templates of the conventions.
 
 `Erdos173/Reduction/Plane.lean`.
 
-- **Triangles as templates** (`toC`, `side`, `frame`, `apex`,
-  `hasMonochromaticCopy_of_monoCopy`). Identify `ℝ²` with `ℂ`. For a
-  triangle `T` relabelled by `σ`, with vertices `w_j`, put
-  `a = |w₁ - w₀|`, `u₀ = (w₁ - w₀)/a` and `z = (w₂ - w₀)/u₀`. Placing
-  `(0, a, z)` by `(p, u)` is the image of `T` under the isometry
-  `w ↦ (u/u₀)(w - w₀) + p` (`isometry_pMotion`), so a monochromatic copy of
-  the template is a monochromatic congruent copy of `T`.
+- **Three points as templates** (`toC`, `side`, `frame`, `apex`,
+  `exists_motion_of_monoCopy`). Identify `ℝ²` with `ℂ`. For three distinct
+  points `v`, collinear or not, relabelled by `σ`, with images `w_j`, put
+  `a = |w₁ - w₀|`, `u₀ = (w₁ - w₀)/a` and `z = (w₂ - w₀)/u₀`; `z` is real
+  when the points are collinear. Placing `(0, a, z)` by `(p, u)` is the
+  image of `v` under the isometry `w ↦ (u/u₀)(w - w₀) + p`
+  (`isometry_pMotion`), so a monochromatic copy of the template is a
+  monochromatic image of `v` under a motion, which is congruent to `v`.
 
 `Erdos173/Reduction/EightPoint.lean`.
 
@@ -78,15 +83,22 @@ ordinary characters `j ξ : z ↦ e^{i⟨ξ, z⟩}`, `ξ ∈ ℂ`.
 `Erdos173/FinalAssembly.lean`.
 
 - **Avoided triangles are equilateral** (`avoidsEq_side`,
-  `equilateral_of_not_hasMonochromaticCopy`). If `T` has no monochromatic
-  copy, part (i) with `z = apex T σ` shows that the side `side T σ` is
-  avoided as an equilateral side. Relabelling cyclically, all three sides
-  are avoided, and they are equal by `two_scale` (§2).
+  `equilateral_of_not_exists_motion`,
+  `equilateral_of_not_hasMonochromaticCopy`). If three distinct points `v`,
+  collinear or not, have no monochromatic image under a motion, part (i)
+  with `z = apex v σ` shows that the side `side v σ` is avoided as an
+  equilateral side. Relabelling cyclically, all three sides are avoided, and
+  they are equal by `two_scale` (§2). Such an image is a congruent copy,
+  so a triangle without a monochromatic copy, or three distinct points
+  without one, has no monochromatic image under a motion.
 - **The theorems** (`erdos_173_proved`, `right_triangle_proved`,
-  `non_equilateral_proved`). Two triangles without a monochromatic copy are
-  equilateral with avoided sides, equal by `two_scale`, so congruent. A
-  triangle that is not equilateral therefore has a monochromatic copy; a
-  right triangle is not equilateral, since `a² = 2a²` is impossible.
+  `non_equilateral_proved`, `three_distinct_points_proved`). Two triangles
+  without a monochromatic copy are equilateral with avoided sides, equal by
+  `two_scale`, so congruent. A triangle that is not equilateral therefore
+  has a monochromatic copy, and so do three distinct points that are not
+  equilateral; a right triangle is not equilateral, since `a² = 2a²` is
+  impossible, and neither are three distinct collinear points, whose
+  longest distance is the sum of the other two.
 
 `Erdos173/Reduction/Strips.lean`.
 
@@ -586,11 +598,13 @@ conclusion by the same route: finite forcing, the carrier, the unit template,
 Haar rigidity, binary transfer, measurable exclusion and assembly. The Lean
 route makes these changes:
 
-- **Scope.** The formal statements use nondegenerate `Affine.Triangle`s,
-  as `formal-conjectures` does. The original argument also treats collinear
-  triples of distinct points. With part (i) of the configuration (§1), which
-  holds for any apex `z`, `erdos_173` implies the collinear case too, but no
-  Lean theorem states it.
+- **Scope.** The original argument treats triangles and collinear triples
+  of distinct points alike. The `formal-conjectures` statements and
+  `non_equilateral` use nondegenerate `Affine.Triangle`s;
+  `three_distinct_points` states the result for any three distinct points,
+  collinear ones included. Both come from the same lemmas about three
+  distinct points (§1), since part (i) of the configuration holds for any
+  apex `z`.
 - **Rigidity.** The original argument adapts OpenAI's prose proof lemma by
   lemma to `F_x(i)`, `F_x` the real closure of `ℚ(x)`, the same field as
   `fieldOf x`. The Lean route generalizes OpenAI's Lean proof over the class
