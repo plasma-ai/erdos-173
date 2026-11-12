@@ -1,0 +1,891 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{bookmarksnumbered=true}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\T}{\mathbb T}
+\newcommand{\Qbar}{\overline{\mathbb Q}}
+\newcommand{\calH}{\mathcal H}
+\DeclareMathOperator{\Cay}{Cay}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+
+\title{Every non-equilateral triangle is $2$-Ramsey in the plane}
+\author{Plasma AI}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove that in every two-coloring of the plane, every non-equilateral triangle, including every collinear triple of distinct points, has a monochromatic congruent copy, and all equilateral triangles without a monochromatic congruent copy have the same side length. This proves a conjecture of Erd\H{o}s, Graham, Montgomery, Rothschild, Spencer and Straus from 1975 and answers Erd\H{o}s Problem~173. Equivalently, no two-coloring of the plane avoids monochromatic equilateral triangles of two different side lengths. We also extend OpenAI's rigidity theorem for wild character laws from the field of algebraic numbers to the algebraic closure of $\Q(x)$, for every real $x$.
+\end{abstract}
+
+\section{Introduction}
+
+Euclidean Ramsey theory asks which finite configurations must appear monochromatically, up to congruence, in every coloring of a Euclidean space with a given number of colors. For two-colorings of the plane and triangles, the question goes back to Erd\H{o}s, Graham, Montgomery, Rothschild, Spencer and Straus~\cite{EGMRSS}. Not every triangle must appear: if the plane is colored in alternating half-open horizontal strips of width $\sqrt3/2$, then no equilateral triangle of side $1$ has all its vertices of one color~\cite[pp.~559--560]{EGMRSS}.
+
+Erd\H{o}s et al.\ conjectured that equilateral triangles are the only exceptions: in every two-coloring of the plane, every non-equilateral triangle has a monochromatic congruent copy~\cite[Conjecture~3, p.~560]{EGMRSS}. Their Theorem~1~\cite[p.~563]{EGMRSS} shows that a two-coloring contains a monochromatic copy of a triangle with sides $a,b,c$ if and only if it contains a monochromatic equilateral triangle of side $a$, $b$ or $c$. The conjecture is therefore equivalent to their Conjecture~2: a two-coloring of the plane with no monochromatic equilateral triangle of side $d$ has one of every side $d'\ne d$. The conjecture appears as Conjecture~11.1.1 in Graham's survey~\cite{Graham}, and Bloom catalogs it as Erd\H{o}s Problem~173~\cite{Bloom173}. We prove it. As in~\cite{EGMRSS} and~\cite[p.~2]{JKSV}, a \emph{triangle} is any set of three distinct points of the plane, collinear or not.
+
+\begin{thm}\label{thm:main}
+In every two-coloring of the plane, every non-equilateral triangle has a monochromatic congruent copy, and all equilateral triangles without a monochromatic congruent copy have the same side length.
+\end{thm}
+
+Thus, in every two-coloring of the plane, at most one triangle up to congruence has no monochromatic congruent copy, and such a triangle is equilateral; the strip coloring shows that the exception can occur. The coloring is an arbitrary map from the plane to two colors. Since a right triangle is not equilateral, Theorem~\ref{thm:main} contains Shader's theorem~\cite[Theorem~2]{Shader}, and since three distinct collinear points are never equilateral, it contains the theorem of Currier, Moore and Yip~\cite[Theorem~1.1]{CMY}. By the reduction of Erd\H{o}s et al., Theorem~\ref{thm:main} is equivalent to the following statement.
+
+\begin{thm}\label{thm:twoscale}
+No two-coloring of the plane avoids monochromatic equilateral triangles of two different side lengths.
+\end{thm}
+
+Erd\H{o}s et al.\ proved the conjecture for several families of triangles, among them the triangles with an angle of $30^\circ$ or $150^\circ$ and the right triangles with an angle that is a rational multiple of $\pi$~\cite[Theorems~9 and~17]{EGMRSS}. Shader~\cite[Theorem~2]{Shader} proved it for all right triangles. Jel\'inek, Kyn\v{c}l, Stola\v{r} and Valla~\cite[Theorems~2.1 and~3.20]{JKSV} proved it for colorings in which one color class is closed and the other open, and for polygonal colorings; they also found colorings other than the strip colorings that avoid one equilateral triangle, disproving Conjecture~1 of Erd\H{o}s et al. Currier, Moore and Yip~\cite[Theorem~1.1]{CMY} proved that every two-coloring of the plane contains a monochromatic three-term arithmetic progression of every common difference, which is the case of the collinear triangles with sides $d,d,2d$. For measurable colorings, Shkredov~\cite[Theorem~1]{Shkredov} gave a criterion in terms of the Bessel function $J_0$ for a triangle to have a monochromatic copy. We do not prove Graham's stronger Conjecture~11.1.2~\cite{Graham}, that one color class contains a copy of every triangle with the possible exception of one equilateral triangle.
+
+Two features of the problem limit finite and algebraic methods. Erd\H{o}s et al.\ observed that all their positive results concern triangles with an algebraic relation among the sides, and that they knew of no isosceles triangle with sides $a,a,b$ and $a/b$ transcendental that must appear~\cite[p.~582]{EGMRSS}. They also showed that the smallest finite set forcing a monochromatic triangle with sides $1,1,x$ grows without bound as $x\to1$~\cite[Theorem~28]{EGMRSS}, so no argument with configurations of bounded size settles the conjecture.
+
+Our proof passes from an arbitrary coloring to a measurable one, following OpenAI's proof that the plane is not five-colorable~\cite{OAI}. They restrict a coloring to the countable field $\Qbar$ of algebraic numbers, average its translations and rotations into an invariant probability measure on labelings of $\Qbar$, and project the label indicators onto the vectors whose translation orbits are continuous in the usual topology. Their rigidity theorem for wild character laws~\cite[Theorem~2.3]{OAI} shows that this projection preserves every pair correlation at a nonzero algebraic displacement. Avoiding a triangle is a condition on three points rather than on pairs, but for two colors the difference disappears: three signs $a,b,c\in\{\pm1\}$ are all equal exactly when $1+ab+ac+bc$ is nonzero, and this quadratic polynomial is nonnegative on $[-1,1]^3$. Avoidance is therefore expressed by pair correlations and survives the projection.
+
+The field $\Qbar$ contains no equilateral triangle with a transcendental side, so we work instead in the algebraic closure $E_x$ of $\Q(x)$ in $\C$. Let $K_x$ be the group of elements of $E_x$ of modulus one, let $D_x$ be the compact dual group of the discrete additive group $E_x$, and let $C_x\subset D_x$ be the subgroup of characters $z\mapsto\exp(i\re(\bar\xi z))$, $\xi\in\C$, which are continuous in the usual topology. The group $K_x$ acts on $D_x$ by $(kd)(z)=d(kz)$.
+
+\begin{thm}\label{thm:rigidityx}
+For every real $x$, every $K_x$-invariant Borel probability measure on $D_x$ giving measure zero to $C_x$ is Haar measure.
+\end{thm}
+
+For algebraic $x$ we have $E_x=\Qbar$, and this is OpenAI's theorem. Their proof uses number fields in one step, a selection of rotations in rational general position~\cite[Lemma~3.4]{OAI}. We isolate what this step provides as a \emph{template property} of the field, and prove it for transcendental $x$. Apart from OpenAI's proof of their Theorem~2.3, with this one step replaced, the paper is self-contained. A finite cover of $K_x$ by rotated kernels of a linear functional over $\Qbar$ would force certain Cauchy transforms of the functional to be rational functions. The functional would then factor through a finite-dimensional algebra, in which Cayley transforms of real elements avoid the cover.
+
+With the rigidity theorem, ratios far from one are excluded directly. If a coloring avoids the sides $1$ and $x$, the correlations of its colors at distances $1$ and $x$ both equal $-1/3$, and Theorem~\ref{thm:rigidityx} represents them as $\int J_0(|\xi|)\,d\nu(\xi)$ and $\int J_0(x|\xi|)\,d\nu(\xi)$ for a measure $\nu$ on $\C$ of mass at most one. Since $J_0(t)+J_0(xt)>-2/3$ for $x\ge3/2$, no such coloring exists. Shkredov's criterion involves the same sum but requires the lower bound $-0.5972406$, since avoiding a single triangle fixes fewer correlations.
+
+For ratios near one, $2/3<x<3/2$, we exclude measurable colorings that avoid both sides up to null sets. Call a point at which neither color class has density zero a boundary point, and consider the circle of radius $1$ or $x$ about a boundary point. Unless this circle meets the boundary points in positive length, the density points of one class on it are carried into the other class both by rotation through $\pi/3$ and by rotation through the apex angle $\gamma$ of an isosceles triangle with sides in $\{1,x\}$; this is impossible when $\gamma/\pi$ is irrational. A null set cannot meet the circles about its own points in positive length unless it is empty, while a coloring with density points of both colors has a boundary point.
+
+Section~\ref{sec:reduction} gives the reduction of Erd\H{o}s et al., Section~\ref{sec:circle} the circle argument, and Section~\ref{sec:bessel} the Bessel bound; these sections are elementary. Sections~\ref{sec:carriers}--\ref{sec:templates} prove Theorem~\ref{thm:rigidityx} and use no geometry. Sections~\ref{sec:label} and~\ref{sec:transfer} construct the invariant law and the measurable coloring, and Section~\ref{sec:proof} proves Theorems~\ref{thm:main}--\ref{thm:rigidityx}.
+
+\paragraph{Formalization.} Theorems~\ref{thm:main} and~\ref{thm:twoscale} have been formalized in Lean~4 using Mathlib, together with Theorem~\ref{thm:rigidityx} in the equivalent form of Theorem~\ref{thm:rigidity}; the source code is available in~\cite{Formalization}. The development builds on OpenAI's formalization of their rigidity theorem~\cite{OAICode}. The formal statements of Erd\H{o}s Problem~173, of Shader's theorem and of the strip example are taken from the Formal Conjectures project~\cite{FormalConjectures}, where a triangle has affinely independent vertices; the formalization also states and proves Theorem~\ref{thm:main} for any three distinct points, collinear triples included.
+
+\paragraph{Notation.} We identify the plane with $\C$. A two-coloring is an arbitrary map $c\colon\C\to\{0,1\}$. We write $S^1=\{u\in\C:|u|=1\}$, $\T=\R/2\pi\Z$, and $\sigma$ for normalized arc length on $\T$. For a measurable set $A\subset\C$, $|A|$ is its Lebesgue measure, and $B(p,\rho)$ is the closed disk of radius $\rho$ about $p$. We put $\zeta=e^{i\pi/3}$, so that $(0,r,r\zeta)$ is an equilateral triangle of side $r$, and we use $\bar\zeta=1-\zeta$ and $\zeta^2=\zeta-1$. We write $\Qbar$ for the field of complex algebraic numbers.
+
+\section{Reduction to two equilateral scales}\label{sec:reduction}
+
+A \emph{template} is a pair $(a,b)$ of complex numbers, standing for the triangle with vertices $0,a,b$. Its \emph{copies} are the triples
+\[
+ (p,\;p+ua,\;p+ub)\qquad(p\in\C,\ u\in S^1),
+\]
+its images under orientation-preserving isometries. A two-coloring $c$ \emph{avoids} the template if none of its copies is monochromatic. We say that $c$ avoids the side $r>0$ if it avoids the equilateral template $(r,r\zeta)$. Since an equilateral triangle is symmetric under a reflection, this means that $c$ has no monochromatic equilateral triangle of side $r$.
+
+Every triangle with vertices $w_0,w_1,w_2$, collinear or not, is the image of a template $(a,z)$ with $a=|w_1-w_0|>0$ under an orientation-preserving isometry, so every copy of this template is congruent to the triangle. Thus a coloring with no monochromatic congruent copy of the triangle avoids the template.
+
+For measurable colorings we use a weaker condition, as OpenAI do for proper colorings~\cite[Definition~1.2]{OAI}. The copy of $(a,b)$ placed by $(p,t)\in\C\times\T$ is $(p,p+e^{it}a,p+e^{it}b)$. A Lebesgue measurable two-coloring $c$ \emph{weakly avoids} the template if the placements $(p,t)$ of monochromatic copies form a null set for the product of Lebesgue measure and $\sigma$. It weakly avoids the side $r$ if it weakly avoids $(r,r\zeta)$.
+
+The following lemma is Theorem~1 of Erd\H{o}s et al.~\cite[p.~563]{EGMRSS}, in the form of Lemma~1.3 of Jel\'inek et al.~\cite{JKSV}. We give the configuration in coordinates, since part~(ii) is needed in a measure form.
+
+\begin{lem}\label{lem:eightpoint}
+Let $a>0$ and $z\in\C$.
+\begin{enumerate}
+\item[(i)] If a two-coloring has a monochromatic equilateral triangle of side $a$, then it has a monochromatic copy of the template $(a,z)$.
+\item[(ii)] Suppose that $z\ne0,a$. If a measurable two-coloring weakly avoids the sides $a$, $|z|$ and $|z-a|$, then it weakly avoids the template $(a,z)$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+Consider the eight points
+\[
+\begin{aligned}
+ A&=0,& B&=a,& C&=a\zeta,& D&=z,\\
+ B'&=\zeta z,& A'&=a+\zeta z,& C'&=a\bar\zeta+\zeta z,& D'&=a-\bar\zeta z.
+\end{aligned}
+\]
+Using $\zeta+\bar\zeta=1$, one checks that the triples $ABC$ and $A'B'C'$ are equilateral triangles of side $a$, the triples $ADB'$ and $A'D'B$ are equilateral triangles of side $|z|$, and the triples $BDC'$ and $B'D'C$ are equilateral triangles of side $|z-a|$. Moreover, each of the six triples
+\[
+ BAD,\quad CAB',\quad CBD',\quad B'A'D',\quad C'A'B,\quad C'B'D
+\]
+is the image of $(B,A,D)=(a,0,z)$ under the map $w\mapsto mw+t$, where $(m,t)$ is, in order,
+\[
+ (1,0),\quad(\zeta,0),\quad(-\bar\zeta,a),\quad(-1,a+\zeta z),\quad(-\zeta,a+\zeta z),\quad(\bar\zeta,\zeta z).
+\]
+Each multiplier has modulus one, so each of these triples is a copy of the template $(a,z)$. For instance, $C'A'B$ is the image of $(a,0,z)$ under $w\mapsto-\zeta w+a+\zeta z$, since $a-\zeta a=a\bar\zeta$.
+
+For~(i), place the configuration so that $A,B,C$ is the given monochromatic triangle, say of color $0$, and suppose that the six copies of the template are not monochromatic. Then $BAD$, $CAB'$ and $CBD'$ give $D$, $B'$ and $D'$ the color $1$. The copy $B'A'D'$ gives $A'$ the color $0$, and then $C'A'B$ gives $C'$ the color $1$. Now $C'$, $B'$ and $D$ all have color $1$, a contradiction.
+
+For~(ii), the same bookkeeping runs in the other direction. If $B,A,D$ have color $0$ and the six equilateral triples are not monochromatic, then $ADB'$, $ABC$ and $BDC'$ give $B'$, $C$ and $C'$ the color $1$. The triple $A'B'C'$ gives $A'$ the color $0$, and $A'D'B$ gives $D'$ the color $1$, so $B'D'C$ is monochromatic. Hence, if the copy of the template placed by $(p,t)$ is monochromatic, one of the six equilateral triples of the configuration placed by $w\mapsto p+e^{it}w$ is monochromatic. Each equilateral triple of the configuration has the form $(X,X+wr,X+wr\zeta)$ for a point $X$, a unit $w$ and a side $r\in\{a,|z|,|z-a|\}$ depending only on the triple. Placed by $(p,t)$, it is the copy of $(r,r\zeta)$ placed by $(p+e^{it}X,\,t+\arg w)$. The map $(p,t)\mapsto(p+e^{it}X,t+\arg w)$ preserves the product of Lebesgue measure and $\sigma$: it translates $t$ and, for each fixed $t$, translates $p$. The placements of monochromatic copies of $(a,z)$ are therefore contained in the union of six preimages of null sets under measure-preserving maps.
+\end{proof}
+
+When some of the eight points coincide, the argument still applies, since a coloring assigns one color to each point. In particular, part~(i) holds also when $z$ is real, that is, for collinear templates.
+
+\begin{prop}[Strip coloring]\label{prop:strips}
+Color each point $z\in\C$ by the parity of $\lfloor 2\im z/\sqrt3\rfloor$. This two-coloring has no monochromatic equilateral triangle of side $1$.
+\end{prop}
+
+\begin{proof}
+Put $h=\sqrt3/2$, so that the color classes are unions of half-open strips $\{nh\le\im z<(n+1)h\}$. An equilateral triangle of side $1$ has vertices $p$, $p+e^{i\theta}$ and $p+e^{i(\theta+\pi/3)}$ for some $\theta$. Its three vertical gaps are $|\sin\theta|$, $|\sin(\theta+\pi/3)|$ and $|\sin(\theta+\pi/3)-\sin\theta|=|\sin(\theta+2\pi/3)|$, so the sum of their squares is
+\[
+ \sum_{k=0}^2\sin^2(\theta+k\pi/3)=\frac32-\frac12\sum_{k=0}^2\cos(2\theta+2k\pi/3)=\frac32=2h^2.
+\]
+The largest gap is the sum $g_1+g_2$ of the other two, and $2(g_1+g_2)^2\ge g_1^2+g_2^2+(g_1+g_2)^2=2h^2$. Hence some gap is at least $h$, and at most one gap exceeds $h$.
+
+Two points of the same color lie in the same strip, at vertical distance less than $h$, or in strips at least two apart, at vertical distance greater than $h$. If all three vertices had the same color, they could not all lie in one strip, since some gap is at least $h$. One vertex would then lie in a different strip from the other two, and two gaps would exceed $h$, which is impossible.
+\end{proof}
+
+\section{Measurable colorings with ratio near one}\label{sec:circle}
+
+This section uses only Lemma~\ref{lem:eightpoint}(ii) from the preceding one, and proves the following theorem.
+
+\begin{thm}\label{thm:circle}
+Let $2/3<x<3/2$ with $x\ne1$. No measurable two-coloring of the plane weakly avoids both the side $1$ and the side $x$.
+\end{thm}
+
+Throughout, $c$ is a measurable two-coloring with color classes $K_0=c^{-1}(0)$ and $K_1=c^{-1}(1)$. A measurable set $A$ has \emph{density zero} at $p$ if $|A\cap B(p,\rho)|=o(\rho^2)$ as $\rho\to0$. A point $p$ is a \emph{density point} of the class $i$ if $K_{1-i}$ has density zero at $p$. The two classes cannot both have density zero at $p$, since $|K_0\cap B(p,\rho)|+|K_1\cap B(p,\rho)|=\pi\rho^2$. We call the set $S$ of points at which neither class has density zero the \emph{boundary} of $c$; it is the measure-theoretic boundary of $K_0$. Every point is either a density point of exactly one class or a point of $S$, and at a point of $S$ both classes have positive upper density.
+
+\begin{lem}\label{lem:density}
+\begin{enumerate}
+\item[(a)] For a measurable set $A$, the set of points at which $A$ has density zero is Borel. The boundary $S$ is Borel and null.
+\item[(b)] If $c$ weakly avoids some template, then each class $K_i$ has positive measure and has a density point of the class $i$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) If $1/(k+2)\le\rho\le1/(k+1)$, then $|A\cap B(p,\rho)|/\rho^2\le4(k+1)^2|A\cap B(p,1/(k+1))|$. Hence $A$ has density zero at $p$ exactly when $(k+1)^2|A\cap B(p,1/(k+1))|\to0$ as $k\to\infty$. Each function $p\mapsto|A\cap B(p,\rho)|$ is continuous, so this set is Borel. By Lebesgue's density theorem, $K_1$ has density zero at almost every point of $K_0$, and $K_0$ at almost every point of $K_1$. Thus $S$ is null.
+
+(b) Suppose that $c$ weakly avoids $(a,b)$ and that $K_1$ is null. For each fixed $t$, the points $p$ for which one of $p$, $p+e^{it}a$, $p+e^{it}b$ lies in $K_1$ form a null set. By Fubini's theorem, almost every copy of $(a,b)$ lies in $K_0$ and is monochromatic, which contradicts weak avoidance. So $|K_1|>0$, and likewise $|K_0|>0$. By Lebesgue's density theorem, almost every point of $K_i$ is a density point of the class $i$.
+\end{proof}
+
+The next lemma is the three-point form of the density argument of OpenAI~\cite[Lemma~4.3]{OAI}, a version of the density-point method of Falconer~\cite{Falconer} and Payne~\cite[Lemma~1 and Proposition~1]{Payne}; at the first vertex only positive upper density is required.
+
+\begin{lem}[Apex lemma]\label{lem:apex}
+Let $c$ weakly avoid the template $(a,b)$, and let $p$ be a point at which $K_i$ does not have density zero. Then there is no $u_0\in S^1$ for which $p+u_0a$ and $p+u_0b$ are both density points of the class $i$.
+\end{lem}
+
+\begin{proof}
+Suppose that such a $u_0$ exists, and put $L=|a|+|b|+1$. There are $\varepsilon>0$ and arbitrarily small $h>0$ with $|K_i\cap B(p,h)|\ge\varepsilon h^2$. Let $T_h$ be the arc of $t\in\T$ with $|e^{it}-u_0|\le h/L$, so $\sigma(T_h)>0$. For $q\in B(p,h)$ and $t\in T_h$,
+\[
+ |(q+e^{it}a)-(p+u_0a)|\le|q-p|+|e^{it}-u_0|\,|a|\le2h.
+\]
+Thus, for each $t\in T_h$, the points $q\in B(p,h)$ with $q+e^{it}a\notin K_i$ lie in a translate of $K_{1-i}\cap B(p+u_0a,2h)$, a set of measure $o(h^2)$; the same holds for $b$. Therefore the placements $(q,t)\in(K_i\cap B(p,h))\times T_h$ of copies with all three vertices in $K_i$ have measure at least $(\varepsilon h^2-o(h^2))\,\sigma(T_h)$, which is positive for small $h$. This contradicts weak avoidance.
+\end{proof}
+
+For $R\subset\T$ and $s\in\T$ we write $R-s=\{t\in\T:t+s\in R\}$.
+
+\begin{lem}[Alternation on a circle]\label{lem:alternation}
+Let $R\subset\T$ be measurable, let $R'=\T\setminus R$, and let $\gamma\in\R$. If the sets $R\cap(R-\pi/3)$, $R'\cap(R'-\pi/3)$ and $R\cap(R-\gamma)$ are null, then $\gamma/\pi$ is rational.
+\end{lem}
+
+\begin{proof}
+The first condition says that $R-\pi/3\subset R'$ up to a null set, so $\sigma(R)\le\sigma(R')$. The second gives $\sigma(R')\le\sigma(R)$, so $\sigma(R)=\sigma(R')=1/2$. An inclusion up to a null set between sets of equal finite measure is an equality up to a null set; thus $R-\pi/3=R'$ up to a null set, and the third condition likewise gives $R-\gamma=R'$. Hence $R-\gamma=R-\pi/3$, so $R$ is invariant up to a null set under the rotation by $\gamma-\pi/3$. If $\gamma/\pi$ were irrational, this rotation would be ergodic for $\sigma$, and $\sigma(R)$ would be $0$ or $1$, not $1/2$.
+\end{proof}
+
+\begin{lem}[No self-supporting null set]\label{lem:selfsupport}
+Let $S\subset\C$ be a Borel null set and $r>0$. Suppose that $\sigma\{t:p+re^{it}\in S\}>0$ for every $p\in S$. Then $S$ is empty.
+\end{lem}
+
+\begin{proof}
+We first show that, for every Borel null set $N\subset\C$,
+\begin{equation}\label{eq:twostep}
+ (\sigma\otimes\sigma)\{(t,s)\in\T^2:e^{it}+e^{is}\in N\}=0.
+\end{equation}
+The shear $(t,s)\mapsto(t,t+s)$ preserves $\sigma\otimes\sigma$, and $e^{it}+e^{i(t+s)}=e^{it}(1+e^{is})$. In polar coordinates, $|N|=2\pi\int_0^\infty\sigma\{t:\rho e^{it}\in N\}\,\rho\,d\rho$, so the set $Z$ of radii $\rho>0$ with $\sigma\{t:\rho e^{it}\in N\}>0$ is null. If $|1+e^{is}|\notin Z\cup\{0\}$, then the $t$ with $e^{it}(1+e^{is})\in N$ form a $\sigma$-null set, by rotation invariance. For $|s|<\pi$ we have $|1+e^{is}|=2\cos(s/2)$, and $s=\pm2\arccos(\rho/2)$ is a continuously differentiable function of $\rho\in(0,2)$, so it maps null sets to null sets. Hence the $s$ with $|1+e^{is}|\in Z\cup\{0\}$ form a null set, and Fubini's theorem gives~\eqref{eq:twostep}.
+
+Now suppose that $p\in S$, and write $\Theta(q)=\{t:q+re^{it}\in S\}$. Every point $p+re^{it}$ with $t\in\Theta(p)$ lies in $S$, so Fubini's theorem gives
+\[
+ (\sigma\otimes\sigma)\{(t,s):p+re^{it}\in S,\ p+re^{it}+re^{is}\in S\}
+ =\int_{\Theta(p)}\sigma\bigl(\Theta(p+re^{it})\bigr)\,d\sigma(t)>0.
+\]
+This contradicts~\eqref{eq:twostep} for the null set $N=(S-p)/r$.
+\end{proof}
+
+\begin{lem}[An irrational apex angle]\label{lem:cyclotomic}
+Let $2/3<x<3/2$ with $x\ne1$, and put $A=\arcsin(x/2)$ and $B=\arcsin(1/(2x))$. Then $A/\pi$ or $B/\pi$ is irrational.
+\end{lem}
+
+Here $2A$ is the apex angle of the isosceles triangle with legs $1$ and base $x$, and $2B$ that of the isosceles triangle with legs $x$ and base $1$.
+
+\begin{proof}
+Since $\sin A\sin B=1/4$, the angles $u=A-B$ and $v=A+B$ satisfy
+\[
+ 2\cos u-2\cos v=4\sin A\sin B=1.
+\]
+Suppose that $A/\pi$ and $B/\pi$ are rational. Then there are integers $m\ge1$ and $0\le\alpha,\beta<m$ with $u\equiv2\pi\alpha/m$ and $v\equiv2\pi\beta/m$ modulo $2\pi$. Let $\omega=e^{2\pi i/m}$. The polynomial
+\[
+ P(X)=X^\alpha+X^{m-\alpha}-X^\beta-X^{m-\beta}-1\in\Z[X]
+\]
+satisfies $P(\omega^k)=2\cos(ku)-2\cos(kv)-1$ for every integer $k$, and $P(\omega)=0$. The minimal polynomial of $\omega$ over $\Q$ is the cyclotomic polynomial, whose roots are the $\omega^k$ with $k$ coprime to $m$. Hence
+\begin{equation}\label{eq:galois}
+ 2\cos(ku)-2\cos(kv)=1\qquad(\gcd(k,m)=1).
+\end{equation}
+
+Since $x/2$ and $1/(2x)$ lie in $(1/3,3/4)$, both $A$ and $B$ lie in $(\arcsin(1/3),\arcsin(3/4))$, and
+\[
+ |u|<\arcsin(3/4)-\arcsin(1/3)<0.51<\pi/5.
+\]
+Also $u\ne0$, since $A=B$ only when $x=1$. Write $u/2\pi\equiv\alpha_1/m_1$ modulo $1$ in lowest terms, with $m_1\mid m$. Since $\cos u\ne1$, the numerator $\alpha_1$ is not divisible by $m_1$, so $\cos u\le\cos(2\pi/m_1)$. Since $\cos u>\cos(\pi/5)$, it follows that $m_1\ge11$. Choose $j$ coprime to $m_1$ with $m_1<3j<2m_1$: for $m_1=4l,4l+1,4l+2,4l+3$ take $j=2l+1,2l,2l+3,2l+1$ respectively. The reduction map $(\Z/m\Z)^\times\to(\Z/m_1\Z)^\times$ is surjective, so some $k$ coprime to $m$ satisfies $k\alpha_1\equiv j$ modulo $m_1$. Then $ku\equiv2\pi j/m_1$ modulo $2\pi$, with $2\pi/3<2\pi j/m_1<4\pi/3$, so $\cos(ku)<-1/2$ and $2\cos(ku)-2\cos(kv)<1$. This contradicts~\eqref{eq:galois}.
+\end{proof}
+
+\begin{lem}[A boundary point]\label{lem:boundarypoint}
+Let $A\subset\C$ be measurable. Suppose that $\C\setminus A$ has density zero at a point $a$ and $A$ has density zero at a point $b$. Then there is a point at which neither $A$ nor $\C\setminus A$ has density zero.
+\end{lem}
+
+\begin{proof}
+For $q\in\C$ and $s>0$, let $Q(q,s)=q+\{\xi+i\eta:0\le\xi,\eta\le s\}$ be the closed square with lower left corner $q$ and side $s$. Call it \emph{balanced} if $|A\cap Q(q,s)|=s^2/2$. For fixed $s$, the function $q\mapsto|A\cap Q(q,s)|$ is continuous.
+
+A square of side $s$ containing $a$ lies in $B(a,2s)$. For all sufficiently small $s$, the density assumption therefore gives $|A\cap Q(a,s)|\ge s^2-|B(a,2s)\setminus A|\ge s^2/2$, and likewise $|A\cap Q(b,s)|\le s^2/2$. By continuity along the segment from $a$ to $b$, some square $Q_0$ of side $s$ is balanced.
+
+A balanced square $Q$ of side $s$ contains a balanced square of side $s/2$. Indeed, the four quadrants of $Q$ have side $s/2$, and the measures of their intersections with $A$ sum to $s^2/2$, so one quadrant meets $A$ in measure at least $s^2/8$ and another in measure at most $s^2/8$. Translating a square of side $s/2$ from the first quadrant to the second along a segment keeps it inside $Q$, by convexity, and continuity gives a balanced square in between.
+
+This gives nested balanced squares $Q_n$ of side $s_n=s/2^n$, which shrink to a point $z$. Each $Q_n$ contains $z$, so $Q_n\subset B(z,2s_n)$, and both $|A\cap B(z,2s_n)|$ and $|B(z,2s_n)\setminus A|$ are at least $s_n^2/2=(2s_n)^2/8$. Hence neither $A$ nor its complement has density zero at $z$.
+\end{proof}
+
+\begin{prop}\label{prop:circlecore}
+Let $r>0$, and let $\gamma\in\R$ with $\gamma/\pi$ irrational. No measurable two-coloring weakly avoids both the equilateral template $(r,r\zeta)$ and the isosceles template $(r,re^{i\gamma})$.
+\end{prop}
+
+\begin{proof}
+Suppose that $c$ weakly avoids both, and let $S$ be its boundary. By Lemma~\ref{lem:density}(a), $S$ is a Borel null set. For $p\in\C$, put
+\[
+ R_i(p)=\{t\in\T:p+re^{it}\text{ is a density point of the class }i\},\qquad
+ \Theta(p)=\{t\in\T:p+re^{it}\in S\}.
+\]
+By Lemma~\ref{lem:density}(a) these are Borel sets, and they partition $\T$.
+
+We claim that $\sigma(\Theta(p))>0$ for every $p\in S$. Suppose instead that $\Theta(p)$ is null for some $p\in S$. Neither class has density zero at $p$. If $t$ and $t+\pi/3$ both belonged to $R_0(p)$, then $p+e^{it}r$ and $p+e^{it}r\zeta$ would both be density points of the class $0$, contrary to Lemma~\ref{lem:apex} for the template $(r,r\zeta)$. Thus $R_0(p)\cap(R_0(p)-\pi/3)$ is empty. In the same way, Lemma~\ref{lem:apex} for $(r,re^{i\gamma})$ shows that $R_0(p)\cap(R_0(p)-\gamma)$ is empty, and Lemma~\ref{lem:apex} for $(r,r\zeta)$ and the class $1$ shows that $R_1(p)\cap(R_1(p)-\pi/3)$ is empty. The complement of $R=R_0(p)$ is $R'=R_1(p)\cup\Theta(p)$, so
+\[
+ R'\cap(R'-\pi/3)\subset\bigl(R_1(p)\cap(R_1(p)-\pi/3)\bigr)\cup\Theta(p)\cup(\Theta(p)-\pi/3)
+\]
+is null. Lemma~\ref{lem:alternation} now shows that $\gamma/\pi$ is rational, a contradiction.
+
+By the claim and Lemma~\ref{lem:selfsupport}, the boundary $S$ is empty. On the other hand, by Lemma~\ref{lem:density}(b) there are a density point $a$ of the class $0$ and a density point $b$ of the class $1$. Lemma~\ref{lem:boundarypoint}, applied to $A=K_0$, gives a point of $S$. This contradiction proves the proposition.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:circle}]
+Let $c$ be a measurable two-coloring that weakly avoids the sides $1$ and $x$, and let $A$ and $B$ be as in Lemma~\ref{lem:cyclotomic}. If $A/\pi$ is irrational, put $\gamma=2A$ and $z=e^{i\gamma}$. Then $|z|=1$ and $|z-1|=2\sin A=x$, so Lemma~\ref{lem:eightpoint}(ii) shows that $c$ weakly avoids $(1,e^{i\gamma})$. Proposition~\ref{prop:circlecore} with $r=1$ gives a contradiction. If $B/\pi$ is irrational, put $\gamma=2B$ and $z=xe^{i\gamma}$. Then $|z|=x$ and $|z-x|=2x\sin B=1$, so $c$ weakly avoids $(x,xe^{i\gamma})$, and Proposition~\ref{prop:circlecore} with $r=x$ gives a contradiction. By Lemma~\ref{lem:cyclotomic}, one of the two cases occurs.
+\end{proof}
+
+\section{A lower bound for \texorpdfstring{$J_0(t)+J_0(xt)$}{J0(t)+J0(xt)}}\label{sec:bessel}
+
+The Bessel function of order zero is
+\[
+ J_0(t)=\frac1{2\pi}\int_0^{2\pi}\cos(t\cos\theta)\,d\theta.
+\]
+Differentiating under the integral sign, we write $J_1=-J_0'$, so that
+\[
+ J_1(t)=\frac1{2\pi}\int_0^{2\pi}\cos\theta\,\sin(t\cos\theta)\,d\theta,\qquad
+ J_0''(t)=-\frac1{2\pi}\int_0^{2\pi}\cos^2\theta\,\cos(t\cos\theta)\,d\theta.
+\]
+Integrating the derivative of $\sin\theta\sin(t\cos\theta)$ over a period gives Bessel's equation $tJ_0''+J_0'+tJ_0=0$. This section proves the following bound.
+
+\begin{prop}\label{prop:bessel}
+For $x\ge3/2$ and $t\ge0$,
+\[
+ J_0(t)+J_0(xt)\ge-\frac{83}{125}>-\frac23.
+\]
+\end{prop}
+
+We use the following elementary properties of $J_0$ and $J_1$.
+
+\begin{lem}\label{lem:besselshape}
+\begin{enumerate}
+\item[(a)] For all real $s,t$, we have $|J_0(t)-J_0(s)|\le|t-s|$ and $|J_1(t)-J_1(s)|\le|t-s|/2$.
+\item[(b)] $J_1(t)\ge0$ for $0\le t\le\pi$.
+\item[(c)] For $0<s\le t$, we have $J_0(t)^2\le J_0(s)^2+J_1(s)^2$.
+\item[(d)] For $t\ge0$ and every integer $N\ge0$,
+\[
+\begin{aligned}
+ \Bigl|J_0(t)-\sum_{k=0}^{N-1}\frac{(-1)^k(t/2)^{2k}}{(k!)^2}\Bigr|&\le\frac{(t/2)^{2N}}{(N!)^2},\\
+ \Bigl|J_1(t)-\sum_{k=0}^{N-1}\frac{(-1)^k(t/2)^{2k+1}}{k!\,(k+1)!}\Bigr|&\le\frac{(t/2)^{2N+1}}{N!\,(N+1)!}.
+\end{aligned}
+\]
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) The integral formulas give $|J_1|\le1$ and $|J_0''|\le\frac1{2\pi}\int_0^{2\pi}\cos^2\theta\,d\theta=1/2$.
+
+(b) For $0\le t\le\pi$, the number $t\cos\theta$ lies in $[-\pi,\pi]$ and has the sign of $\cos\theta$, so the integrand of $J_1$ is nonnegative.
+
+(c) By Bessel's equation, $J_1'=-J_0''=J_0-J_1/t$ for $t>0$. Hence the energy $J_0^2+J_1^2$ has derivative $-2J_0J_1+2J_1(J_0-J_1/t)=-2J_1^2/t\le0$, and is nonincreasing on $(0,\infty)$.
+
+(d) The Taylor polynomials of $\cos y$ and $\sin y$ of degrees $2N-1$ and $2N$ differ from them by at most $|y|^{2N}/(2N)!$ and $|y|^{2N+1}/(2N+1)!$, respectively. Substitute $y=t\cos\theta$, multiply the second by $\cos\theta$, and integrate using
+\[
+ \frac1{2\pi}\int_0^{2\pi}\cos^{2k}\theta\,d\theta=\frac{(2k)!}{4^k(k!)^2}.
+\]
+The term of degree $2k$ in $\cos y$ contributes $(t/2)^{2k}/(k!)^2$, and the term of degree $2k+1$ in $\sin y$ contributes $(t/2)^{2k+1}/(k!\,(k+1)!)$; the error terms are bounded by the same expressions with $k=N$.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llll|llll}
+ & $t$ & $N$ & bound & & $t$ & $N$ & bound\\\hline
+ $J_0$ & $3$ & $8$ & $\ge-0.261$ & $J_1$ & $3$ & $8$ & $\ge0.33$\\
+ $J_0$ & $16/5$ & $9$ & $\ge-0.321$ & $J_1$ & $7/2$ & $9$ & $\ge0.13$\\
+ $J_0$ & $15/4$ & $9$ & $\in[-0.4015,0]$ & $J_1$ & $15/4$ & $9$ & $\in[-0.0334,0.0334]$\\
+ $J_0$ & $9/2$ & $10$ & $\ge-0.321$ & $J_1$ & $9/2$ & $10$ & $\le-0.23$\\
+ $J_0$ & $24/5$ & $11$ & $\ge-0.241$ & $J_1$ & $11/2$ & $12$ & $\le-0.34$\\
+ $J_0$ & $13/2$ & $13$ & $\ge0.25$ & $J_1$ & $17/2$ & $16$ & $\ge0.27$\\
+ $J_0$ & $15/2$ & $15$ & $\ge0.25$ & $J_1$ & $9$ & $17$ & $\ge0.24$\\
+ $J_0$ & $46/5$ & $17$ & $\in[-0.137,0]$ & $J_1$ & $46/5$ & $17$ & $\in[-0.218,0.218]$
+\end{tabular}
+\caption{Bounds for $J_0$ and $J_1$ at rational points, from Lemma~\ref{lem:besselshape}(d) with the stated number $N$ of terms. Each is a comparison of rational numbers.}
+\label{tab:bessel}
+\end{table}
+
+\begin{proof}[Proof of Proposition~\ref{prop:bessel}]
+All numerical values below are from Table~\ref{tab:bessel}. By Lemma~\ref{lem:besselshape}(a), if $J_1(p)\ge\beta>0$, then $J_1\ge0$ on $[p-2\beta,p+2\beta]$, and similarly for $J_1(p)\le-\beta$. Together with Lemma~\ref{lem:besselshape}(b) on $[0,3]\subset[0,\pi]$, the values of $J_1$ at $3$ and $7/2$ show that $J_1\ge0$ on $[0,15/4]$, the values at $9/2$ and $11/2$ show that $J_1\le0$ on $[9/2,61/10]$, and the values at $17/2$ and $9$ show that $J_1\ge0$ on $[8,46/5]$. Thus $J_0$ is nonincreasing on $[0,15/4]$ and on $[8,46/5]$, and nondecreasing on $[9/2,61/10]$.
+
+We first show that $J_0\ge-0.403$ on $[0,\infty)$. For $t\le15/4$ this follows from monotonicity and $J_0(15/4)\ge-0.4015$. For $t\ge15/4$, Lemma~\ref{lem:besselshape}(c) gives $J_0(t)^2\le0.4015^2+0.0334^2<0.403^2$.
+
+Next we show that $J_0\ge-0.261$ on $[0,3]\cup[24/5,\infty)$. On $[0,3]$ this follows from monotonicity and the value at $3$. On $[24/5,61/10]$, monotonicity gives $J_0(t)\ge J_0(24/5)\ge-0.241$. On $[61/10,7]$ and $[7,8]$, the Lipschitz bound of Lemma~\ref{lem:besselshape}(a) and the values at $13/2$ and $15/2$ give $J_0(t)\ge1/4-1/2$. On $[8,46/5]$, monotonicity gives $J_0(t)\ge J_0(46/5)\ge-0.137$. For $t\ge46/5$, Lemma~\ref{lem:besselshape}(c) gives $J_0(t)^2\le0.137^2+0.218^2<0.261^2$.
+
+Now let $x\ge3/2$ and $t\ge0$. If $t$ or $xt$ lies outside $(3,24/5)$, the two bounds give $J_0(t)+J_0(xt)\ge-0.261-0.403=-83/125$. Otherwise $3<t<24/(5x)\le16/5$ and $xt\ge3t/2>9/2$. By monotonicity $J_0(t)\ge J_0(16/5)\ge-0.321$ and $J_0(xt)\ge J_0(9/2)\ge-0.321$, so the sum is at least $-0.642$.
+\end{proof}
+
+\section{Carriers and Haar rigidity}\label{sec:carriers}
+
+OpenAI's rigidity theorem~\cite[Theorem~2.3]{OAI} concerns the field of algebraic numbers. In this section we list the properties of that field which its proof uses, and we replace the one step that uses number fields by a property that we prove for the algebraic closure of $\Q(x)$ in Sections~\ref{sec:template} and~\ref{sec:templates}. This theorem, with its proof so modified, is the only result of~\cite{OAI} on which our argument depends; the other results of~\cite{OAI} that we cite are proved here as well.
+
+We call a countable subfield $E\subset\C$ a \emph{carrier} if it has the following three properties, where $F=E\cap\R$ and $K=\{u\in E:|u|=1\}$.
+\begin{enumerate}
+\item[(C1)] A complex number $z$ lies in $E$ if and only if $\re z$ and $\im z$ lie in $F$.
+\item[(C2)] Every complex root of a nonzero polynomial with coefficients in $E$ lies in $E$.
+\item[(C3)] (\emph{Template property}) For every finite set $Q\subset K$ there is a finite set $S\subset K$ such that, for every map $\chi\colon S\to Q$, both $1$ and $i$ lie in the $\Q$-linear span of $\{\chi(s)s:s\in S\}$.
+\end{enumerate}
+
+These properties are modeled on the field $\Qbar$. Properties (C1) and (C2) have the following consequences, which replace the uses of algebraicity over $\Q$ in OpenAI's proof. The field $E$ contains $i$ and is closed under complex conjugation. If $t\in F$ and $t\ge0$, then $\sqrt t\in F$; hence $|z|\in F$ for $z\in E$. Every complex root of an element of $K$ lies in $K$, so the group $K$ is divisible. The field $E$ contains $\Q(i)$ and is therefore dense in $\C$; likewise $F$ is dense in $\R$, and $K$ contains the points $(1+si)/(1-si)$, $s\in\Q$, which are dense in $S^1$. Every $t\in F\cap[-1,1]$ is the real part of $t+i\sqrt{1-t^2}\in K$. Two nonzero elements $z,z'$ of $E$ with $|z|=|z'|$ satisfy $z'=kz$ with $k=z'/z\in K$.
+
+For a real number $x$, let $E_x$ be the algebraic closure of $\Q(x)$ in $\C$. It is countable. Complex conjugation fixes $\Q(x)$ and therefore maps $E_x$ onto itself; since also $i\in E_x$, property (C1) holds. Property (C2) holds because $E_x$ is relatively algebraically closed in $\C$. If $x$ is algebraic, then $E_x=\Qbar$.
+
+The template property is modeled on a selection of rotations in a number field~\cite[Lemma~3.4]{OAI}. We prove that selection with two algebraic lemmas, which we use again in Section~\ref{sec:template}.
+
+\begin{lem}\label{lem:generalposition}
+Let $V$ be a vector space of finite dimension $d$ over a field, and let $U\subset V$ be a set not contained in any finite union of proper subspaces. Then for every $n$ there are $u_1,\ldots,u_n\in U$ such that every $d$ of them form a basis of $V$.
+\end{lem}
+
+\begin{proof}
+Choose each $u_{m+1}\in U$ outside the spans of all subsets of $\{u_1,\ldots,u_m\}$ with fewer than $d$ elements, which are proper subspaces. By induction on the largest index, every subset of at most $d$ of the chosen elements is linearly independent.
+\end{proof}
+
+The next lemma adapts the Cayley-transform argument in OpenAI's proof of~\cite[Lemma~3.4]{OAI} from $\Q$ to an arbitrary field of characteristic zero.
+
+\begin{lem}[Cayley escape]\label{lem:cayley}
+Let $\Bbbk$ be a field of characteristic zero, and let $R$ be a commutative $\Bbbk$-algebra that is integral over $\Bbbk$. Let $\iota\in R$ satisfy $\iota^2=-1$, and let $R_\R\subset R$ be a $\Q$-linear subspace containing $1$ such that $1-\iota r$ is a unit of $R$ for every $r\in R_\R$. Put $\Cay(r)=(1+\iota r)(1-\iota r)^{-1}$. Suppose that the only $\Bbbk$-linear functional on $R$ vanishing on $R_\R\cup\iota R_\R$ is zero. Then for finitely many nonzero $\Bbbk$-linear functionals $\lambda_1,\ldots,\lambda_m$ on $R$, there is $r\in R_\R$ with $\lambda_j(\Cay(r))\ne0$ for all $j$.
+\end{lem}
+
+\begin{proof}
+Let $r_0,r_1\in R_\R$, and put $r(t)=r_0+tr_1$ for $t\in\Q$. The subalgebra $R'=\Bbbk[\iota r_0,\iota r_1]$ is finitely generated by integral elements, hence finite-dimensional. Multiplication by $1-\iota r(t)$ on $R'$ has a matrix of the form $M_0-tM_1$, and it is injective for rational $t$, since $1-\iota r(t)$ is a unit of $R$. Its determinant $\vartheta(t)$ is therefore a polynomial in $t$, nonzero at every rational $t$, and Cramer's rule writes the coordinates of $(1-\iota r(t))^{-1}\in R'$ as polynomials in $t$ divided by $\vartheta(t)$. Hence, for each functional $\lambda$, there is a polynomial $\pi_\lambda$ with $\lambda(\Cay(r(t)))=\pi_\lambda(t)/\vartheta(t)$ for all $t\in\Q$.
+
+First let $m=1$, and suppose that $\lambda_1(\Cay(r))=0$ for every $r\in R_\R$. Fix $b\in R_\R$ and take $r_0=0$ and $r_1=b$. Then $\pi_{\lambda_1}$ vanishes at every rational number, so $\pi_{\lambda_1}=0$. In $\Bbbk[[t]]$, the rational function $\pi_{\lambda_1}/\vartheta$ is the image under $\lambda_1$ of the formal expansion
+\[
+ \Cay(tb)=(1+t\iota b)\sum_{n\ge0}(t\iota b)^n=1+2t\iota b-2t^2b^2+\cdots,
+\]
+whose coefficients therefore lie in $\ker\lambda_1$. Thus $\lambda_1(1)=\lambda_1(\iota b)=\lambda_1(b^2)=0$ for every $b\in R_\R$. Applying this to $b$ and $b+1$ gives $\lambda_1(b)=\frac12\bigl(\lambda_1((b+1)^2)-\lambda_1(b^2)-\lambda_1(1)\bigr)=0$. So $\lambda_1$ vanishes on $R_\R\cup\iota R_\R$, and $\lambda_1=0$, a contradiction.
+
+For general $m$, argue by induction on $m$. By the induction hypothesis there is $r_0\in R_\R$ with $\lambda_j(\Cay(r_0))\ne0$ for $j<m$, and by the case $m=1$ there is $r'\in R_\R$ with $\lambda_m(\Cay(r'))\ne0$. Put $r_1=r'-r_0\in R_\R$. Then $\pi_{\lambda_j}(0)\ne0$ for $j<m$ and $\pi_{\lambda_m}(1)\ne0$. The nonzero polynomials $\pi_{\lambda_1},\ldots,\pi_{\lambda_m}$ have finitely many roots, so some rational $t$ is a root of none of them, and $r=r(t)$ has the required property.
+\end{proof}
+
+
+\begin{lem}[General position in a number field]\label{lem:numberfield}
+Let $M_0\subset\R$ be a number field, and put $M=M_0(i)$ and $d_0=[M:\Q]$. For every $n$ there are elements $s_1,\ldots,s_n\in M$ of modulus one such that every $d_0$ of them form a $\Q$-basis of $M$.
+\end{lem}
+
+\begin{proof}
+This is~\cite[Lemma~3.4]{OAI}; we deduce it from the two preceding lemmas. Apply Lemma~\ref{lem:cayley} with $\Bbbk=\Q$, $R=M$, $\iota=i$ and $R_\R=M_0$. The field $M$ is a finite extension of $\Q$, hence integral over it; for $r\in M_0$ the element $1-ir$ is nonzero, hence a unit; and $M=M_0+iM_0$, so the only functional vanishing on $M_0\cup iM_0$ is zero. The Cayley transforms $\Cay(r)=(1+ir)/(1-ir)$, $r\in M_0$, have modulus one, and by Lemma~\ref{lem:cayley} they avoid the kernels of any finitely many nonzero $\Q$-linear functionals, hence any finite union of proper $\Q$-subspaces of $M$. Lemma~\ref{lem:generalposition} completes the proof.
+\end{proof}
+
+\begin{prop}\label{prop:algebraiccarrier}
+The field $\Qbar$ of algebraic numbers is a carrier.
+\end{prop}
+
+\begin{proof}
+It remains to check~(C3). Let $Q\subset K$ be finite. Let $M_0\subset\R$ be a number field containing the real and imaginary parts of the elements of $Q$, and put $M=M_0(i)$ and $d_0=[M:\Q]$. By Lemma~\ref{lem:numberfield}, there is a finite set $S\subset K\cap M$ with $|S|>|Q|(d_0-1)$ such that every $d_0$ distinct elements of $S$ form a $\Q$-basis of $M$. Given $\chi\colon S\to Q$, the pigeonhole principle gives $q\in Q$ and $d_0$ distinct elements $s\in S$ with $\chi(s)=q$. These $s$ form a $\Q$-basis of $M$, and multiplication by $q$ is a $\Q$-linear automorphism of $M$, so the elements $qs$ span $M$, which contains $1$ and $i$.
+\end{proof}
+
+In Sections~\ref{sec:template} and~\ref{sec:templates} we prove the following theorem.
+
+\begin{thm}\label{thm:carrier}
+For every real number $x$, the field $E_x$ is a carrier.
+\end{thm}
+
+For algebraic $x$ this is Proposition~\ref{prop:algebraiccarrier}. The case of transcendental $x$ is proved in Section~\ref{sec:templates}.
+
+\paragraph{The rigidity theorem.} Let $E$ be a carrier. Following OpenAI~\cite[Definition~2.1]{OAI}, we regard $E$ as a discrete additive group and let $D$ be its compact dual group, the group of homomorphisms $d\colon E\to S^1$. For $z\in E$ put $\psi_z(d)=d(z)$, and for $a\in E$ put $(ad)(z)=d(az)$. For $\xi\in\C$ let $j(\xi)\in D$ be the character $z\mapsto\exp(i\re(\bar\xi z))$, and let $C=j(\C)$ be the subgroup of ordinary continuous characters. Since $E$ is countable, $D$ is compact and metrizable. The map $j$ is continuous, and it is injective: if $\exp(i\re(\bar\xi z))=1$ for all $z$ in the dense set $E$, then by continuity for all $z\in\C$, so $\xi=0$. Hence $j$ restricts to a homeomorphism from each closed disk $B(0,n)$ onto its compact image, so $C=\bigcup_nj(B(0,n))$ is Borel and $j^{-1}\colon C\to\C$ is Borel. Finally $a\,j(\xi)=j(\bar a\xi)$ for $a\in E$, so $aC=C$ for $a\in E\setminus\{0\}$. A finite Borel measure $\nu$ on $D$ is \emph{wild} if it is invariant under the maps $d\mapsto kd$, $k\in K$, and $\nu(C)=0$.
+
+\begin{thm}\label{thm:rigidity}
+Let $E$ be a carrier, and let $\nu$ be a finite wild measure on $D$. Then
+\[
+ \int_D\psi_z\,d\nu=0\qquad(z\in E\setminus\{0\}).
+\]
+\end{thm}
+
+For $E=\Qbar$ this is OpenAI's Theorem~2.3~\cite{OAI}, applied, if $\nu\ne0$, to $\nu$ normalized to a probability measure: a wild probability measure is Haar measure, whose Fourier coefficients vanish at every nonzero point. Their proof uses the field $\Qbar$ through the properties of a carrier listed below, with one exception, which we now describe. As OpenAI note~\cite[Section~2]{OAI}, there is a classical analogue on the whole plane: a measurable radial positive-definite function on $\R^2$ is the sum of a continuous positive-definite function and a nonnegative multiple of the indicator of the origin~\cite{Crum,GneitingSasvari}. Theorem~\ref{thm:rigidity} concerns Fourier coefficients defined only on $E$ and invariant only under $K$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:rigidity}]
+We follow the proof of~\cite[Theorem~2.3]{OAI} in Sections~2 and~3 of that paper, with $E,F,K$ as above. Its steps use the field only as follows.
+\begin{itemize}
+\item The discussion after Definition~2.1 uses that $E$ and $K$ are countable, that $K$ is divisible, and that $E$ is dense in $\C$.
+\item Lemma~2.4 uses that $K$ is divisible and infinite, that two elements $a,b\in E$ with $aF\ne bF$ form an $F$-basis of $E$, which holds by~(C1), and that $F$ is dense in $\R$.
+\item Lemma~2.5 uses an invariant mean on the countable abelian group $F/\Z$~\cite{vonNeumann,Folner}, and density of $F$ in $\R$ for its agreement with Lebesgue integration and for Bochner's theorem.
+\item Lemma~2.6 involves no field.
+\item Lemma~2.7 uses, besides Lemmas~2.4--2.6, the decomposition $t=k+\bar k$ of $t\in F$ with $|t|<2$, where $k=t/2+i\sqrt{1-t^2/4}\in K$.
+\item Lemmas~3.1 and~3.2 use only that $K$ is a countable divisible abelian group acting on a standard probability space. They are, respectively, the compact-extension part of the Furstenberg--Zimmer structure theory~\cite{Furstenberg,ZimmerExt,ZimmerSpectrum,Jamneshan} and a relative weak-mixing argument for multiple averages in the manner of Furstenberg~\cite{Furstenberg}.
+\item The radiality of the function $m$ before Lemma~3.3 uses that equal nonzero moduli in $E$ differ by an element of $K$, and Lemma~3.3 uses that $\sqrt{AB}\in F$ for $A,B\in F$ with $A,B\ge0$.
+\item Lemma~3.5 concerns functions on $F\cap[0,\infty)$ and uses no further property.
+\item The completion of the proof uses that every $t\in F\cap[-1,1]$ is the real part of an element of $K$, and, through Lemma~3.4, number fields.
+\end{itemize}
+All of these except the last item hold for every carrier, as noted after the definition of a carrier. In the formalization, OpenAI's Lean proof of the theorem is generalized in this way: its modules are stated for an arbitrary carrier, and the use of Lemma~3.4 is replaced by~(C3) as follows.
+
+We now replace the use of Lemma~3.4. Recall the setting of the completion~\cite[Section~3]{OAI}. For an ergodic wild $K$-invariant probability measure on $D$, OpenAI construct a factor and a radial function $m\colon F\cap[0,\infty)\to[0,1]$ with $m(0)=1$. Its negative logarithm $w=-\log m$ satisfies the difference inequality~\cite[(3.12)]{OAI}, the function $m$ satisfies the averaging identity~\cite[(3.13)]{OAI}, and its line averages vanish~\cite[(2.4) and~(3.11)]{OAI}. Suppose that $m(r)>0$ for some $r\in F$ with $r>0$, and choose a finite $H$ with $e^{-H}<m(r)^2$. OpenAI deduce from~\cite[(3.13)]{OAI} that the set
+\[
+ A_0=\{u\in K:w(2r|\re u|)\le H\}
+\]
+is syndetic: there are $q_1,\ldots,q_J\in K$ such that every $v\in K$ has some $q_jv\in A_0$~\cite[(3.16)]{OAI}.
+
+The rest of their argument needs only a finite family $\mathcal F$ of finite subsets of $K$, each having $1$ and $i$ in its $\Q$-linear span, such that for every $v\in K$ some $\mathcal T\in\mathcal F$ satisfies $kv\in A_0$ for all $k\in\mathcal T$. In their proof these sets are bases of a number field containing the $q_j$, obtained from Lemma~3.4. Over a general carrier the $q_j$ need not be algebraic, and we use~(C3) instead. Let $S$ be the set given by~(C3) for $Q=\{q_1,\ldots,q_J\}$. For $v\in K$ and $s\in S$, apply~\cite[(3.16)]{OAI} to $sv$ and choose $\chi(s)\in Q$ with $\chi(s)sv\in A_0$. The set $\mathcal T_v=\{\chi(s)s:s\in S\}$ has $1$ and $i$ in its $\Q$-linear span by~(C3), and there are at most $J^{|S|}$ such sets.
+
+For completeness we recall how the argument concludes. Clearing denominators gives a positive integer $D_0$ and a bound $b_0$ such that every $\mathcal T\in\mathcal F$ satisfies
+\[
+ D_0=\sum_{k\in\mathcal T}a_kk,\qquad a_k\in\Z,\qquad\sum_{k\in\mathcal T}|a_k|\le b_0.
+\]
+Since the real span of each $\mathcal T$ contains $1$ and $i$, the continuous function $v\mapsto\max_{k\in\mathcal T}|\re(kv)|$ has no zero on $S^1$; compactness gives a common $c_0\in(0,1]$ with $\max_{k\in\mathcal T}|\re(kv)|\ge c_0$ for $v\in S^1$ and $\mathcal T\in\mathcal F$. Now let $v\in K$ with $|\re v|<c_0/D_0$, and choose $\mathcal T$ for $v$. The numbers $p_k=2r|\re(kv)|$ satisfy $w(p_k)\le H$, their maximum $p$ is at least $2rc_0$, and taking real parts in the expression for $D_0$ writes $2rD_0|\re v|<p$ as an integer combination of the $p_k$ with coefficients of total size at most $b_0$. Lemma~3.5 of~\cite{OAI} gives $w(2rD_0|\re v|)\le4b_0H$. Since every $t\in F\cap[-1,1]$ is the real part of an element of $K$, it follows that $m\ge e^{-4b_0H}$ on $F\cap(0,2rc_0)$, which contradicts the vanishing line average~\cite[(2.4)]{OAI}. Hence $m(t)=0$ for every $t\in F$ with $t>0$, and the ergodic case of the theorem follows as in~\cite{OAI}; the general case follows by ergodic decomposition.
+\end{proof}
+
+We use Theorem~\ref{thm:rigidity} in two forms: directly for spectral measures in Section~\ref{sec:label}, and in the following form in Section~\ref{sec:transfer}. For a unitary representation $(T_z)_{z\in E}$ of the additive group $E$ on a complex Hilbert space $\calH$, let $\calH_c$ be the closed subspace of vectors $v$ with $\|T_zv-v\|\to0$ as $z\to0$ in the usual topology of $\C$.
+
+\begin{cor}\label{cor:residual}
+Let $E$ be a carrier. Let $(T_z)_{z\in E}$ be a unitary representation of $E$ on a complex Hilbert space $\calH$, and let $W_k$, $k\in K$, be unitary operators with $W_kT_z=T_{kz}W_k$. If $v\perp\calH_c$ and $W_kv=v$ for every $k\in K$, then $\langle v,T_zv\rangle=0$ for every $z\in E\setminus\{0\}$.
+\end{cor}
+
+\begin{proof}
+By the spectral theorem for the discrete abelian group $E$~\cite[Theorem~D.3.1]{BHV}, there is a finite Borel measure $\lambda_v$ on $D$ with $\langle v,T_zv\rangle=\int_D\psi_z\,d\lambda_v$, and a projection-valued measure $\Pi$ on $D$ with $\lambda_v(B)=\|\Pi(B)v\|^2$. Each vector $u$ in the range of $\Pi(C)$ lies in $\calH_c$: by dominated convergence,
+\[
+ \|T_zu-u\|^2=\int_C|\psi_z-1|^2\,d\lambda_u\longrightarrow0\qquad(z\to0),
+\]
+because $\psi_z(j(\xi))=\exp(i\re(\bar\xi z))\to1$ for each $\xi$. Hence $\Pi(C)v=0$ and $\lambda_v(C)=0$. The measure $\lambda_v$ is $K$-invariant: its image under $d\mapsto kd$ has Fourier coefficients
+\[
+ \int_D\psi_{kz}\,d\lambda_v=\langle v,T_{kz}v\rangle=\langle W_kv,W_kT_zv\rangle=\langle v,T_zv\rangle,
+\]
+and finite measures on $D$ are determined by their Fourier coefficients. Theorem~\ref{thm:rigidity} applies to $\lambda_v$.
+\end{proof}
+
+\section{Finite covers of a function-field unit circle}\label{sec:template}
+
+In this section and the next, $x$ is a transcendental real number, $L=E_x$ is the algebraic closure of $\Q(x)$ in $\C$, and $K_L=\{u\in L:|u|=1\}$. Unless stated otherwise, vector spaces and linear maps are over the field $\Qbar$ of algebraic numbers. The template property~(C3) for $L$ rests on the following theorem.
+
+\begin{thm}\label{thm:nocover}
+There are no finite set $Q\subset K_L$ and $\Qbar$-linear map $\lambda\colon L\to\Qbar$ with $\lambda(1)=1$ such that every $u\in K_L$ has some $q\in Q$ with $\lambda(qu)=0$.
+\end{thm}
+
+In other words, $K_L$ is not covered by finitely many rotations $q^{-1}\ker\lambda$ of the kernel of such a functional. In Section~\ref{sec:templates} we deduce the template property from Theorem~\ref{thm:nocover} by a compactness argument and Lemma~\ref{lem:numberfield}.
+
+We outline the proof of Theorem~\ref{thm:nocover}. A cover involves finitely many units, so it lives in a finite extension $N$ of the rational function field $\Qbar(T)$, where $T=(x+i)/(x-i)$. We test the cover on the units $a(T-1/\bar a)/(T-a)$, $a\in\Qbar$. This shows that the Cauchy transforms $a\mapsto\lambda(b/(T-a))$ agree, off a proper algebraic subset, with rational functions of $a$ of bounded degree (Proposition~\ref{prop:rational}). Multiplication by $T$ acts on Cauchy transforms as multiplication by $a$ plus a constant; the degree bound then yields a nonzero polynomial $p$ with $\lambda(p(T)\,\cdot)=0$ (Proposition~\ref{prop:annihilator}). The functional therefore factors through a finite-dimensional algebra, and there Cayley transforms of real elements avoid the cover, by Lemma~\ref{lem:cayley}. We begin with a lemma on Zariski density.
+
+For a finite set $I$, the polynomial functions on $\Qbar^I$ correspond to polynomials, since $\Qbar$ is infinite. A set $Z\subset\Qbar^I$ is \emph{dense} if the only polynomial vanishing on $Z$ is zero.
+
+\begin{lem}\label{lem:zariski}
+\begin{enumerate}
+\item[(a)] If $Z$ is dense and $g$ is a nonzero polynomial, then $\{z\in Z:g(z)\ne0\}$ is dense.
+\item[(b)] If a dense set is covered by finitely many sets, one of them is dense.
+\item[(c)] If $Z\subset\Qbar^I$ and $Z'\subset\Qbar^{I'}$ are dense, then $Z\times Z'\subset\Qbar^{I\sqcup I'}$ is dense.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) If $f$ vanishes on this set, then $fg$ vanishes on $Z$, so $fg=0$ and $f=0$. (b) If no member were dense, the product of nonzero polynomials vanishing on the members would be a nonzero polynomial vanishing on the dense set. (c) If $f$ vanishes on $Z\times Z'$, then for each $z'\in Z'$ the polynomial $f(\cdot,z')$ vanishes on $Z$ and is zero; so for each $y\in\Qbar^I$ the polynomial $f(y,\cdot)$ vanishes on $Z'$ and is zero.
+\end{proof}
+
+For the rest of this section, suppose, for a contradiction, that $Q\subset K_L$ and $\lambda$ are as in Theorem~\ref{thm:nocover}. Put
+\[
+ T=\frac{x+i}{x-i}\in K_L,\qquad B=\Qbar(T)=\Qbar(x).
+\]
+Since $x=i(T+1)/(T-1)$ and $x$ is transcendental, so is $T$. Let $N=B(Q)\subset L$. Each $q\in Q$ is algebraic over $\Q(x)\subset B$, so $N$ is a finite extension of $B$; let $d=[N:B]$. Since $\bar T=T^{-1}$, $\bar q=q^{-1}$ and $\overline{\Qbar}=\Qbar$, the field $N$ is closed under complex conjugation. Let $K_N=N\cap K_L$, a group closed under conjugation. Because $N=B[Q]$, the field $N$ is spanned over $B$ by the monomials in $Q$, which lie in $K_N$. Let $A$ be the $\Qbar$-linear span of $K_N$. It is a subring of $N$ containing $\Qbar$, $T^{\pm1}$ and $Q$, and it is closed under conjugation.
+
+We say that a $\Qbar$-linear functional $\mu\colon N\to\Qbar$ is \emph{covered} if every $u\in K_N$ has some $q\in Q$ with $\mu(qu)=0$. The restriction of $\lambda$ to $N$ is covered. For $w\in A$ write $\lambda_w(y)=\lambda(wy)$. If $v\in K_N$, then $\lambda_v$ is covered, since $vK_N=K_N$.
+
+The test units come from the \emph{parameter plane}
+\[
+ \Omega=\{(a,h)\in\Qbar^2:a\ne0,\ |a|\ne1,\ h=a-1/\bar a\}.
+\]
+For $(a,h)\in\Omega$ put
+\[
+ U_{a,h}=a\Bigl(1+\frac h{T-a}\Bigr)=\frac{a(T-1/\bar a)}{T-a}.
+\]
+
+\begin{lem}\label{lem:omega}
+\begin{enumerate}
+\item[(a)] For $(a,h)\in\Omega$, we have $h\ne0$ and $U_{a,h}\in K_N$.
+\item[(b)] The set $\Omega$ is dense in $\Qbar^2$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) We have $h=0$ only if $a\bar a=1$. Since $|T|=1$,
+\[
+ |a(T-1/\bar a)|=|\bar aT-1|=|T|\,|\bar a-\bar T|=|T-a|,
+\]
+and $T\ne a$ since $T$ is transcendental. So $|U_{a,h}|=1$, and $U_{a,h}\in N$ since $a,\bar a\in\Qbar$.
+
+(b) Let $f$ be a polynomial vanishing on $\Omega$. For rational $r>1$ put $\theta_r=1-r^{-2}$. For every $s\in\Q$, the number $a=r(1+si)/(1-si)$ has $|a|=r$ and $1/\bar a=a/r^2$, so $(a,\theta_ra)\in\Omega$. These are infinitely many values of $a$, so the polynomial $a\mapsto f(a,\theta_ra)$ is zero. For fixed $a\ne0$, the polynomial $h\mapsto f(a,h)$ therefore vanishes at the infinitely many points $\theta_ra$ and is zero. Hence $f(a,h)=0$ whenever $a\ne0$, and then $f=0$.
+\end{proof}
+
+\begin{lem}[Cauchy frame]\label{lem:frame}
+There are $b_1,\ldots,b_d\in K_N$ forming a $B$-basis of $N$, elements $s_1,\ldots,s_n\in K_N$ with $n>|Q|(d-1)$, a nonzero polynomial $\kappa\in\Qbar[X]$, and polynomials $p_{qkl}\in\Qbar[X]$, for $q\in Q$, $1\le k\le n$ and $1\le l\le d$, such that
+\begin{equation}\label{eq:frame}
+ \kappa(T)\,qs_k=\sum_{l=1}^dp_{qkl}(T)\,b_l
+\end{equation}
+and such that, for each $q\in Q$ and all distinct $k_1,\ldots,k_d$, the polynomial $\det\bigl(p_{qk_il}\bigr)_{i,l=1}^d$ is nonzero.
+\end{lem}
+
+\begin{proof}
+Let $N_\R=N\cap\R$. For $r\in N_\R$, the element $1-ir$ is nonzero, and $\Cay(r)=(1+ir)/(1-ir)$ lies in $K_N$. Every $u\in K_N$ is $\frac12(u+u^{-1})+i\cdot\frac1{2i}(u-u^{-1})$ with both coefficients in $N_\R$, so $N_\R\cup iN_\R$ spans $N$ over $B$. Lemma~\ref{lem:cayley}, applied with $\Bbbk=B$, $R=N$, $\iota=i$ and $R_\R=N_\R$, shows that Cayley transforms of elements of $N_\R$ avoid the kernels of any finitely many nonzero $B$-linear functionals, and hence any finite union of proper $B$-subspaces. Lemma~\ref{lem:generalposition} gives $u_1,\ldots,u_n\in K_N$, with $n=|Q|(d-1)+d$, every $d$ of which form a $B$-basis of $N$. Put $s_k=u_k$ and $b_l=u_l$ for $l\le d$. Write the coordinates of the elements $qs_k$ in the basis $(b_l)$ over a common denominator to obtain~\eqref{eq:frame}. For $q\in Q$ and distinct $k_1,\ldots,k_d$, the elements $qs_{k_1},\ldots,qs_{k_d}$ form a $B$-basis, so the value of $\det(p_{qk_il})$ at $T$ is nonzero, and this polynomial is nonzero.
+\end{proof}
+
+We fix such a frame for the rest of this section.
+
+For a covered functional $\mu$ and $a\in\Qbar$, define its \emph{Cauchy transform}
+\[
+ F_\mu(a)=\Bigl(\mu\Bigl(\frac{b_l}{T-a}\Bigr)\Bigr)_{l=1}^d\in\Qbar^d.
+\]
+A property of $(a,h)\in\Omega$ holds \emph{generically} if there is a nonzero polynomial $g$ on $\Qbar^2$ such that the property holds for all $(a,h)\in\Omega$ with $g(a,h)\ne0$. By Lemmas~\ref{lem:zariski}(a) and~\ref{lem:omega}(b), such points form a dense set.
+
+\begin{prop}\label{prop:rational}
+There are a nonzero polynomial $\Delta\in\Qbar[X]$ and an integer $e\ge0$, depending only on the frame, with the following property. For every covered functional $\mu$ there is a unique vector $P_\mu\in\Qbar[X]^d$ of polynomials such that $\Delta(a)F_\mu(a)=P_\mu(a)$ generically on $\Omega$, and its entries have degree at most $e$.
+\end{prop}
+
+\begin{proof}
+Fix a covered $\mu$, and write $F=F_\mu$. For $q\in Q$ and $1\le k\le n$ put
+\[
+ \ell_{qk}=\mu(qs_k),\qquad H_{qk}(a)=\mu\Bigl(\frac{qs_k}{T-a}\Bigr).
+\]
+
+\emph{Divided differences.} For a polynomial $p=\sum_m p_mX^m$ and $y\in N$, the identity $(T^m-a^m)/(T-a)=\sum_{i<m}T^ia^{m-1-i}$ shows that
+\[
+ \mu\Bigl(y\,\frac{p(T)-p(a)}{T-a}\Bigr)=\sum_m p_m\sum_{i<m}\mu(yT^i)\,a^{m-1-i}
+\]
+is a polynomial in $a$ of degree less than $\deg p$. Divide~\eqref{eq:frame} by $T-a$, write $\kappa(T)=\kappa(a)+(\kappa(T)-\kappa(a))$ and likewise for $p_{qkl}(T)$, and apply $\mu$. This gives
+\begin{equation}\label{eq:divided}
+ \kappa(a)H_{qk}(a)=\sum_{l=1}^dp_{qkl}(a)F_l(a)+G_{qk}(a)
+\end{equation}
+with polynomials $G_{qk}$ of degree less than $e_1=\max\bigl(\deg\kappa,\max_{q,k,l}\deg p_{qkl}\bigr)$.
+
+\emph{One test unit.} Let $(a,h)\in\Omega$ and $1\le k\le n$. Since $s_kU_{a,h}\in K_N$, some $q\in Q$ satisfies $\mu(qs_kU_{a,h})=0$. As $qs_kU_{a,h}=a\bigl(qs_k+hqs_k/(T-a)\bigr)$ and $a\ne0$,
+\begin{equation}\label{eq:single}
+ \ell_{qk}+hH_{qk}(a)=0.
+\end{equation}
+
+\emph{Branches.} A \emph{branch} $\beta$ is a pair consisting of some $q\in Q$ and indices $k_1<\cdots<k_d$. Let $M_\beta=\bigl(p_{qk_il}\bigr)_{i,l}$, so that $\delta_\beta=\det M_\beta$ is a nonzero polynomial, and let $Z_\beta\subset\Omega$ be the set of $(a,h)$ at which~\eqref{eq:single} holds for this $q$ and $k=k_1,\ldots,k_d$. Every point of $\Omega$ lies in some $Z_\beta$: \eqref{eq:single} holds for some $q=q(k)$ at each of the $n>|Q|(d-1)$ indices $k$, and by the pigeonhole principle some $q$ occurs $d$ times. On $Z_\beta$, multiplying~\eqref{eq:single} by $\kappa(a)$, substituting~\eqref{eq:divided} and multiplying by the adjugate of $M_\beta(a)$ gives
+\begin{equation}\label{eq:branch}
+ h\,\delta_\beta(a)F(a)=hR_\beta(a)+S_\beta(a),
+\end{equation}
+where $R_\beta=-\adj(M_\beta)\,(G_{qk_i})_i$ and $S_\beta=-\kappa\adj(M_\beta)\,(\ell_{qk_i})_i$ are vectors of polynomials. Put $\varepsilon_\beta=\kappa\delta_\beta$. Multiplying~\eqref{eq:divided} by $h\delta_\beta(a)$ and using~\eqref{eq:branch}, we find that on $Z_\beta$, for all $q'\in Q$ and $1\le k\le n$,
+\begin{equation}\label{eq:branchH}
+ \varepsilon_\beta(a)\,hH_{q'k}(a)=hV_{\beta q'k}(a)+W_{\beta q'k}(a),
+\end{equation}
+where $V_{\beta q'k}=\sum_lp_{q'kl}R_{\beta,l}+\delta_\beta G_{q'k}$ and $W_{\beta q'k}=\sum_lp_{q'kl}S_{\beta,l}$.
+
+\emph{Two dense branches.} Suppose that $Z_\beta$ and $Z_\gamma$ are dense. We show that
+\begin{equation}\label{eq:densebranches}
+ S_\beta=0\qquad\text{and}\qquad\delta_\gamma R_\beta=\delta_\beta R_\gamma.
+\end{equation}
+Let $(a,h)\in Z_\beta$ and $(c,h')\in Z_\gamma$ with $a\ne c$, and fix $k$. The partial fraction decomposition
+\[
+ U_{a,h}U_{c,h'}=ac\Bigl(1+\frac h{T-a}+\frac{h'}{T-c}+\frac{hh'}{a-c}\Bigl(\frac1{T-a}-\frac1{T-c}\Bigr)\Bigr)
+\]
+and the unit $s_kU_{a,h}U_{c,h'}\in K_N$ give some $q\in Q$ with
+\[
+ \ell_{qk}+hH_{qk}(a)+h'H_{qk}(c)+\frac{hh'}{a-c}\bigl(H_{qk}(a)-H_{qk}(c)\bigr)=0.
+\]
+Multiply by $(a-c)\varepsilon_\beta(a)\varepsilon_\gamma(c)$ and use~\eqref{eq:branchH} for $\beta$ at $(a,h)$ and for $\gamma$ at $(c,h')$. Writing $V_\beta=V_{\beta qk}$, $W_\beta=W_{\beta qk}$, and similarly for $\gamma$, we obtain $\Psi_q(a,h,c,h')=0$, where
+\[
+\begin{aligned}
+ \Psi_q(a,h,c,h')={}&(a-c)\varepsilon_\beta(a)\varepsilon_\gamma(c)\ell_{qk}
+ +(a-c)\varepsilon_\gamma(c)\bigl(hV_\beta(a)+W_\beta(a)\bigr)\\
+ &+(a-c)\varepsilon_\beta(a)\bigl(h'V_\gamma(c)+W_\gamma(c)\bigr)
+ +h'\varepsilon_\gamma(c)\bigl(hV_\beta(a)+W_\beta(a)\bigr)\\
+ &-h\varepsilon_\beta(a)\bigl(h'V_\gamma(c)+W_\gamma(c)\bigr)
+\end{aligned}
+\]
+is a polynomial on $\Qbar^4$. By Lemma~\ref{lem:zariski}(a) and~(c), the points $(a,h,c,h')$ with $(a,h)\in Z_\beta$, $(c,h')\in Z_\gamma$ and $a\ne c$ form a dense subset of $\Qbar^4$. It is covered by the zero sets of the finitely many $\Psi_q$, so by Lemma~\ref{lem:zariski}(b) some $\Psi_q$ vanishes on a dense set and is the zero polynomial. In this polynomial, $\Psi_q(a,1,a,0)=-\varepsilon_\beta(a)W_\gamma(a)$ and $\Psi_q(a,0,a,1)=\varepsilon_\gamma(a)W_\beta(a)$, so $W_\beta=W_\gamma=0$. Then $\Psi_q(a,1,c,0)-\Psi_q(a,0,c,0)=(a-c)\varepsilon_\gamma(c)V_\beta(a)$; choosing $c$ with $\varepsilon_\gamma(c)\ne0$ shows $V_\beta=0$, and likewise $V_\gamma=0$.
+
+Thus every $k$ has some $q\in Q$ with $W_{\beta qk}=V_{\beta qk}=V_{\gamma qk}=0$. By the pigeonhole principle, some $q$ serves $d$ indices $k_1,\ldots,k_d$. Since $\det(p_{qk_il})\ne0$, the equations $\sum_lp_{qk_il}S_{\beta,l}=0$ give $S_\beta=0$, and the equations
+\[
+ \sum_lp_{qk_il}\bigl(\delta_\gamma R_{\beta,l}-\delta_\beta R_{\gamma,l}\bigr)=-\delta_\gamma\delta_\beta G_{qk_i}+\delta_\beta\delta_\gamma G_{qk_i}=0
+\]
+give $\delta_\gamma R_\beta=\delta_\beta R_\gamma$. This proves~\eqref{eq:densebranches}.
+
+\emph{Conclusion.} Let $\Delta$ be the product of $\delta_\beta$ over all branches $\beta$. The dense set $\Omega$ is covered by the finitely many sets $Z_\beta$, so some $Z_{\beta_0}$ is dense. Put $P_\mu=(\Delta/\delta_{\beta_0})R_{\beta_0}$. By~\eqref{eq:densebranches}, $(\Delta/\delta_\beta)R_\beta=P_\mu$ for every branch $\beta$ with $Z_\beta$ dense. For every other branch, choose a nonzero polynomial vanishing on $Z_\beta$, and let $g$ be the product of these polynomials. If $(a,h)\in\Omega$ and $g(a,h)\ne0$, then $(a,h)$ lies in some dense $Z_\beta$, and~\eqref{eq:branch} with $S_\beta=0$ and $h\ne0$ gives $\delta_\beta(a)F(a)=R_\beta(a)$, hence $\Delta(a)F(a)=P_\mu(a)$. The entries of $\adj(M_\beta)$ have degree at most $(d-1)e_1$, so $P_\mu$ has degree at most $e=\deg\Delta+de_1$, which depends only on the frame. If another polynomial vector $P'$ also agrees generically with $\Delta F$, then the polynomial $(a,h)\mapsto P_\mu(a)-P'(a)$ vanishes on a dense subset of $\Omega$, so $P'=P_\mu$.
+\end{proof}
+
+\begin{prop}\label{prop:annihilator}
+There is a nonzero polynomial $p\in\Qbar[X]$ such that $\lambda(p(T)w)=0$ for every $w\in A$.
+\end{prop}
+
+\begin{proof}
+For $w\in A$ put $F^w(a)=(\lambda(wb_l/(T-a)))_l$, which is linear in $w$; for $w\in K_N$ it is the Cauchy transform of the covered functional $\lambda_w$. Write $w=\sum_ic_iv_i$ with $c_i\in\Qbar$ and $v_i\in K_N$. Then, generically on $\Omega$, $\Delta(a)F^w(a)$ agrees with $\sum_ic_iP_{\lambda_{v_i}}(a)$, a vector of polynomials of degree at most $e$. As in the uniqueness part of Proposition~\ref{prop:rational}, at most one vector of polynomials agrees generically with $\Delta F^w$, so this vector depends only on $w$; call it $\Phi(w)$. The map $\Phi$ is linear from $A$ to the finite-dimensional space $\mathcal P_e$ of vectors of polynomials of degree at most $e$. Put $\Lambda(w)=(\lambda(wb_l))_l\in\Qbar^d$.
+
+Since $T\in K_N$, also $Tw\in A$, and
+\[
+ \lambda\Bigl(\frac{Twb_l}{T-a}\Bigr)=\lambda(wb_l)+a\,\lambda\Bigl(\frac{wb_l}{T-a}\Bigr).
+\]
+Hence $\Delta(a)F^{Tw}(a)$ agrees generically with $a\Phi(w)(a)+\Delta(a)\Lambda(w)$, and by uniqueness $\Phi(Tw)=X\Phi(w)+\Delta\Lambda(w)$. Suppose that $\Phi(w)=0$ but $\Lambda(w)\ne0$. By induction,
+\[
+ \Phi(T^mw)=\sum_{j=0}^{m-1}X^{m-1-j}\Delta\,\Lambda(T^jw)\qquad(m\ge1),
+\]
+and the term with $j=0$ has degree $m-1+\deg\Delta$, larger than the degrees of the other terms. For $m>e+1$ this contradicts $\Phi(T^mw)\in \mathcal P_e$. Hence $\ker\Phi\subset\ker\Lambda$, and therefore $T\ker\Phi\subset\ker\Phi$. Multiplication by $T$ induces a linear operator on the finite-dimensional space $A/\ker\Phi$; let $p$ be its characteristic polynomial. By the Cayley--Hamilton theorem, $p(T)w\in\ker\Phi\subset\ker\Lambda$ for every $w\in A$, so $\lambda(p(T)wb_1)=0$. As $w$ ranges over $A$, so does $wb_1$, since $b_1^{-1}=\bar b_1\in A$.
+\end{proof}
+
+\begin{lem}\label{lem:quotient}
+For every nonzero $p\in\Qbar[X]$, the space $A/p(T)A$ has dimension at most $d\deg p$.
+\end{lem}
+
+\begin{proof}
+First let $a\in\Qbar$, and let $w_0,\ldots,w_d\in A$. Since $[N:B]=d$, there are polynomials $c_0,\ldots,c_d\in\Qbar[X]$, not all zero, with $\sum_ic_i(T)w_i=0$. Dividing by the largest power of $X-a$ that divides every $c_i$, we may assume that some $c_i(a)$ is nonzero. Then
+\[
+ \sum_ic_i(a)w_i=-(T-a)\sum_i\frac{c_i(T)-c_i(a)}{T-a}\,w_i\in(T-a)A,
+\]
+since $A$ is a ring containing $T$. Hence $\dim A/(T-a)A\le d$. In general, write $p=(X-a)p_1$, which is possible since $\Qbar$ is algebraically closed. The subspace $(T-a)A/p(T)A$ of $A/p(T)A$ is the image of $A/p_1(T)A$ under multiplication by $T-a$, and the quotient by it is $A/(T-a)A$. Induction on $\deg p$ completes the proof.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:nocover}]
+Let $p$ be as in Proposition~\ref{prop:annihilator}, and let $I=\{v\in A:\lambda(vw)=0\text{ for all }w\in A\}$. It is an ideal of $A$ containing $p(T)A$. By Lemma~\ref{lem:quotient}, $\bar A=A/I$ is a finite-dimensional commutative $\Qbar$-algebra. Since $1\in A$, we have $I\subset\ker\lambda$, so $\lambda$ induces a functional $\bar\lambda$ on $\bar A$.
+
+We apply Lemma~\ref{lem:cayley} with $\Bbbk=\Qbar$, the algebra $R=\bar A$, the image $\iota$ of $i$, and the image $R_\R$ of $A\cap\R$. The algebra $\bar A$ is finite-dimensional, hence integral over $\Qbar$. For $r\in A\cap\R$, the Cayley transform $\Cay(r)=(1+ir)/(1-ir)$ lies in $K_N$, and $(1-ir)^{-1}=(1+\Cay(r))/2$ lies in $A$; so $1-ir$ is a unit of $A$, and its image is a unit of $\bar A$. Since $A$ is closed under conjugation, it is spanned by $A\cap\R$ and $i(A\cap\R)$, and so the only functional on $\bar A$ vanishing on $R_\R\cup\iota R_\R$ is zero. For $q\in Q$, the functional $y\mapsto\bar\lambda(qy)$ on $\bar A$ is nonzero, since its value at the image of $\bar q=q^{-1}\in A$ is $\lambda(1)=1$. Lemma~\ref{lem:cayley} gives $r\in A\cap\R$ with $\lambda(q\Cay(r))\ne0$ for every $q\in Q$. But $\Cay(r)\in K_N\subset K_L$, which contradicts the assumption on $Q$ and $\lambda$.
+\end{proof}
+
+\section{The template property}\label{sec:templates}
+
+We now deduce Theorem~\ref{thm:carrier} from Theorem~\ref{thm:nocover}, keeping the notation of Section~\ref{sec:template}. A compactness argument first gives templates with algebraic coefficients.
+
+\begin{prop}\label{prop:algebraictemplate}
+For every nonempty finite set $Q\subset K_L$ there is a finite set $P\subset K_L$ such that, for every map $f\colon P\to Q$, the number $1$ lies in the $\Qbar$-linear span of $\{f(p)p:p\in P\}$.
+\end{prop}
+
+\begin{proof}
+Suppose not. For a finite set $P\subset K_L$, let $\mathcal C_P$ be the set of maps $f\colon K_L\to Q$ such that $1$ does not lie in the span of $\{f(p)p:p\in P\}$. Each $\mathcal C_P$ is nonempty, by assumption and since $Q$ is nonempty, and it is closed in the compact product space $Q^{K_L}$, since it is defined by the coordinates in $P$. Moreover $\mathcal C_{P\cup P'}\subset\mathcal C_P\cap\mathcal C_{P'}$. By compactness some $f$ lies in every $\mathcal C_P$. Then $1$ does not lie in the span $V$ of $\{f(p)p:p\in K_L\}$, since otherwise it would lie in the span of finitely many of these elements. Choose a $\Qbar$-linear $\lambda\colon L\to\Qbar$ with $\lambda(V)=0$ and $\lambda(1)=1$. Every $u\in K_L$ satisfies $\lambda(f(u)u)=0$ with $f(u)\in Q$, contrary to Theorem~\ref{thm:nocover}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:carrier}]
+For algebraic $x$ this is Proposition~\ref{prop:algebraiccarrier}, so let $x$ be transcendental. By Section~\ref{sec:carriers}, the field $L=E_x$ is countable and satisfies~(C1) and~(C2). Let $Q\subset K_L$ be finite. If $Q$ is empty, any nonempty $S$ satisfies~(C3), since there are no maps $S\to Q$. Otherwise let $P$ be as in Proposition~\ref{prop:algebraictemplate}, and for each of the finitely many maps $f\colon P\to Q$ fix an expression
+\[
+ 1=\sum_{p\in P}a^f_p\,f(p)p\qquad(a^f_p\in\Qbar).
+\]
+Let $M_0\subset\R$ be the number field generated by the real and imaginary parts of all $a^f_p$, and put $M=M_0(i)$ and $d_0=[M:\Q]$. Then $M$ contains every $a^f_p$ and every $ia^f_p$. By Lemma~\ref{lem:numberfield}, there is a finite set $S_0\subset M\cap S^1$ with $|S_0|>|Q|(d_0-1)$ such that every $d_0$ distinct elements of $S_0$ form a $\Q$-basis of $M$. Put $S=\{ps:p\in P,\ s\in S_0\}\subset K_L$, and let $\chi\colon S\to Q$. For each $p\in P$, the elements $ps$, $s\in S_0$, are distinct, so the pigeonhole principle gives $f(p)\in Q$ and $d_0$ distinct elements $s\in S_0$ with $\chi(ps)=f(p)$. These $s$ form a $\Q$-basis of $M$, so the $\Q$-linear span of $\{\chi(y)y:y\in S\}$ contains $f(p)pM$ for every $p\in P$. It therefore contains $\sum_pa^f_pf(p)p=1$ and $\sum_p(ia^f_p)f(p)p=i$.
+\end{proof}
+
+\section{The label model and ratios far from one}\label{sec:label}
+
+In this section and the next, $x>0$ is real, $E$ is a carrier containing $x$, and $F$, $K$, $D$, $C$ are as in Section~\ref{sec:carriers}. By Theorem~\ref{thm:carrier} we may take $E=E_x$. Since $\sqrt3\in F$, also $\zeta\in E$. We suppose that some two-coloring $c$ of the plane avoids the sides $1$ and $x$, and we derive a contradiction for $x\ge3/2$ and $x\le2/3$ in this section, and a measurable coloring for the remaining $x$ in the next.
+
+\paragraph{The label model.} Following OpenAI~\cite[Proposition~4.2]{OAI}, we average the coloring over translations and rotations of the countable field $E$. Let $\mathcal X\subset\{\pm1\}^E$ be the set of labelings $\eta$ of $E$ such that no $p\in E$, $u\in K$ and $r\in\{1,x\}$ satisfy $\eta(p)=\eta(p+ur)=\eta(p+ur\zeta)$. It is a closed subset of the compact metrizable space $\{\pm1\}^E$, and it contains the labeling $z\mapsto(-1)^{c(z)}$, since the triples in its definition are equilateral triangles of side $1$ or $x$ in the plane. The countable group $E\rtimes K$ acts on $\mathcal X$ by
+\[
+ (\tau_z\eta)(y)=\eta(y+z),\qquad(\varrho_k\eta)(y)=\eta(ky)\qquad(z\in E,\ k\in K).
+\]
+This group is amenable, being an extension of an abelian group by an abelian group~\cite[Theorem~G.2.1 and Proposition~G.2.2(ii)]{BHV}. By the F\o lner criterion~\cite{Folner}, in the form of~\cite[Theorem~G.5.1]{BHV}, averages of a point mass of $\mathcal X$ over a F\o lner sequence of finite sets have a weak-$*$ limit point, and every such limit is a Borel probability measure $\mu$ on $\mathcal X$ invariant under all $\tau_z$ and $\varrho_k$, as in~\cite[Proposition~4.2]{OAI}. On $\calH=L^2(\mathcal X,\mu)$, put $T_zf=f\circ\tau_z$ and $W_kf=f\circ\varrho_k$. Then $(T_z)_{z\in E}$ is a unitary representation of $E$, each $W_k$ is unitary, and $W_kT_z=T_{kz}W_k$.
+
+Let $s(\eta)=\eta(0)$. Then $\|s\|=1$ and $W_ks=s$ for all $k\in K$. Define the correlation
+\[
+ \rho(z)=\langle s,T_zs\rangle=\int_{\mathcal X}\eta(0)\eta(z)\,d\mu(\eta)\qquad(z\in E).
+\]
+
+\begin{lem}\label{lem:correlation}
+\begin{enumerate}
+\item[(a)] For $z\in E$ and $k\in K$, we have $\rho(kz)=\rho(z)$. Hence $\rho(z)$ depends only on $|z|$.
+\item[(b)] For $r\in\{1,x\}$ and $u\in K$,
+\[
+ \rho(ur)+\rho(ur\zeta)+\rho(ur(\zeta-1))=-1.
+\]
+Consequently $\rho(1)=\rho(x)=-1/3$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) We have $\langle s,T_{kz}s\rangle=\langle W_ks,T_{kz}W_ks\rangle=\langle W_ks,W_kT_zs\rangle=\langle s,T_zs\rangle$. Two elements of $E$ of equal modulus differ by a factor in $K$.
+
+(b) Three signs $a,b,c$ that are not all equal contain exactly one equal pair, so $ab+ac+bc=-1$. For $\eta\in\mathcal X$ apply this to $\eta(0)$, $\eta(ur)$ and $\eta(ur\zeta)$, and integrate. By invariance under $\tau_{ur}$, the integral of $\eta(ur)\eta(ur\zeta)$ is $\rho(ur(\zeta-1))$. The three displacements have modulus $r$, since $|\zeta-1|=1$, so part~(a) gives $3\rho(r)=-1$.
+\end{proof}
+
+\begin{lem}\label{lem:radial}
+There is a finite Borel measure $\nu$ on $\C$ with $\nu(\C)\le1$ such that
+\[
+ \rho(z)=\int_\C J_0(|z|\,|\xi|)\,d\nu(\xi)\qquad(z\in E\setminus\{0\}).
+\]
+\end{lem}
+
+\begin{proof}
+Let $\lambda_s$ be the spectral measure of $s$, the finite Borel measure on $D$ with $\langle s,T_zs\rangle=\int_D\psi_z\,d\lambda_s$ for $z\in E$; its mass is $\|s\|^2=1$. As in the proof of Corollary~\ref{cor:residual}, $\lambda_s$ is $K$-invariant. Since $kC=C$ for $k\in K$, the restriction of $\lambda_s$ to $D\setminus C$ is wild, and Theorem~\ref{thm:rigidity} shows that its Fourier coefficients vanish at every nonzero $z\in E$. Let $\nu$ be the measure on $\C$ with $\nu(B)=\lambda_s(j(B))$, the pullback of the restriction of $\lambda_s$ to $C$ under the Borel bijection $j\colon\C\to C$. Then $\nu(\C)\le1$, and
+\[
+ \rho(z)=\int_C\psi_z\,d\lambda_s=\int_\C\exp(i\re(\bar\xi z))\,d\nu(\xi)\qquad(z\in E\setminus\{0\}).
+\]
+The right-hand side defines a continuous function $\varphi$ on $\C$. For $z\in E\setminus\{0\}$ and $k\in K$, Lemma~\ref{lem:correlation}(a) gives $\varphi(kz)=\varphi(z)$. Since $K$ is dense in $S^1$, continuity gives $\varphi(uz)=\varphi(z)$ for every $u\in S^1$. Averaging over $u$ and using
+\[
+ \int_\T\exp\bigl(i\re(\bar\xi e^{it}z)\bigr)\,d\sigma(t)=\frac1{2\pi}\int_0^{2\pi}e^{i|\xi||z|\cos t}\,dt=J_0(|\xi|\,|z|),
+\]
+in which the imaginary part vanishes because $\sin(R\cos t)$ is odd under $t\mapsto\pi-t$, we obtain the stated formula.
+\end{proof}
+
+\begin{thm}\label{thm:far}
+Let $x>0$ with $x\ge3/2$ or $x\le2/3$. No two-coloring of the plane avoids both the side $1$ and the side $x$.
+\end{thm}
+
+\begin{proof}
+Suppose that $c$ avoids both sides, and use the label model above with $E=E_x$. By Lemmas~\ref{lem:correlation} and~\ref{lem:radial},
+\[
+ -\frac23=\rho(1)+\rho(x)=\int_\C\bigl(J_0(|\xi|)+J_0(x|\xi|)\bigr)\,d\nu(\xi).
+\]
+If $x\ge3/2$, Proposition~\ref{prop:bessel} bounds the integrand below by $-83/125$, so the right-hand side is at least $-83/125>-2/3$, since $\nu(\C)\le1$. If $x\le2/3$, write $J_0(t)+J_0(xt)=J_0(t'/x)+J_0(t')$ with $t'=xt$ and apply Proposition~\ref{prop:bessel} with $1/x\ge3/2$. Either way we reach a contradiction.
+\end{proof}
+
+\section{Binary transfer}\label{sec:transfer}
+
+In this section we prove the following theorem. We keep the notation of Section~\ref{sec:label}.
+
+\begin{thm}\label{thm:transfer}
+Let $x>0$, and let $E$ be a carrier containing $x$. If some two-coloring of the plane avoids both the side $1$ and the side $x$, then some measurable two-coloring weakly avoids both the side $1$ and the side $x$.
+\end{thm}
+
+The proof follows OpenAI's proof of~\cite[Proposition~4.2]{OAI}, which transfers proper colorings. Let $\calH_c\subset\calH$ be the subspace of vectors with continuous translation orbits, as in Section~\ref{sec:carriers}, and let $P$ be the orthogonal projection onto $\calH_c$. The following facts are part of~\cite[Lemma~4.1]{OAI}; we include their short proofs.
+
+\begin{lem}\label{lem:continuous}
+\begin{enumerate}
+\item[(a)] The subspace $\calH_c$ is closed and invariant under every $T_z$ and $W_k$, and $P$ commutes with these operators.
+\item[(b)] If $\phi\colon\C\to\C$ is Lipschitz and $h\in\calH_c$, then $\phi\circ h\in\calH_c$.
+\item[(c)] For $h\in\calH_c$ and $y\in\C$, the limit $T_yh=\lim T_{z_n}h$ along any sequence $z_n\in E$ tending to $y$ exists and does not depend on the sequence. This defines a strongly continuous unitary representation $(T_y)_{y\in\C}$ on $\calH_c$ extending $(T_z)_{z\in E}$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+(a) Closedness follows from $\|T_zv-v\|\le2\|v-w\|+\|T_zw-w\|$. For $v\in\calH_c$ we have $\|T_{z'}T_zv-T_zv\|=\|T_{z'}v-v\|$ and $\|T_zW_kv-W_kv\|=\|T_{k^{-1}z}v-v\|$. These unitary operators and their inverses preserve $\calH_c$, hence also its orthogonal complement. (b) Koopman operators commute with composition, so $\|T_z(\phi\circ h)-\phi\circ h\|\le{\rm Lip}(\phi)\,\|T_zh-h\|$. (c) We have $\|T_{z_n}h-T_{z_m}h\|=\|T_{z_n-z_m}h-h\|\to0$, and the remaining assertions follow by passing to limits.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:transfer}]
+\emph{The projected sign.} Put $g=Ps$. We claim that $g$ is real-valued with $-1\le g\le1$ and that $W_kg=g$ for $k\in K$. The map $\phi(w)=\max(-1,\min(1,\re w))$ is $1$-Lipschitz and fixes $s$. By Lemma~\ref{lem:continuous}(b), $\phi\circ g\in\calH_c$, and
+\[
+ \|\phi\circ g-s\|=\|\phi\circ g-\phi\circ s\|\le\|g-s\|.
+\]
+Since $g$ is the unique point of $\calH_c$ closest to $s$, we get $\phi\circ g=g$. Also $W_kg=PW_ks=g$ by Lemma~\ref{lem:continuous}(a).
+
+\emph{Correlations.} The vector $v=s-g$ is orthogonal to $\calH_c$ and fixed by every $W_k$. By Corollary~\ref{cor:residual}, $\langle v,T_zv\rangle=0$ for $z\in E\setminus\{0\}$. The cross terms $\langle g,T_zv\rangle$ and $\langle v,T_zg\rangle$ vanish, since $T_z$ preserves $\calH_c$ and its orthogonal complement. Hence
+\begin{equation}\label{eq:projcorr}
+ \langle g,T_zg\rangle=\rho(z)\qquad(z\in E\setminus\{0\}).
+\end{equation}
+
+\emph{A continuous field.} By Lemma~\ref{lem:continuous}(c), $G(y)=T_yg$ defines a continuous map from $\C$ to $\calH_c$ with $\langle G(y),G(y')\rangle=\langle g,G(y'-y)\rangle$. Each $G(y)$ is real-valued with values in $[-1,1]$, since it is an $L^2$ limit of the functions $T_zg=g\circ\tau_z$, $z\in E$, which have these properties. The function $\tilde\rho(y)=\langle g,G(y)\rangle$ is real and continuous, and $\tilde\rho(z)=\rho(z)$ for $z\in E\setminus\{0\}$ by~\eqref{eq:projcorr}.
+
+\emph{The quadratic form.} For real $a,b,c$ put $\mathsf Q(a,b,c)=1+ab+ac+bc$. Then
+\[
+ 2\mathsf Q(a,b,c)=(1+a)(1+b)(1+c)+(1-a)(1-b)(1-c),
+\]
+so $\mathsf Q\ge0$ on $[-1,1]^3$. Let $r\in\{1,x\}$. By Lemma~\ref{lem:correlation}(b),
+\[
+ 1+\tilde\rho(ur)+\tilde\rho(ur\zeta)+\tilde\rho(ur(\zeta-1))=0
+\]
+for $u\in K$, and by continuity and density of $K$ in $S^1$ for every $u\in S^1$. For $p\in\C$ and $u\in S^1$, the identity $\int G(p)G(p+w)\,d\mu=\tilde\rho(w)$ therefore gives
+\[
+ \int_{\mathcal X}\mathsf Q\bigl(G(p),G(p+ur),G(p+ur\zeta)\bigr)\,d\mu=0.
+\]
+Since the integrand is nonnegative, it vanishes $\mu$-almost everywhere.
+
+\emph{A jointly measurable field.} We construct a Borel function $\mathcal G\colon\C\times\mathcal X\to[-1,1]$ such that, for every $y\in\C$, the function $\mathcal G(y,\cdot)$ represents $G(y)$. Fix a Borel representative $\tilde g\colon\mathcal X\to[-1,1]$ of $g$. Since $\|G(y)-G(y')\|=\|G(y-y')-g\|$, the map $G$ is uniformly continuous. For each $n\ge1$ choose $\delta_n>0$ with $\|G(w)-g\|\le2^{-n}$ for $|w|\le\delta_n$. Enumerate $E=\{e_1,e_2,\ldots\}$ and let $q_n(y)=e_m$ for the least $m$ with $|y-e_m|<\delta_n$. The map $q_n$ is Borel with countable range, $G_n(y,\eta)=\tilde g(\tau_{q_n(y)}\eta)$ is jointly Borel, and $G_n(y,\cdot)$ represents $G(q_n(y))$, which is within $2^{-n}$ of $G(y)$. For fixed $y$, the sum $\sum_n\|G_{n+1}(y,\cdot)-G_n(y,\cdot)\|_{L^1(\mu)}$ is finite, so $G_n(y,\cdot)$ converges $\mu$-almost everywhere, necessarily to a representative of $G(y)$. Let $\mathcal G(y,\eta)$ be this limit where it exists and $0$ elsewhere.
+
+\emph{Sampling.} For $r\in\{1,x\}$, the set of $(p,t,\eta)\in\C\times\T\times\mathcal X$ with
+\[
+ \mathsf Q\bigl(\mathcal G(p,\eta),\mathcal G(p+e^{it}r,\eta),\mathcal G(p+e^{it}r\zeta,\eta)\bigr)\ne0
+\]
+is Borel, and by the previous steps each of its sections with $(p,t)$ fixed is $\mu$-null. By Tonelli's theorem, for $\mu$-almost every $\eta$ its section with $\eta$ fixed is null for the product of Lebesgue measure and $\sigma$. Fix such an $\eta_0$ for both values of $r$, and let $c'(y)=0$ if $\mathcal G(y,\eta_0)\ge0$ and $c'(y)=1$ otherwise. This coloring is Borel. If $a,b,c\in[-1,1]$ and $\mathsf Q(a,b,c)=0$, then $a,b,c$ do not all receive the same color: if all were nonnegative then $\mathsf Q\ge1$, and if all were negative then $\mathsf Q>1$. Hence, for almost every placement $(p,t)$, the copy of $(r,r\zeta)$ placed by $(p,t)$ is not monochromatic for $c'$, and $c'$ weakly avoids the sides $1$ and $x$.
+\end{proof}
+
+\section{Proofs of the main theorems}\label{sec:proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rigidityx}]
+By Theorem~\ref{thm:carrier}, $E_x$ is a carrier, and $K_x$, $D_x$, $C_x$ are its group $K$, dual group $D$ and subgroup $C$. Let $\nu$ be a $K_x$-invariant probability measure on $D_x$ with $\nu(C_x)=0$. By Theorem~\ref{thm:rigidity}, its Fourier coefficients vanish at every nonzero $z\in E_x$, as do those of Haar measure, and both coefficients equal $1$ at $z=0$. Finite measures on $D_x$ are determined by their Fourier coefficients, so $\nu$ is Haar measure.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:twoscale}]
+Suppose that a two-coloring $c$ avoids the sides $r$ and $s$ with $0<r<s$. Put $x=s/r$. The coloring $z\mapsto c(rz)$ avoids the sides $1$ and $x$, and $x\ne1$. If $x\ge3/2$, this contradicts Theorem~\ref{thm:far}. If $x<3/2$, then $E_x$ is a carrier containing $x$ by Theorem~\ref{thm:carrier}, Theorem~\ref{thm:transfer} gives a measurable two-coloring that weakly avoids the sides $1$ and $x$, and this contradicts Theorem~\ref{thm:circle}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let $c$ be a two-coloring, and let $T$ be a triangle with no monochromatic congruent copy. Choose a side of $T$, of length $a$, and write $T$ as the image of a template $(a,z)$ under an orientation-preserving isometry, as in Section~\ref{sec:reduction}. Then $c$ avoids $(a,z)$, so by Lemma~\ref{lem:eightpoint}(i), which holds for every $z\in\C$, it avoids the side $a$. Hence $c$ avoids the lengths of all three sides of $T$, and by Theorem~\ref{thm:twoscale} they are equal. So $T$ is equilateral, and in particular not collinear, and its side is the unique side length that $c$ avoids. In particular, all such triangles have the same side length.
+\end{proof}
+
+Proposition~\ref{prop:strips} shows that the exceptional equilateral triangle can occur.
+
+\begin{thebibliography}{99}
+\bibitem{BHV}
+B. Bekka, P. de la Harpe and A. Valette, \emph{Kazhdan's Property (T)}, New Mathematical Monographs \textbf{11}, Cambridge University Press, Cambridge, 2008. \href{https://doi.org/10.1017/CBO9780511542749}{doi:10.1017/CBO9780511542749}.
+
+\bibitem{Bloom173}
+T. F. Bloom, \emph{Erd\H{o}s Problem \#173}, Erd\H{o}s Problems, \url{https://www.erdosproblems.com/173}, accessed 17 October 2026.
+
+\bibitem{CMY}
+G. Currier, K. Moore and C. H. Yip, \emph{Any two-coloring of the plane contains monochromatic 3-term arithmetic progressions}, Combinatorica \textbf{44} (2024), 1367--1380. \href{https://doi.org/10.1007/s00493-024-00122-2}{doi:10.1007/s00493-024-00122-2}.
+
+\bibitem{Crum}
+M. M. Crum, \emph{On positive-definite functions}, Proc. London Math. Soc. (3) \textbf{6} (1956), 548--560. \href{https://doi.org/10.1112/plms/s3-6.4.548}{doi:10.1112/plms/s3-6.4.548}.
+
+\bibitem{EGMRSS}
+P. Erd\H{o}s, R. L. Graham, P. Montgomery, B. L. Rothschild, J. Spencer and E. G. Straus, \emph{Euclidean Ramsey theorems~III}, in \emph{Infinite and Finite Sets} (Keszthely, 1973), Colloq. Math. Soc. J\'{a}nos Bolyai \textbf{10}, North-Holland, Amsterdam, 1975, pp. 559--583. \url{https://combinatorica.hu/~p_erdos/1975-12.pdf}.
+
+\bibitem{Falconer}
+K. J. Falconer, \emph{The realization of distances in measurable subsets covering $\mathbb R^n$}, J. Combin. Theory Ser. A \textbf{31} (1981), 184--189. \href{https://doi.org/10.1016/0097-3165(81)90014-5}{doi:10.1016/0097-3165(81)90014-5}.
+
+\bibitem{Folner}
+E. F\o lner, \emph{On groups with full Banach mean value}, Math. Scand. \textbf{3} (1955), 243--254. \href{https://doi.org/10.7146/math.scand.a-10442}{doi:10.7146/math.scand.a-10442}.
+
+\bibitem{FormalConjectures}
+The Formal Conjectures Authors, \emph{Formal Conjectures: Erd\H{o}s Problem 173} (2026), revision \texttt{7db2ea3b91bf}. \href{https://github.com/google-deepmind/formal-conjectures/blob/7db2ea3b91bfbd0ab620215163e6c488bbb916d5/FormalConjectures/ErdosProblems/173.lean}{Source statement}. \url{https://github.com/google-deepmind/formal-conjectures}.
+
+\bibitem{Formalization}
+Plasma AI, \emph{Erd\H{o}s Problem 173: monochromatic triangles in two-colorings of the plane}, Lean~4 formalization (2026). \url{https://github.com/plasma-ai/erdos-173}.
+
+\bibitem{Furstenberg}
+H. Furstenberg, \emph{Ergodic behavior of diagonal measures and a theorem of Szemer\'{e}di on arithmetic progressions}, J. Analyse Math. \textbf{31} (1977), 204--256. \href{https://doi.org/10.1007/BF02813304}{doi:10.1007/BF02813304}.
+
+\bibitem{GneitingSasvari}
+T. Gneiting and Z. Sasv\'{a}ri, \emph{The characterization problem for isotropic covariance functions}, Math. Geol. \textbf{31} (1999), 105--111. \href{https://doi.org/10.1023/A:1007597415185}{doi:10.1023/A:1007597415185}.
+
+\bibitem{Graham}
+R. L. Graham, \emph{Euclidean Ramsey theory}, in \emph{Handbook of Discrete and Computational Geometry}, 3rd edition, J. E. Goodman, J. O'Rourke and C. D. T\'{o}th (eds.), CRC Press, Boca Raton, FL, 2017, Chapter~11.
+
+\bibitem{Jamneshan}
+A. Jamneshan, \emph{An uncountable Furstenberg--Zimmer structure theory}, Ergodic Theory Dynam. Systems \textbf{43} (2023), 2404--2436; Corrigendum, \textbf{46} (2026), 211--217. \href{https://doi.org/10.1017/etds.2022.43}{doi:10.1017/etds.2022.43}.
+
+\bibitem{JKSV}
+V. Jel\'{i}nek, J. Kyn\v{c}l, R. Stola\v{r} and T. Valla, \emph{Monochromatic triangles in two-colored plane}, Combinatorica \textbf{29} (2009), 699--718. \href{https://doi.org/10.1007/s00493-009-2291-y}{doi:10.1007/s00493-009-2291-y}.
+
+\bibitem{OAI}
+OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint, September 23, 2026. \href{https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf}{Manuscript and source, openai/math}.
+
+\bibitem{OAICode}
+OpenAI, \emph{openai/math}, Lean~4 source library (2026), revision \href{https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean}{\texttt{adc7f1241b42}}. \url{https://github.com/openai/math}.
+
+\bibitem{Payne}
+M. S. Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin. \textbf{16} (2009), N31. \href{https://doi.org/10.37236/269}{doi:10.37236/269}.
+
+\bibitem{Shader}
+L. E. Shader, \emph{All right triangles are Ramsey in $E^2$!}, J. Combin. Theory Ser. A \textbf{20} (1976), 385--389. \href{https://doi.org/10.1016/0097-3165(76)90036-4}{doi:10.1016/0097-3165(76)90036-4}.
+
+\bibitem{Shkredov}
+I. D. Shkredov, \emph{On some problems of Euclidean Ramsey theory}, arXiv:1507.02727v2 (2015). \url{https://arxiv.org/abs/1507.02727v2}.
+
+\bibitem{vonNeumann}
+J. von Neumann, \emph{Zur allgemeinen Theorie des Masses}, Fund. Math. \textbf{13} (1929), 73--116. \href{https://doi.org/10.4064/fm-13-1-73-116}{doi:10.4064/fm-13-1-73-116}.
+
+\bibitem{ZimmerExt}
+R. J. Zimmer, \emph{Extensions of ergodic group actions}, Illinois J. Math. \textbf{20} (1976), 373--409. \href{https://doi.org/10.1215/ijm/1256049780}{doi:10.1215/ijm/1256049780}.
+
+\bibitem{ZimmerSpectrum}
+R. J. Zimmer, \emph{Ergodic actions with generalized discrete spectrum}, Illinois J. Math. \textbf{20} (1976), 555--588. \href{https://doi.org/10.1215/ijm/1256049648}{doi:10.1215/ijm/1256049648}.
+
+\end{thebibliography}
+
+\end{document}
