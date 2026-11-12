@@ -54,19 +54,19 @@ namespace Erdos173
 local notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
 /--
-The colouring `c` contains a monochromatic triangle congruent to `T`.
+The coloring `c` contains a monochromatic triangle congruent to `T`.
 
-Since `T'` is arbitrary, relabellings and reflections of `T` are allowed. Rescaling is not.
+Since `T'` is arbitrary, relabelings and reflections of `T` are allowed. Rescaling is not.
 -/
 def HasMonochromaticCopy (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²) : Prop :=
   ∃ T' : Triangle ℝ ℝ², (T'.points ≅ T.points) ∧ ∃ i, ∀ j, c (T'.points j) = i
 
 /--
-In any $2$-colouring of $\mathbb{R}^2$, for all but at most one triangle $T$ (up to
+In any $2$-coloring of $\mathbb{R}^2$, for all but at most one triangle $T$ (up to
 congruence), there is a monochromatic congruent copy of $T$.
 
-The colouring is arbitrary. No measurability is assumed. `≅` compares vertices with the same
-label, so the conclusion allows a relabelling `σ`.
+The coloring is arbitrary. No measurability is assumed. `≅` compares vertices with the same
+label, so the conclusion allows a relabeling `σ`.
 -/
 theorem erdos_173 : ∀ (c : ℝ² → Fin 2) (T₁ T₂ : Triangle ℝ ℝ²),
     ¬ HasMonochromaticCopy c T₁ → ¬ HasMonochromaticCopy c T₂ →
@@ -74,7 +74,7 @@ theorem erdos_173 : ∀ (c : ℝ² → Fin 2) (T₁ T₂ : Triangle ℝ ℝ²),
   sorry
 
 /--
-Shader [Sh76] proved that in any $2$-colouring of $\mathbb{R}^2$, every right-angled triangle
+Shader [Sh76] proved that in any $2$-coloring of $\mathbb{R}^2$, every right-angled triangle
 has a monochromatic congruent copy.
 -/
 theorem erdos_173.variants.right_triangle (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²)
@@ -83,7 +83,7 @@ theorem erdos_173.variants.right_triangle (c : ℝ² → Fin 2) (T : Triangle �
   sorry
 
 /--
-The exceptional triangle can exist: colouring the plane in alternating half-open strips of
+The exceptional triangle can exist: coloring the plane in alternating half-open strips of
 suitable width gives no monochromatic copy of some equilateral triangle.
 -/
 theorem erdos_173.variants.equilateral_exception : ∃ (c : ℝ² → Fin 2) (T : Triangle ℝ ℝ²),
@@ -93,7 +93,7 @@ theorem erdos_173.variants.equilateral_exception : ∃ (c : ℝ² → Fin 2) (T 
   sorry
 
 /--
-Every non-equilateral triangle has a monochromatic congruent copy in every $2$-colouring of
+Every non-equilateral triangle has a monochromatic congruent copy in every $2$-coloring of
 $\mathbb{R}^2$. This is Conjecture 3 of Erdős, Graham, Montgomery, Rothschild, Spencer and
 Straus, for nondegenerate triangles.
 -/
@@ -105,12 +105,12 @@ theorem erdos_173.variants.non_equilateral (c : ℝ² → Fin 2) (T : Triangle �
 
 /--
 Any three distinct points of $\mathbb{R}^2$ that are not the vertices of an equilateral triangle
-have a monochromatic congruent copy in every $2$-colouring of $\mathbb{R}^2$. This is Conjecture 3
+have a monochromatic congruent copy in every $2$-coloring of $\mathbb{R}^2$. This is Conjecture 3
 of Erdős, Graham, Montgomery, Rothschild, Spencer and Straus, including its degenerate triangles:
 the points may be collinear, and three distinct collinear points never have equal pairwise
 distances, so every collinear triple is covered.
 
-Since `q` is arbitrary, relabellings and reflections of `p` are allowed. Rescaling is not.
+Since `q` is arbitrary, relabelings and reflections of `p` are allowed. Rescaling is not.
 -/
 theorem erdos_173.variants.three_distinct_points (c : ℝ² → Fin 2) (p : Fin 3 → ℝ²)
     (hp : Function.Injective p)
